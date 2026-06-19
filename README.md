@@ -1,228 +1,127 @@
-# Digital Equb Platform
+# Yerosan Girma Portfolio
 
-A modern web application that digitizes the traditional Ethiopian "Equb" savings system - a community-based rotating savings and credit association.
+A modern personal portfolio website for Yerosan Girma, built to showcase skills, featured projects, experience, social links, and a working contact form.
 
-## 🌟 Features
+## Overview
 
-### User Features
-- **Account Management**: Secure signup/login with profile customization
-- **Group Discovery**: Browse and join existing Equb groups
-- **Group Creation**: Start your own savings circle with custom rules
-- **Payment Integration**: Seamless Telebirr payment processing
-- **Payment History**: Complete transaction records
-- **Real-time Notifications**: Stay updated on group activity
-- **Dashboard**: Comprehensive overview of all savings activity
+This site presents Yerosan Girma as a Full Stack MERN Developer. It includes an animated landing section, project portfolio, skills overview, experience section, and EmailJS-powered contact form.
 
-### Admin Features
-- **Winner Selection**: Choose round winners fairly
-- **Member Management**: Add/remove group members
-- **Payment Reminders**: Send notifications to members
-- **Group Settings**: Customize contribution amounts and rules
-- **Reports & Analytics**: Track group performance
+## Features
 
-## 🎨 Design System
+- Animated splash screen and hero section
+- Responsive portfolio layout for desktop and mobile
+- Skills and technology showcase
+- Featured project cards with details, demos, and GitHub links
+- Experience section
+- Contact form using EmailJS
+- Social links for GitHub, LinkedIn, and email
+- Vercel-ready deployment configuration
 
-Based on the Ethiopian design aesthetic with a modern twist:
+## Tech Stack
 
-### Colors
-- **Primary Blue**: `#1E3A8A` (Trust and stability)
-- **Success Green**: `#10B981` (Growth and success)
-- **Warning Yellow**: `#F59E0B` (Attention and alerts)
-- **Danger Red**: `#EF4444` (Errors and critical actions)
+- React 18
+- Vite
+- TypeScript
+- Tailwind CSS
+- Motion animations
+- Lucide React icons
+- EmailJS contact form
+- Vercel hosting
 
-### Typography
-- **Heading XL**: 48px Bold
-- **Heading L**: 32px SemiBold
-- **Heading M**: 24px
-- **Body Large**: 18px
-- **Body**: 16px
-- **Caption**: 14px
+## Project Structure
 
-## 🏗️ Project Structure
-
-```
+```text
 src/
-├── app/
-│   ├── components/
-│   │   ├── ui/              # Shadcn UI components
-│   │   ├── Navbar.tsx       # Main navigation
-│   │   ├── Sidebar.tsx      # Desktop sidebar
-│   │   ├── TopBar.tsx       # Dashboard top bar
-│   │   ├── BottomNav.tsx    # Mobile navigation
-│   │   ├── GroupCard.tsx    # Group display card
-│   │   ├── StatsCard.tsx    # Statistics card
-│   │   └── NotificationCard.tsx
-│   ├── pages/
-│   │   ├── HomePage.tsx
-│   │   ├── LoginPage.tsx
-│   │   ├── SignupPage.tsx
-│   │   ├── DashboardPage.tsx
-│   │   ├── BrowseGroupsPage.tsx
-│   │   ├── GroupDetailPage.tsx
-│   │   ├── PaymentsPage.tsx
-│   │   └── ProfilePage.tsx
-│   ├── layouts/
-│   │   ├── RootLayout.tsx
-│   │   └── DashboardLayout.tsx
-│   ├── data/
-│   │   └── mockData.ts      # Mock data for development
-│   ├── routes.tsx           # React Router configuration
-│   └── App.tsx              # Application entry point
-└── styles/
-    ├── theme.css            # Design system tokens
-    ├── fonts.css            # Font imports
-    └── tailwind.css         # Tailwind configuration
+  app/
+    App.tsx
+    components/
+      portfolio/
+        About.tsx
+        Contact.tsx
+        Experience.tsx
+        Footer.tsx
+        Hero.tsx
+        Navbar.tsx
+        Projects.tsx
+        Skills.tsx
+      image/
+        yeroimage1.jpg
+        yeroimage2.jpg
+        yeroimage3.jpg
+    pages/
+      PortfolioPage.tsx
+  styles/
+    index.css
 ```
 
-## 🚀 Tech Stack
+## Environment Variables
 
-- **Framework**: React 18.3.1
-- **Routing**: React Router 7.13.0
-- **Styling**: Tailwind CSS 4.1.12
-- **UI Components**: Shadcn UI (Radix UI primitives)
-- **Build Tool**: Vite 6.3.5
-- **Icons**: Lucide React
-- **Charts**: Recharts
-- **Animation**: Motion (Framer Motion)
-- **Form Handling**: React Hook Form
-- **Date Handling**: date-fns
+The contact form uses EmailJS. Create a local `.env` file with:
 
-## 📱 Responsive Design
+```env
+VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
+```
 
-The application is fully responsive with:
-- **Desktop**: Sidebar navigation with full-featured layouts
-- **Mobile**: Bottom navigation bar with optimized views
-- **Tablet**: Adaptive layouts that work on all screen sizes
+The project includes `.env.example` as a template. The real `.env` file is ignored by git.
 
-## 🔐 Security Notes
+Important: Vite exposes `VITE_` variables in the browser build, so do not put private server secrets in these values. EmailJS public keys are intended for browser use.
 
-**Current Implementation**: Mock authentication and data
-**Production Requirements**:
-- Implement Supabase backend for data persistence
-- Add user authentication (Supabase Auth)
-- Secure Telebirr API integration
-- Input validation and sanitization
-- HTTPS enforcement
-- Rate limiting on payment endpoints
+## Local Development
 
-## 📊 Mock Data
+Install dependencies:
 
-The application includes comprehensive mock data for:
-- 3 sample groups with different configurations
-- 10+ mock users/members
-- Payment history records
-- Notification examples
-
-## 🎯 Key Pages
-
-### Home Page
-- Hero section with value proposition
-- Features showcase
-- "How It Works" explanation
-- Testimonials from users
-- Call-to-action sections
-
-### Dashboard
-- Statistics overview (active groups, total saved, pending payments)
-- Active groups grid
-- Upcoming payments
-- Recent notifications
-
-### Browse Groups
-- Search functionality
-- Filter by status (active/full)
-- Create new group modal
-- Group cards with key information
-
-### Group Detail
-- Member list with payment status
-- Round progress tracking
-- Current winner display
-- Admin control panel (for group admins)
-- Payment statistics
-
-### Payments
-- Pending payments section
-- Telebirr payment modal with processing animation
-- Complete payment history table
-- Payment status badges
-
-### Profile
-- Personal information management
-- Password change functionality
-- Notification preferences
-- Security settings
-
-## 🛠️ Development
-
-### Prerequisites
-- Node.js 18+
-- pnpm
-
-### Installation
 ```bash
-pnpm install
+npm install
 ```
 
-### Running the Development Server
-The Vite dev server is already running in the environment.
+Start the development server:
 
-### Building for Production
 ```bash
-pnpm run build
+npm run dev
 ```
 
-**Note**: Do NOT run `vite build` manually - use the configured build command.
+Build for production:
 
-## 🌐 Browser Support
+```bash
+npm run build
+```
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+The production build is written to the `dist` folder.
 
-## 📝 Future Enhancements
+## Vercel Deployment
 
-### Phase 1 (Current) ✅
-- Complete UI/UX implementation
-- Routing and navigation
-- Mock data integration
-- Responsive design
+This project is configured for Vercel in `vercel.json`.
 
-### Phase 2 (Planned)
-- Supabase backend integration
-- Real authentication
-- Database persistence
-- Telebirr payment gateway
+Use these Vercel settings:
 
-### Phase 3 (Future)
-- SMS notifications via Ethiopian carriers
-- Group chat functionality
-- Automated winner selection algorithms
-- Mobile app (React Native)
-- Multi-language support (Amharic, Oromo, Tigrinya)
+```text
+Framework Preset: Vite
+Install Command: npm install
+Build Command: npm run build
+Output Directory: dist
+```
 
-## 🤝 Contributing
+Add these environment variables in Vercel:
 
-This is a demonstration project. For production use:
-1. Implement proper backend (Supabase recommended)
-2. Add real payment gateway integration
-3. Implement comprehensive security measures
-4. Add proper error handling
-5. Set up logging and monitoring
+```env
+VITE_EMAILJS_SERVICE_ID
+VITE_EMAILJS_TEMPLATE_ID
+VITE_EMAILJS_PUBLIC_KEY
+```
 
-## 📄 License
+Recommended Vercel steps:
 
-Copyright © 2026 Digital Equb. All rights reserved.
+1. Push this repository to GitHub, GitLab, or Bitbucket.
+2. Open Vercel and choose Add New > Project.
+3. Import the repository.
+4. Confirm the project settings above.
+5. Add the EmailJS environment variables.
+6. Deploy the project.
 
-## 🙏 Acknowledgments
+## Notes
 
-- Ethiopian Equb tradition and community
-- Telebirr for digital payment infrastructure
-- Shadcn UI for component library
-- React Router team
-- Tailwind CSS team
-
----
-
-**Built with ❤️ for the Ethiopian community**
+- `vercel.json` rewrites all app routes to `index.html`, which keeps the single-page app working on direct links.
+- The contact form will show an error if EmailJS environment variables are missing.
+- The site currently renders the portfolio page directly from `src/app/App.tsx`.

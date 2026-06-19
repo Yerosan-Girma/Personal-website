@@ -61,6 +61,12 @@ const contactInfo = [
   { icon: MapPin, label: "Location", value: "Addis Ababa, Ethiopia 🇪🇹", href: null, color: "text-cyan-400" },
 ];
 
+const emailJsConfig = {
+  serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+  templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+  publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+};
+
 export function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -85,9 +91,9 @@ export function Contact() {
     setStatus("loading");
 
     try {
-      const serviceId = "service_zbdi773";
-      const templateId = "template_2n8n6iw";
-      const publicKey = "uqqy2Shg06aXNjM77";
+      if (!emailJsConfig.serviceId || !emailJsConfig.templateId || !emailJsConfig.publicKey) {
+        throw new Error("Missing EmailJS environment variables");
+      }
 
       const templateParams = {
         from_name: form.name,
@@ -98,7 +104,7 @@ export function Contact() {
         to_email: "yerosang463@gmail.com",
       };
 
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      await emailjs.send(emailJsConfig.serviceId, emailJsConfig.templateId, templateParams, emailJsConfig.publicKey);
       setStatus("success");
       setForm({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setStatus("idle"), 5000);
