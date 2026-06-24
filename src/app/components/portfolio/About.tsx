@@ -1,175 +1,251 @@
-import { motion, useScroll, useTransform } from "motion/react";
-import { useInView } from "motion/react";
-import { useRef } from "react";
-import { Code2, Lightbulb, Target, TrendingUp, Coffee, Heart } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, useInView } from "motion/react";
+import { Code2, Lightbulb, Target, TrendingUp, Coffee, Heart, Database, Terminal } from "lucide-react";
 
 const PROFILE_URL = new URL("../image/yeroimage1.jpg", import.meta.url).href;
 
-const stats = [
-  { label: "Projects Built", value: "10+", icon: "🚀" },
-  { label: "Technologies", value: "15+", icon: "⚙️" },
-  { label: "Years Learning", value: "3+", icon: "📚" },
-  { label: "GitHub Repos", value: "20+", icon: "💻" },
-];
+// CountUp hook to animate stats
+function useCountUp(target: number, duration = 1200, trigger = false) {
+  const [count, setCount] = useState(0);
 
-const traits = [
-  { icon: Code2, title: "Full-Stack Focus", desc: "End-to-end development from DB design to responsive UIs.", color: "from-blue-500 to-blue-600" },
-  { icon: Lightbulb, title: "Problem Solver", desc: "Analytical mindset — I break complex challenges into clean solutions.", color: "from-amber-500 to-orange-500" },
-  { icon: Target, title: "Detail-Oriented", desc: "Pixel-perfect UI, clean architecture, and maintainable code.", color: "from-violet-500 to-purple-600" },
-  { icon: TrendingUp, title: "Always Learning", desc: "Continuously expanding my skills in modern web tech.", color: "from-emerald-500 to-teal-600" },
-];
+  useEffect(() => {
+    if (!trigger) return;
+    let start = 0;
+    const end = target;
+    if (start === end) return;
 
-const funFacts = [
-  { icon: Coffee, text: "Building digital experiences" },
-  { icon: Heart, text: "Passionate about open-source" },
-];
+    const totalMiliseconds = duration;
+    const incrementTime = Math.abs(Math.floor(totalMiliseconds / end));
+    const timer = setInterval(() => {
+      start += 1;
+      setCount(start);
+      if (start === end) clearInterval(timer);
+    }, Math.max(incrementTime, 8));
+
+    return () => clearInterval(timer);
+  }, [target, duration, trigger]);
+
+  return count;
+}
+
+interface StatProps {
+  label: string;
+  value: number;
+  suffix: string;
+  icon: string;
+  trigger: boolean;
+  delayIndex: number;
+}
+
+function StatCard({ label, value, suffix, icon, trigger, delayIndex }: StatProps) {
+  const val = useCountUp(value, 1500, trigger);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={trigger ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.5, delay: delayIndex * 0.08, type: "spring" }}
+      whileHover={{ y: -5, scale: 1.03 }}
+      className="text-center p-5 rounded-2xl bg-white/[0.03] border border-white/8 hover:border-blue-500/30 hover:bg-white/[0.05] transition-all cursor-default shadow-lg"
+    >
+      <div className="text-2xl mb-1.5">{icon}</div>
+      <div className="text-3xl text-white font-extrabold font-mono tracking-tight">
+        {val}
+        <span className="text-cyan-400">{suffix}</span>
+      </div>
+      <div className="text-white/40 text-xs mt-1 font-medium tracking-wide uppercase">{label}</div>
+    </motion.div>
+  );
+}
 
 export function About() {
   const ref = useRef(null);
   const containerRef = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-100px" });
 
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
+  // Parallax translation on image
+  const imgY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+
+  const stats = [
+    { label: "Projects Built", value: 10, suffix: "+", icon: "🚀" },
+    { label: "Technologies", value: 15, suffix: "+", icon: "⚙️" },
+    { label: "Years Coding", value: 3, suffix: "+", icon: "📚" },
+    { label: "GitHub Repos", value: 20, suffix: "+", icon: "💻" },
+  ];
+
+  const traits = [
+    { icon: Code2, title: "Full-Stack Focus", desc: "End-to-end development from database design to responsive client interfaces.", color: "from-blue-500 to-blue-600" },
+    { icon: Lightbulb, title: "Problem Solver", desc: "Analytical mindset—deconstructing complex challenges into modular solutions.", color: "from-amber-500 to-orange-500" },
+    { icon: Target, title: "Detail-Oriented", desc: "Crafting pixel-perfect layouts, dry code structures, and fast animations.", color: "from-violet-500 to-purple-600" },
+    { icon: TrendingUp, title: "Always Learning", desc: "Continuously digesting documentation to stay current with modern paradigms.", color: "from-emerald-500 to-teal-600" },
+  ];
+
+  const funFacts = [
+    { icon: Coffee, text: "Powered by double espresso" },
+    { icon: Heart, text: "Passionate about open-source" },
+  ];
+
+  // Orbiting Tech Icons for the profile circle
+  const orbitingIcons = [
+    { Icon: Code2, color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20", delay: 0 },
+    { Icon: Database, color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20", delay: 1.5 },
+    { Icon: Terminal, color: "text-purple-400", bg: "bg-purple-500/10 border-purple-500/20", delay: 3 },
+  ];
 
   return (
-    <section id="about" ref={containerRef} className="py-28 relative overflow-hidden">
-      {/* Background blobs */}
+    <section id="about" ref={containerRef} className="py-24 relative overflow-hidden">
+      {/* Background glowing circles */}
       <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          animate={{ scale: [1, 1.12, 1], opacity: [0.06, 0.12, 0.06] }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute top-0 right-0 w-72 h-72 bg-blue-500 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.05, 0.1, 0.05] }}
-          transition={{ duration: 12, repeat: Infinity, delay: 2 }}
-          className="absolute bottom-0 left-0 w-56 h-56 bg-cyan-500 rounded-full blur-3xl"
-        />
+        <div className="absolute top-1/4 right-0 w-80 h-80 bg-blue-500/[0.03] rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-cyan-500/[0.03] rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6" ref={ref}>
-        {/* Section header */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
-          <span className="text-cyan-400 text-sm tracking-widest uppercase">Who I Am</span>
+          <span className="text-cyan-400 text-sm tracking-widest uppercase">Overview</span>
           <h2 className="text-white mt-2" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
             About Me
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left: Profile image with parallax */}
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="relative flex justify-center"
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-5 flex justify-center"
           >
-            <div className="relative">
-              {/* Decorative frame */}
+            <div className="relative w-64 h-64 sm:w-76 sm:h-76 flex items-center justify-center select-none">
+              {/* Animated outer glowing borders */}
               <motion.div
-                animate={{ rotate: [0, 3, 0, -3, 0] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-[-12px] rounded-3xl border-2 border-dashed border-blue-500/20"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-[-15px] rounded-full border border-dashed border-cyan-400/18"
+              />
+              
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-[-30px] rounded-full border border-white/5"
               />
 
-              {/* Glow */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-600/30 to-cyan-500/20 blur-xl scale-105" />
+              {/* Orbiting nodes */}
+              {orbitingIcons.map((node, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                    delay: node.delay
+                  }}
+                  className="absolute w-full h-full pointer-events-none"
+                >
+                  <motion.div
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i }}
+                    className={`absolute w-10 h-10 rounded-xl ${node.bg} border flex items-center justify-center shadow-lg pointer-events-auto`}
+                    style={{
+                      top: "-5px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
+                  >
+                    <node.Icon size={18} className={node.color} />
+                  </motion.div>
+                </motion.div>
+              ))}
 
-              {/* Image */}
+              {/* Circular profile image floating */}
               <motion.div
-                style={{ y: imgY }}
-                className="relative w-64 sm:w-80 rounded-2xl overflow-hidden border border-white/15 shadow-2xl shadow-blue-500/20"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative w-full h-full rounded-full border-2 border-white/10 overflow-hidden shadow-2xl shadow-blue-500/15"
               >
+                <div className="absolute inset-0 bg-gradient-to-t from-[#030712]/50 via-transparent to-transparent z-10" />
                 <img
                   src={PROFILE_URL}
-                  alt="Yerosan Girma"
-                  className="w-full object-cover"
-                  style={{ height: "360px", filter: "brightness(1.12) contrast(1.18) saturate(1.25) hue-rotate(8deg) blur(0.5px)" }}
+                  alt="Yerosan Girma Portrait"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  style={{ filter: "brightness(1.08) contrast(1.1) saturate(1.15)" }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E]/60 via-transparent to-transparent" />
               </motion.div>
 
-              {/* Fun facts floating cards */}
-              {funFacts.map(({ icon: Icon, text }, i) => (
+              {/* Float overlays */}
+              {funFacts.map((fact, idx) => (
                 <motion.div
-                  key={text}
-                  animate={{ y: [0, i % 2 === 0 ? -8 : 8, 0] }}
-                  initial={{ opacity: 0, scale: 0 }}
+                  key={fact.text}
+                  animate={{ y: [0, idx % 2 === 0 ? -6 : 6, 0] }}
+                  initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 4 + i, repeat: Infinity, ease: "easeInOut", delay: 0.5 + i * 0.2, type: "spring" }}
-                  className={`absolute ${i === 0 ? "-right-6 top-10" : "-left-6 bottom-16"} px-3 py-2 rounded-xl bg-[#0D1A3A] border border-blue-500/30 text-white/70 text-xs flex items-center gap-2 shadow-xl backdrop-blur-sm`}
+                  transition={{ duration: 3.5 + idx, repeat: Infinity, ease: "easeInOut", delay: 0.3 + idx * 0.2 }}
+                  className={`absolute ${idx === 0 ? "-right-6 top-8" : "-left-6 bottom-12"} px-3 py-2 rounded-xl bg-[#091124] border border-blue-500/20 text-white/70 text-[11px] flex items-center gap-2 shadow-xl backdrop-blur-sm`}
                 >
-                  <Icon size={14} className="text-blue-400" />
-                  {text}
+                  <fact.icon size={13} className="text-cyan-400" />
+                  {fact.text}
                 </motion.div>
               ))}
             </div>
           </motion.div>
 
-          {/* Right: Text + stats + traits */}
-          <div>
+          {/* Right Column: Bio details, Stats grid and traits */}
+          <div className="lg:col-span-7 flex flex-col justify-center text-left">
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 40 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.15 }}
+              transition={{ duration: 0.8 }}
             >
-              <p className="text-white/65 text-lg leading-relaxed mb-5">
-                I'm a passionate{" "}
-                <span className="text-white font-semibold">Full Stack MERN Developer</span> with a
-                strong foundation in building modern web applications. My journey started with a
-                curiosity about how digital products work — and quickly grew into a deep passion for
-                crafting seamless experiences.
+              <p className="text-white/60 text-base sm:text-lg leading-relaxed mb-4">
+                I'm a dedicated <span className="text-white font-bold">Full Stack Software Engineer</span> who enjoys engineering modular web architectures. My interest sparks at the intersection of performance, design integration, and clean logic flow.
               </p>
-              <p className="text-white/65 text-lg leading-relaxed mb-8">
-                I specialize in the{" "}
-                <span className="text-cyan-400 font-semibold">MERN Stack</span> and enjoy taking
-                products from concept to production. Whether designing RESTful APIs, building
-                interactive frontends, or optimizing queries, I bring precision to every layer.
+              <p className="text-white/65 text-sm sm:text-base leading-relaxed mb-8">
+                With comprehensive experience across the <span className="text-cyan-400 font-bold">MERN stack</span>, I specialize in shipping projects from local wireframes to cloud hosting packages. I enjoy tackling query constraints, deploying REST routes, and styling high-performance user interfaces.
               </p>
             </motion.div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            {/* Stats counter list */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
               {stats.map((stat, i) => (
-                <motion.div
+                <StatCard
                   key={stat.label}
-                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                  animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                  transition={{ duration: 0.5, delay: 0.3 + i * 0.08, type: "spring" }}
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  className="text-center p-4 rounded-2xl bg-white/[0.05] border border-white/10 hover:border-blue-500/30 hover:bg-white/[0.08] transition-all cursor-default"
-                >
-                  <div className="text-xl mb-1">{stat.icon}</div>
-                  <div className="text-2xl text-white" style={{ fontWeight: 800 }}>{stat.value}</div>
-                  <div className="text-white/40 text-[11px] mt-0.5">{stat.label}</div>
-                </motion.div>
+                  label={stat.label}
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  icon={stat.icon}
+                  trigger={inView}
+                  delayIndex={i}
+                />
               ))}
             </div>
 
-            {/* Trait cards */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Trait grids */}
+            <div className="grid sm:grid-cols-2 gap-4">
               {traits.map((trait, i) => (
                 <motion.div
                   key={trait.title}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 25 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.45 + i * 0.1 }}
-                  whileHover={{ scale: 1.03, y: -4 }}
-                  className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all cursor-default"
+                  transition={{ duration: 0.5, delay: 0.4 + i * 0.08 }}
+                  whileHover={{ scale: 1.02 }}
+                  className="p-4 rounded-xl bg-white/[0.02] border border-white/6 hover:border-white/12 transition-all flex items-start gap-4"
                 >
-                  <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${trait.color} flex items-center justify-center mb-3 shadow-lg`}>
-                    <trait.icon size={16} className="text-white" />
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${trait.color} flex items-center justify-center flex-shrink-0 text-white shadow-md`}>
+                    <trait.icon size={18} />
                   </div>
-                  <h3 className="text-white text-sm mb-1" style={{ fontWeight: 600 }}>{trait.title}</h3>
-                  <p className="text-white/45 text-xs leading-relaxed">{trait.desc}</p>
+                  <div>
+                    <h4 className="text-white text-sm font-semibold mb-0.5">{trait.title}</h4>
+                    <p className="text-white/40 text-xs leading-relaxed">{trait.desc}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
