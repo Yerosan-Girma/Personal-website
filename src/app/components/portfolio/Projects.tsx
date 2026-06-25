@@ -7,7 +7,7 @@ const tags = ["All", "Full Stack", "Real-time", "E-Commerce", "FinTech"];
 const projects = [
   {
     id: 1,
-    title: "Student Academic Management System",
+    title: "E-learning",
     description:
       "A full-stack academic management platform for managing students, courses, grades, and academic records with role-based access and real-time notifications.",
     tags: ["Full Stack"],
@@ -18,11 +18,11 @@ const projects = [
       "Course and schedule management",
       "Real-time notifications via Socket.io",
     ],
-    image: "https://images.unsplash.com/photo-1763718528755-4bca23f82ac3?w=800&h=450&fit=crop&auto=format",
+    image: "../image/e-learn.png",
     screenshots: [
-      "https://images.unsplash.com/photo-1763718528755-4bca23f82ac3?w=800&h=450&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=450&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&h=450&fit=crop&auto=format"
+      "../image/e-learn.png",
+      "../image/e-learn.png",
+      "../image/e-learn.png"
     ],
     color: "from-blue-600 to-indigo-700",
     accent: "#3B82F6",
