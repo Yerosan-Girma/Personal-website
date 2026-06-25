@@ -140,7 +140,7 @@ export function Contact() {
             Contact Me
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />
-          <p className="text-white/45 mt-4 max-w-md mx-auto text-xs sm:text-sm">
+          <p className="text-white/65 mt-4 max-w-md mx-auto text-xs sm:text-sm">
             Have a project concept or request? Fire me an inbox query and I'll respond within a business day.
           </p>
         </motion.div>

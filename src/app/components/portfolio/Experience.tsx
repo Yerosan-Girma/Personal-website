@@ -115,14 +115,14 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
                 {item.title}
               </h3>
             </div>
-            <span className="text-white/45 text-xs sm:text-sm">{item.org}</span>
+            <span className="text-white/60 text-xs sm:text-sm">{item.org}</span>
           </div>
           <span className={`px-3 py-1 rounded-full text-[10px] sm:text-xs bg-gradient-to-r ${item.color} text-white font-semibold shadow-md ${item.shadow}`}>
             {item.period}
           </span>
         </div>
 
-        <p className="text-white/45 text-xs sm:text-sm leading-relaxed mb-4 pl-2.5">
+        <p className="text-white/65 text-xs sm:text-sm leading-relaxed mb-4 pl-2.5">
           {item.desc}
         </p>
 

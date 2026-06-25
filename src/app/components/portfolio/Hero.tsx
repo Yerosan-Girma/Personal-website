@@ -147,7 +147,7 @@ export function Hero() {
             </span>
           </div>
 
-          <p className="text-white/45 text-sm sm:text-base leading-relaxed mb-8 max-w-xl text-center">
+          <p className="text-white/70 text-sm sm:text-base leading-relaxed mb-8 max-w-xl text-center">
             A software engineer specializing in engineering robust, secure, and user-centric web applications. Harnessing modern stacks to build production-ready digital tools.
           </p>
 

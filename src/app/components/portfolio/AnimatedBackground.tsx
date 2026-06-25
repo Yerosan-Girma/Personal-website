@@ -62,7 +62,7 @@ export function AnimatedBackground() {
         const drawY = (this.y - scrollOffset * 0.15 + height) % height;
         context.beginPath();
         context.arc(this.x, drawY, this.size, 0, Math.PI * 2);
-        context.fillStyle = `rgba(165, 180, 252, ${this.opacity * 0.3})`;
+        context.fillStyle = `rgba(165, 180, 252, ${this.opacity * 0.45})`;
         context.fill();
       }
     }
@@ -218,12 +218,12 @@ export function AnimatedBackground() {
         const screenX = cx + node.x * scale;
         const screenY = cy + node.y * scale;
 
-        // Opacity based on depth (z) - significantly reduced to prevent conflict with readability
+        // Opacity based on depth (z) - balanced for visibility and readability
         const rawDepth = (node.z + sphereRadius) / (2 * sphereRadius);
-        const opacity = Math.max(0.08, rawDepth) * 0.15;
-        const fontSize = Math.max(11, Math.floor(14 * scale));
+        const opacity = Math.max(0.1, rawDepth) * 0.22;
+        const fontSize = Math.max(11, Math.floor(15 * scale));
 
-        ctx.font = `500 ${fontSize}px sans-serif`;
+        ctx.font = `600 ${fontSize}px sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
@@ -239,14 +239,14 @@ export function AnimatedBackground() {
         ctx.fill();
         ctx.stroke();
 
-        // Add very subtle glow effect for foreground tags
-        if (rawDepth > 0.6) {
-          ctx.shadowBlur = 6;
-          ctx.shadowColor = `rgba(6, 182, 212, ${opacity * 0.25})`;
+        // Add subtle glow effect for foreground tags
+        if (rawDepth > 0.5) {
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = `rgba(6, 182, 212, ${opacity * 0.3})`;
         }
 
-        // Draw tag text with subtle, readable color and opacity
-        ctx.fillStyle = `rgba(224, 242, 254, ${opacity * 0.95})`;
+        // Draw tag text with clean, readable color and opacity
+        ctx.fillStyle = `rgba(224, 242, 254, ${opacity * 1.2})`;
         ctx.fillText(node.name, screenX, screenY);
         ctx.shadowBlur = 0; // Reset shadow after each node
       });
@@ -266,7 +266,7 @@ export function AnimatedBackground() {
             const sxB = cx + b.x * scaleB;
             const syB = cy + b.y * scaleB;
             const avgDepth = ((a.z + b.z) / 2 + sphereRadius) / (2 * sphereRadius);
-            const lineOpacity = Math.max(0.01, avgDepth * 0.04);
+            const lineOpacity = Math.max(0.015, avgDepth * 0.06);
             ctx.beginPath();
             ctx.moveTo(sxA, syA);
             ctx.lineTo(sxB, syB);

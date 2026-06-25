@@ -138,7 +138,7 @@ export function GithubSection() {
             {/* Counter items */}
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <div className="flex items-center gap-1.5 text-white/40 text-[10px] uppercase tracking-wider mb-1">
+                <div className="flex items-center gap-1.5 text-white/60 text-[10px] uppercase tracking-wider mb-1">
                   <Calendar size={11} className="text-emerald-400" />
                   Commits (YTD)
                 </div>
@@ -146,7 +146,7 @@ export function GithubSection() {
               </div>
 
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <div className="flex items-center gap-1.5 text-white/40 text-[10px] uppercase tracking-wider mb-1">
+                <div className="flex items-center gap-1.5 text-white/60 text-[10px] uppercase tracking-wider mb-1">
                   <Flame size={11} className="text-orange-400 animate-pulse" />
                   Best Streak
                 </div>
@@ -154,7 +154,7 @@ export function GithubSection() {
               </div>
 
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <div className="flex items-center gap-1.5 text-white/40 text-[10px] uppercase tracking-wider mb-1">
+                <div className="flex items-center gap-1.5 text-white/60 text-[10px] uppercase tracking-wider mb-1">
                   <BookOpen size={11} className="text-blue-400" />
                   Repositories
                 </div>
@@ -162,7 +162,7 @@ export function GithubSection() {
               </div>
 
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <div className="flex items-center gap-1.5 text-white/40 text-[10px] uppercase tracking-wider mb-1">
+                <div className="flex items-center gap-1.5 text-white/60 text-[10px] uppercase tracking-wider mb-1">
                   <Award size={11} className="text-yellow-400" />
                   Followers
                 </div>
@@ -268,12 +268,12 @@ export function GithubSection() {
                     Public
                   </span>
                 </div>
-                <p className="text-white/45 text-xs leading-relaxed">
+                <p className="text-white/65 text-xs leading-relaxed">
                   {pinned.desc}
                 </p>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-white/40 border-t border-white/5 pt-3">
+              <div className="flex items-center justify-between text-xs text-white/60 border-t border-white/5 pt-3">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-1.5">
                     <span className={`w-2 h-2 rounded-full ${pinned.langColor}`} />

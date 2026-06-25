@@ -11,7 +11,7 @@ const projects = [
     description:
       "A full-stack academic management platform for managing students, courses, grades, and academic records with role-based access and real-time notifications.",
     tags: ["Full Stack"],
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "JWT", "Tailwind CSS"],
+    tech: ["Node.js", "Express.js", "PostgreSQL", "React", "JavaScript", "HTML/CSS"],
     features: [
       "Role-based access control (Admin / Teacher / Student)",
       "Grade analytics & GPA dashboard",
@@ -28,8 +28,8 @@ const projects = [
     accent: "#3B82F6",
     glow: "shadow-blue-500/25",
     border: "hover:border-blue-500/50",
-    demo: "#",
-    github: "#",
+    demo: "https://e-learning-three-phi.vercel.app/",
+    github: "https://github.com/Yerosan-Girma/E-leraning",
   },
   {
     id: 2,
@@ -225,7 +225,7 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
         {/* Modal body (scrollable) */}
         <div className="p-6 overflow-y-auto">
           <h3 className="text-white text-xl mb-2 font-bold">{project.title}</h3>
-          <p className="text-white/60 text-xs sm:text-sm leading-relaxed mb-5">{project.description}</p>
+          <p className="text-white/75 text-xs sm:text-sm leading-relaxed mb-5">{project.description}</p>
 
           <div className="mb-5">
             <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-3">Key Features</p>
@@ -357,7 +357,7 @@ function ProjectCard({ project, onClick, index }: { project: typeof projects[0];
           </h3>
         </div>
 
-        <p className="text-white/45 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
+        <p className="text-white/65 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
           {project.description}
         </p>
 

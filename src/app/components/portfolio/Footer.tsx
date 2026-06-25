@@ -40,7 +40,7 @@ export function Footer() {
                 Yerosan Girma<span className="text-cyan-400">.</span>
               </span>
             </div>
-            <p className="text-white/40 text-xs sm:text-sm leading-relaxed max-w-sm">
+            <p className="text-white/60 text-xs sm:text-sm leading-relaxed max-w-sm">
               Full Stack Software Engineer building scalable, user-centric web applications. Harnessing clean code structures and modern frontend stacks.
             </p>
           </div>
@@ -61,7 +61,7 @@ export function Footer() {
                 <button
                   key={link.id}
                   onClick={() => scrollTo(link.id)}
-                  className="text-left text-white/45 hover:text-cyan-400 text-xs sm:text-sm transition-colors font-medium"
+                  className="text-left text-white/60 hover:text-cyan-400 text-xs sm:text-sm transition-colors font-medium"
                 >
                   {link.label}
                 </button>

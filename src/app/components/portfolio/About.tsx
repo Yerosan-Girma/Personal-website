@@ -244,7 +244,7 @@ export function About() {
                   </div>
                   <div>
                     <h4 className="text-white text-sm font-semibold mb-0.5">{trait.title}</h4>
-                    <p className="text-white/40 text-xs leading-relaxed">{trait.desc}</p>
+                    <p className="text-white/60 text-xs leading-relaxed">{trait.desc}</p>
                   </div>
                 </motion.div>
               ))}

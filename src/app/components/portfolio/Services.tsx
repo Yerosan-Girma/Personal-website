@@ -69,7 +69,7 @@ function ServiceCard({ title, desc, icon: Icon, gradient, glow, index }: Service
         <h3 className="text-white text-base mb-2 font-bold group-hover:text-cyan-400 transition-colors">
           {title}
         </h3>
-        <p className="text-white/45 text-xs sm:text-sm leading-relaxed">
+        <p className="text-white/65 text-xs sm:text-sm leading-relaxed">
           {desc}
         </p>
       </div>
