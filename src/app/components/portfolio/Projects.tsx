@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ExternalLink, Github, X, CheckCircle2, Search, ChevronLeft, ChevronRight, Layers } from "lucide-react";
+import eLearnImage from "../image/e-learn.png";
 
 const tags = ["All", "Full Stack", "Real-time", "E-Commerce", "FinTech"];
 
@@ -9,20 +10,21 @@ const projects = [
     id: 1,
     title: "E-learning",
     description:
-      "A full-stack academic management platform for managing students, courses, grades, and academic records with role-based access and real-time notifications.",
+      "A comprehensive education platform for online learning with courses, lessons, course resources, quizzes, and certificate generation. Students can access educational content, take assessments, and earn certificates upon course completion.",
     tags: ["Full Stack"],
     tech: ["Node.js", "Express.js", "PostgreSQL", "React", "JavaScript", "HTML/CSS"],
     features: [
+      "Course and lesson management system",
+      "Interactive quizzes and assessments",
+      "Course resources and materials library",
+      "Certificate generation upon completion",
       "Role-based access control (Admin / Teacher / Student)",
-      "Grade analytics & GPA dashboard",
-      "Course and schedule management",
-      "Real-time notifications via Socket.io",
     ],
-    image: "../image/e-learn.png",
+    image: eLearnImage,
     screenshots: [
-      "../image/e-learn.png",
-      "../image/e-learn.png",
-      "../image/e-learn.png"
+      eLearnImage,
+      eLearnImage,
+      eLearnImage
     ],
     color: "from-blue-600 to-indigo-700",
     accent: "#3B82F6",
