@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useInView, useMotionValue, useSpring, useTrans
 import { ExternalLink, Github, X, CheckCircle2, Search, ChevronLeft, ChevronRight, Layers } from "lucide-react";
 import eLearnImage from "../image/e-learn.png";
 
-const tags = ["All", "Full Stack", "Real-time", "E-Commerce", "FinTech"];
+const tags = ["All", "Full Stack", "Real-time", "E-Commerce", "FinTech", "E-learning"];
 
 const projects = [
   {
@@ -11,7 +11,7 @@ const projects = [
     title: "E-learning",
     description:
       "A comprehensive education platform for online learning with courses, lessons, course resources, quizzes, and certificate generation. Students can access educational content, take assessments, and earn certificates upon course completion.",
-    tags: ["Full Stack"],
+    tags: ["Full Stack", "E-learning"],
     tech: ["Node.js", "Express.js", "PostgreSQL", "React", "JavaScript", "HTML/CSS"],
     features: [
       "Course and lesson management system",
