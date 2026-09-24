@@ -137,6 +137,33 @@ const projects = [
     demo: "https://digitaequb.onrender.com",
     github: "https://github.com/Yerosan-Girma/Digital-equb",
   },
+  {
+    id: 6,
+    title: "Cafe",
+    description:
+      "A modern cafe website featuring an elegant design with menu displays, reservation system, and online ordering capabilities. Customers can browse the menu, place orders, and book tables seamlessly.",
+    tags: ["Full Stack"],
+    tech: ["React", "Node.js", "MongoDB", "Express.js", "Tailwind CSS"],
+    features: [
+      "Interactive menu with categories",
+      "Online ordering system",
+      "Table reservation booking",
+      "Responsive design for all devices",
+      "Admin dashboard for management",
+    ],
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=450&fit=crop&auto=format",
+    screenshots: [
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=450&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=450&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=450&fit=crop&auto=format"
+    ],
+    color: "from-amber-600 to-orange-700",
+    accent: "#F59E0B",
+    glow: "shadow-amber-500/25",
+    border: "hover:border-amber-500/50",
+    demo: "https://haven-cafe-five.vercel.app",
+    github: "#",
+  },
 ];
 
 // Screenshot Carousel Component inside the Modal
