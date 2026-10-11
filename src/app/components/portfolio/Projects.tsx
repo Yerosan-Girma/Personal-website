@@ -35,28 +35,29 @@ const projects = [
   },
   {
     id: 2,
-    title: "E-Commerce Platform",
+    title: "Multi-Vendor E-commerce",
     description:
-      "A complete online shopping platform with user auth, product catalog, cart system, and Stripe-powered order processing with admin dashboard.",
+      "A comprehensive multi-vendor marketplace platform enabling multiple sellers to manage their own stores, products, and orders. Features include vendor dashboards, product management, shopping cart, secure checkout, and admin oversight for seamless e-commerce operations.",
     tags: ["Full Stack", "E-Commerce"],
     tech: ["MongoDB", "Express.js", "React", "Node.js", "Stripe", "Redux Toolkit"],
     features: [
-      "Stripe payment integration",
-      "Product search & filtering",
-      "Admin product & order management",
-      "Wishlist and order tracking",
+      "Multi-vendor marketplace with seller dashboards",
+      "Product catalog with search & filtering",
+      "Secure payment processing with Stripe",
+      "Shopping cart and order management",
+      "Admin panel for vendor and order oversight",
     ],
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=450&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=450&fit=crop&auto=format",
     screenshots: [
-      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=450&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1472851294608-062f824d296e?w=800&h=450&fit=crop&auto=format"
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=450&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1472851294608-062f824d296e?w=800&h=450&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?w=800&h=450&fit=crop&auto=format"
     ],
     color: "from-violet-600 to-purple-700",
     accent: "#7C3AED",
     glow: "shadow-violet-500/25",
     border: "hover:border-violet-500/50",
-    demo: "#",
+    demo: "https://e-commerce-slcp.vercel.app/",
     github: "#",
   },
   {
