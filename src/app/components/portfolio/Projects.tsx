@@ -57,7 +57,7 @@ const projects = [
     accent: "#7C3AED",
     glow: "shadow-violet-500/25",
     border: "hover:border-violet-500/50",
-    demo: "https://e-commerce-slcp.vercel.app/",
+    demo: "https://e-commerce-navy-mu-90.vercel.app/",
     github: "#",
   },
   {
@@ -289,7 +289,7 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
               href={project.demo}
               className={`flex-1 py-3 rounded-xl bg-gradient-to-r ${project.color} text-white text-sm font-semibold text-center flex items-center justify-center gap-2 hover:opacity-90 transition-opacity`}
             >
-              <ExternalLink size={14} /> Live Demo
+              <ExternalLink size={14} /> Live
             </a>
             <a
               href={project.github}
@@ -415,7 +415,7 @@ function ProjectCard({ project, onClick, index }: { project: typeof projects[0];
             onClick={(e) => e.stopPropagation()}
             className={`flex-1 py-1.8 rounded-lg bg-gradient-to-r ${project.color} text-white text-xs font-semibold text-center hover:opacity-90 transition-opacity`}
           >
-            Demo
+            Live
           </a>
           <a
             href={project.github}
