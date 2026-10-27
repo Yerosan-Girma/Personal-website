@@ -2,12 +2,43 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ExternalLink, Github, X, CheckCircle2, Search, ChevronLeft, ChevronRight, Layers } from "lucide-react";
 import eLearnImage from "../image/e-learn.png";
+import kirayBetHero from "../image/kiray-bet-hero.png";
+import kirayBetListings from "../image/kiray-bet-listings.png";
+import kirayBetFeatures from "../image/kiray-bet-features.png";
 
-const tags = ["All", "Full Stack", "Real-time", "E-Commerce", "FinTech", "E-learning"];
+const tags = ["All", "Full Stack", "Real Estate", "Real-time", "E-Commerce", "FinTech", "E-learning"];
 
 const projects = [
   {
     id: 1,
+    title: "Kiray Bet (ኪራይ ቤት)",
+    description:
+      "Ethiopia's premier home rental marketplace connecting tenants, property owners, and verified brokers across Addis Ababa and beyond. Features real-time property discovery, interactive map search, direct inquiries, role-based dashboards, and digital lease agreements.",
+    tags: ["Full Stack", "Real Estate"],
+    tech: ["React", "TypeScript", "Node.js", "Express.js", "MongoDB", "Socket.io", "Tailwind CSS"],
+    features: [
+      "Verified home & apartment listings with high-resolution photo galleries",
+      "Interactive map search and neighborhood exploration across Ethiopia",
+      "Role-based portals: Tenant discovery, Owner property management, and Broker dashboards",
+      "Direct tenant-broker messaging and inquiry handling via Socket.io",
+      "Admin approval workflows for broker credentials and listings",
+      "Instant digital lease generation and transparent rental pricing",
+    ],
+    image: kirayBetHero,
+    screenshots: [
+      kirayBetHero,
+      kirayBetListings,
+      kirayBetFeatures,
+    ],
+    color: "from-amber-500 to-orange-600",
+    accent: "#F59E0B",
+    glow: "shadow-amber-500/25",
+    border: "hover:border-amber-500/50",
+    demo: "https://kiray-bet-wine.vercel.app",
+    github: "https://github.com/Yerosan-Girma/Kiray-bet",
+  },
+  {
+    id: 2,
     title: "E-learning",
     description:
       "A comprehensive education platform for online learning with courses, lessons, course resources, quizzes, and certificate generation. Students can access educational content, take assessments, and earn certificates upon course completion.",
@@ -34,7 +65,7 @@ const projects = [
     github: "https://github.com/Yerosan-Girma/E-leraning",
   },
   {
-    id: 2,
+    id: 3,
     title: "Multi-Vendor E-commerce",
     description:
       "A comprehensive multi-vendor marketplace platform enabling multiple sellers to manage their own stores, products, and orders. Features include vendor dashboards, product management, shopping cart, secure checkout, and admin oversight for seamless e-commerce operations.",
@@ -61,7 +92,7 @@ const projects = [
     github: "#",
   },
   {
-    id: 3,
+    id: 4,
     title: "Task Management System",
     description:
       "A collaborative Kanban-style productivity platform for managing tasks, projects, and team workflows with drag-and-drop and deadline alerts.",
@@ -87,7 +118,7 @@ const projects = [
     github: "#",
   },
   {
-    id: 4,
+    id: 5,
     title: "Real Time Chat Application",
     description:
       "A real-time chat application built for Wabiskills seminar events, enabling instant communication between participants with live messaging and user presence features.",
@@ -113,7 +144,7 @@ const projects = [
     github: "https://github.com/Yerosan-Girma/Wabiskills-Seminar",
   },
   {
-    id: 5,
+    id: 6,
     title: "Digital Equb",
     description:
       "A modern digital platform for traditional Ethiopian savings circles (Equb), enabling groups to save together with transparent tracking, automated reminders, and secure fund management.",
@@ -139,7 +170,7 @@ const projects = [
     github: "https://github.com/Yerosan-Girma/Digital-equb",
   },
   {
-    id: 6,
+    id: 7,
     title: "Cafe",
     description:
       "A modern cafe website featuring an elegant design with menu displays, reservation system, and online ordering capabilities. Customers can browse the menu, place orders, and book tables seamlessly.",

@@ -79,6 +79,14 @@ export function GithubSection() {
 
   const pinnedProjects = [
     {
+      name: "Kiray-bet",
+      desc: "Ethiopia's premier home rental marketplace platform built with MERN stack, Socket.io real-time inquiries, and verified property listings.",
+      lang: "TypeScript",
+      langColor: "bg-blue-500",
+      stars: 16,
+      forks: 5,
+    },
+    {
       name: "Digital-equb",
       desc: "Traditional Ethiopian savings circle built with MERN stack featuring automatic payment distribution logic and notifications.",
       lang: "TypeScript",
@@ -249,7 +257,7 @@ export function GithubSection() {
         </div>
 
         {/* Pinned Repositories Subsection */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {pinnedProjects.map((pinned, idx) => (
             <motion.div
               key={pinned.name}
