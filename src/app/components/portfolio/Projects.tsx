@@ -309,7 +309,7 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <div>
               <h3 className="text-white text-2xl font-bold tracking-tight">{project.title}</h3>
-              <p className="text-cyan-400 text-xs sm:text-sm font-medium mt-0.5">{project.subtitle}</p>
+              <p className="text-cyan-400 text-sm sm:text-base font-medium mt-0.5">{project.subtitle}</p>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {project.tags.map((t) => (
@@ -329,7 +329,7 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
             <p className="text-white/90 text-xs font-bold uppercase tracking-widest mb-3">Key Features & Architecture</p>
             <ul className="grid sm:grid-cols-2 gap-2.5">
               {project.features.map((f) => (
-                <li key={f} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 bg-[#0b1224]/90 backdrop-blur-md border border-white/5 p-3 rounded-xl">
+                <li key={f} className="flex items-start gap-2.5 text-sm sm:text-base text-slate-300 bg-[#0b1224]/90 backdrop-blur-md border border-white/5 p-3 rounded-xl">
                   <CheckCircle2 size={16} className="shrink-0 mt-0.5" style={{ color: project.accent }} />
                   <span>{f}</span>
                 </li>
@@ -438,12 +438,12 @@ function ProjectCard({
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500/90" />
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/90" />
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[11px] text-slate-300 font-mono">
+        <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-xs text-slate-300 font-mono">
           <Lock size={10} className="text-emerald-400 shrink-0" />
           <span className="truncate max-w-[150px] sm:max-w-[200px]">{hostname}</span>
         </div>
         <div className="flex items-center gap-1.5 text-slate-400">
-          <span className="text-[10px] uppercase font-bold tracking-wider opacity-60">Live</span>
+          <span className="text-xs uppercase font-bold tracking-wider opacity-60">Live</span>
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
         </div>
       </div>
@@ -463,7 +463,7 @@ function ProjectCard({
           {project.tags.map((t) => (
             <span
               key={t}
-              className="px-2.5 py-1 rounded-md bg-black/80 backdrop-blur-md border border-white/20 text-white text-[11px] font-semibold shadow-md"
+              className="px-2.5 py-1 rounded-md bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-md"
             >
               {t}
             </span>
@@ -507,7 +507,7 @@ function ProjectCard({
             </div>
           </div>
 
-          <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-3">
+          <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-4 line-clamp-3">
             {project.description}
           </p>
 
@@ -516,13 +516,13 @@ function ProjectCard({
             {project.tech.slice(0, 4).map((t) => (
               <span
                 key={t}
-                className="px-2.5 py-1 rounded-md bg-[#131C35] border border-slate-700/80 text-cyan-300 text-[11px] font-mono font-medium"
+                className="px-2.5 py-1 rounded-md bg-[#131C35] border border-slate-700/80 text-cyan-300 text-xs font-mono font-medium"
               >
                 {t}
               </span>
             ))}
             {project.tech.length > 4 && (
-              <span className="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-slate-400 text-[11px] font-mono">
+              <span className="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-slate-400 text-xs font-mono">
                 +{project.tech.length - 4}
               </span>
             )}
@@ -609,8 +609,8 @@ export function Projects() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="text-cyan-400 text-sm tracking-widest uppercase font-semibold">Web Portfolio</span>
-          <h2 className="text-white mt-2" style={{ fontSize: "clamp(2rem, 3.5vw, 2.75rem)", fontWeight: 800 }}>
+          <span className="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs font-bold tracking-[0.25em] uppercase">Web Portfolio</span>
+          <h2 className="text-white mt-4 leading-tight" style={{ fontSize: "clamp(2rem, 3.5vw, 2.75rem)", fontWeight: 800 }}>
             Featured Web Applications
           </h2>
           <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mt-3">

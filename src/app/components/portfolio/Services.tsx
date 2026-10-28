@@ -186,8 +186,8 @@ export function Services() {
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12"
         >
           <div>
-            <span className="text-cyan-400 text-sm tracking-widest uppercase">My Offerings</span>
-            <h2 className="text-white mt-2" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
+            <span className="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs font-bold tracking-[0.25em] uppercase">My Offerings</span>
+            <h2 className="text-white mt-4 leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800 }}>
               Services I Provide
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mt-4" />
@@ -304,7 +304,7 @@ export function Services() {
                 <div key={step.title} className="relative flex flex-col items-center text-center gap-3">
                   <div className="relative z-10 w-12 h-12 rounded-full bg-[#030712] border border-white/15 flex items-center justify-center text-cyan-400">
                     <StepIcon size={18} />
-                    <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-[10px] font-bold text-white flex items-center justify-center">
+                    <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-xs font-bold text-white flex items-center justify-center">
                       {i + 1}
                     </span>
                   </div>

@@ -83,7 +83,7 @@ function ProfileOrbit() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 3.5 + idx, repeat: Infinity, ease: "easeInOut", delay: 0.3 + idx * 0.2 }}
-                  className={`absolute ${idx === 0 ? "-right-6 top-8" : "-left-6 bottom-12"} px-3 py-2 rounded-xl bg-[#091124] border border-blue-500/20 text-white/90 text-[11px] flex items-center gap-2 shadow-xl backdrop-blur-sm`}
+                  className={`absolute hidden sm:flex whitespace-nowrap ${idx === 0 ? "-right-6 top-8" : "-left-6 bottom-12"} px-3 py-2 rounded-xl bg-[#091124] border border-blue-500/20 text-white/90 text-xs items-center gap-2 shadow-xl backdrop-blur-sm`}
                 >
                   <fact.icon size={13} className="text-cyan-400" />
                   {fact.text}
@@ -298,7 +298,7 @@ export function Hero() {
         onClick={() => scrollTo("about")}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer hidden lg:flex flex-col items-center gap-1.5 z-20 group"
       >
-        <span className="text-[10px] uppercase font-mono tracking-widest text-white/85 group-hover:text-cyan-400 transition-colors">
+        <span className="text-xs uppercase font-mono tracking-widest text-white/85 group-hover:text-cyan-400 transition-colors">
           Scroll Down
         </span>
         {/* Animated Mouse indicator */}

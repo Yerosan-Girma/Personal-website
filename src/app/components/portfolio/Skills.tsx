@@ -36,7 +36,7 @@ function SkillTile({ skill, index, trigger }: { skill: Skill; index: number; tri
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.35 }}
         whileHover={{ y: -10, scale: 1.06 }}
         title={skill.name}
-        className="group relative aspect-square rounded-3xl bg-[#070c1a]/85 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center gap-3 overflow-hidden cursor-default transition-colors hover:bg-white/[0.06]"
+        className="group relative aspect-square rounded-3xl bg-[#070c1a]/85 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center gap-2.5 p-3 overflow-hidden cursor-default transition-colors hover:bg-white/[0.06]"
         style={{ "--brand": skill.color } as React.CSSProperties}
       >
         <div
@@ -48,7 +48,7 @@ function SkillTile({ skill, index, trigger }: { skill: Skill; index: number; tri
           style={{ borderColor: `${skill.color}66` }}
         />
 
-        <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+        <div className="relative w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
           {skill.logo ? (
             <img
               src={skill.logo}
@@ -62,7 +62,7 @@ function SkillTile({ skill, index, trigger }: { skill: Skill; index: number; tri
           )}
         </div>
 
-        <span className="relative text-xs sm:text-sm font-semibold text-white/95 group-hover:text-white transition-colors">
+        <span className="relative text-sm font-semibold text-white/95 group-hover:text-white transition-colors">
           {skill.label}
         </span>
       </motion.div>
@@ -81,15 +81,15 @@ export function Skills() {
         <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-500/[0.03] rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <span className="text-cyan-400 text-sm tracking-widest uppercase">My Stack</span>
-          <h2 className="text-white mt-2" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
+          <span className="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs font-bold tracking-[0.25em] uppercase">My Stack</span>
+          <h2 className="text-white mt-4 leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800 }}>
             Skills & Expertise
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />

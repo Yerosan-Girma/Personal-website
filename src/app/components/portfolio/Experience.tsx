@@ -115,20 +115,20 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
                 {item.title}
               </h3>
             </div>
-            <span className="text-white/95 text-xs sm:text-sm">{item.org}</span>
+            <span className="text-white/95 text-sm sm:text-base">{item.org}</span>
           </div>
-          <span className={`px-3 py-1 rounded-full text-[10px] sm:text-xs bg-gradient-to-r ${item.color} text-white font-semibold shadow-md ${item.shadow}`}>
+          <span className={`px-3 py-1 rounded-full text-xs sm:text-xs bg-gradient-to-r ${item.color} text-white font-semibold shadow-md ${item.shadow}`}>
             {item.period}
           </span>
         </div>
 
-        <p className="text-white/95 text-xs sm:text-sm leading-relaxed mb-4 pl-2.5">
+        <p className="text-white/95 text-sm sm:text-base leading-relaxed mb-4 pl-2.5">
           {item.desc}
         </p>
 
         {/* Expandable highlights block */}
         <div className="pl-2.5">
-          <div className="flex items-center gap-1.5 text-cyan-400/80 text-[10px] font-bold uppercase tracking-wider mb-2">
+          <div className="flex items-center gap-1.5 text-cyan-400/80 text-xs font-bold uppercase tracking-wider mb-2">
             <span>Highlights</span>
             <motion.div animate={{ rotate: expanded ? 180 : 0 }} className="transition-transform">
               <ChevronDown size={12} />
@@ -179,8 +179,8 @@ export function Experience() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-cyan-400 text-sm tracking-widest uppercase">Career Path</span>
-          <h2 className="text-white mt-2" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
+          <span className="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs font-bold tracking-[0.25em] uppercase">Career Path</span>
+          <h2 className="text-white mt-4 leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800 }}>
             Experience & Education
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />

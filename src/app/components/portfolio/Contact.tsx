@@ -135,12 +135,12 @@ export function Contact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-cyan-400 text-sm tracking-widest uppercase">Communication</span>
-          <h2 className="text-white mt-2" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
+          <span className="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs font-bold tracking-[0.25em] uppercase">Communication</span>
+          <h2 className="text-white mt-4 leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800 }}>
             Contact Me
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />
-          <p className="text-white/95 mt-4 max-w-md mx-auto text-xs sm:text-sm">
+          <p className="text-white/95 mt-4 max-w-md mx-auto text-sm sm:text-base">
             Have a project concept or request? Fire me an inbox query and I'll respond within a business day.
           </p>
         </motion.div>
@@ -162,8 +162,8 @@ export function Contact() {
                 <Zap size={18} className="animate-pulse" />
               </div>
               <div>
-                <div className="text-emerald-400 text-xs sm:text-sm font-bold">Open to Opportunities</div>
-                <div className="text-emerald-300/90 text-[10px] sm:text-xs mt-0.5">Seeking full-time roles & project deliverables</div>
+                <div className="text-emerald-400 text-sm sm:text-base font-bold">Open to Opportunities</div>
+                <div className="text-emerald-300/90 text-xs sm:text-xs mt-0.5">Seeking full-time roles & project deliverables</div>
               </div>
               <span className="ml-auto w-2 h-2 rounded-full bg-emerald-400 animate-ping flex-shrink-0" />
             </motion.div>
@@ -220,20 +220,20 @@ export function Contact() {
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
                         errors.name ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
-                      } text-white text-xs sm:text-sm outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
+                      } text-white text-sm sm:text-base outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
                     />
                     <label
                       htmlFor="form-name"
                       className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                         focused.name || form.name
-                          ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/85"
+                          ? "top-1.5 text-xs text-cyan-400 font-bold"
+                          : "top-1/2 -translate-y-1/2 text-xs text-white/85"
                       }`}
                     >
                       Full Name
                     </label>
                     {errors.name && (
-                      <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-[10px] mt-1 ml-1 flex items-center gap-1">
+                      <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
                         <AlertCircle size={10} /> {errors.name}
                       </motion.p>
                     )}
@@ -250,20 +250,20 @@ export function Contact() {
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
                         errors.email ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
-                      } text-white text-xs sm:text-sm outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
+                      } text-white text-sm sm:text-base outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
                     />
                     <label
                       htmlFor="form-email"
                       className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                         focused.email || form.email
-                          ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/85"
+                          ? "top-1.5 text-xs text-cyan-400 font-bold"
+                          : "top-1/2 -translate-y-1/2 text-xs text-white/85"
                       }`}
                     >
                       Email Address
                     </label>
                     {errors.email && (
-                      <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-[10px] mt-1 ml-1 flex items-center gap-1">
+                      <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
                         <AlertCircle size={10} /> {errors.email}
                       </motion.p>
                     )}
@@ -281,20 +281,20 @@ export function Contact() {
                     onChange={(e) => setForm({ ...form, subject: e.target.value })}
                     className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
                       errors.subject ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
-                    } text-white text-xs sm:text-sm outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
+                    } text-white text-sm sm:text-base outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
                   />
                   <label
                     htmlFor="form-subject"
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                       focused.subject || form.subject
-                        ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                        : "top-1/2 -translate-y-1/2 text-[11px] text-white/85"
+                        ? "top-1.5 text-xs text-cyan-400 font-bold"
+                        : "top-1/2 -translate-y-1/2 text-xs text-white/85"
                     }`}
                   >
                     Subject Title
                   </label>
                   {errors.subject && (
-                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-[10px] mt-1 ml-1 flex items-center gap-1">
+                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
                       <AlertCircle size={10} /> {errors.subject}
                     </motion.p>
                   )}
@@ -311,20 +311,20 @@ export function Contact() {
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
                       errors.message ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
-                    } text-white text-xs sm:text-sm outline-none focus:bg-white/[0.04] transition-all pt-6 pb-2 resize-none`}
+                    } text-white text-sm sm:text-base outline-none focus:bg-white/[0.04] transition-all pt-6 pb-2 resize-none`}
                   />
                   <label
                     htmlFor="form-message"
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                       focused.message || form.message
-                        ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                        : "top-4 text-[11px] text-white/85"
+                        ? "top-1.5 text-xs text-cyan-400 font-bold"
+                        : "top-4 text-xs text-white/85"
                     }`}
                   >
                     Your Message (min. 20 chars)
                   </label>
                   {errors.message && (
-                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-[10px] mt-1 ml-1 flex items-center gap-1">
+                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
                       <AlertCircle size={10} /> {errors.message}
                     </motion.p>
                   )}
@@ -337,7 +337,7 @@ export function Contact() {
                       initial={{ opacity: 0, y: -8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
-                      className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs sm:text-sm"
+                      className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm sm:text-base"
                     >
                       <CheckCircle size={16} /> Query submitted successfully! I'll contact you shortly.
                     </motion.div>
@@ -347,7 +347,7 @@ export function Contact() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="flex items-center gap-3 p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs sm:text-sm"
+                      className="flex items-center gap-3 p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm sm:text-base"
                     >
                       <AlertCircle size={16} /> Error sending transmission. Please try again.
                     </motion.div>
@@ -360,7 +360,7 @@ export function Contact() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={status === "loading"}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 transition-all flex items-center justify-center gap-2 disabled:opacity-60 relative overflow-hidden group/btn font-bold text-xs sm:text-sm tracking-wider uppercase"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 transition-all flex items-center justify-center gap-2 disabled:opacity-60 relative overflow-hidden group/btn font-bold text-sm sm:text-base tracking-wider uppercase"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     {status === "loading" ? (
