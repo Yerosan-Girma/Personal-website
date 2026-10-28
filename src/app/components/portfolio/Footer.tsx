@@ -40,14 +40,14 @@ export function Footer() {
                 Yerosan Girma<span className="text-cyan-400">.</span>
               </span>
             </div>
-            <p className="text-white/85 text-xs sm:text-sm leading-relaxed max-w-sm">
+            <p className="text-white/95 text-xs sm:text-sm leading-relaxed max-w-sm">
               Full Stack Software Engineer building scalable, user-centric web applications. Harnessing clean code structures and modern frontend stacks.
             </p>
           </div>
 
           {/* Quick links Panel (removed GitHub and Tech Stack links) */}
           <div className="md:col-span-4 text-left">
-            <h4 className="text-white/85 text-xs font-bold tracking-widest uppercase mb-4">Quick Links</h4>
+            <h4 className="text-white/95 text-xs font-bold tracking-widest uppercase mb-4">Quick Links</h4>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
               {[
                 { label: "Home", id: "home" },
@@ -61,7 +61,7 @@ export function Footer() {
                 <button
                   key={link.id}
                   onClick={() => scrollTo(link.id)}
-                  className="text-left text-white/85 hover:text-cyan-400 text-xs sm:text-sm transition-colors font-medium"
+                  className="text-left text-white/95 hover:text-cyan-400 text-xs sm:text-sm transition-colors font-medium"
                 >
                   {link.label}
                 </button>
@@ -71,7 +71,7 @@ export function Footer() {
 
           {/* Connect Panel */}
           <div className="md:col-span-3 text-left flex flex-col items-start">
-            <h4 className="text-white/85 text-xs font-bold tracking-widest uppercase mb-4">Connect</h4>
+            <h4 className="text-white/95 text-xs font-bold tracking-widest uppercase mb-4">Connect</h4>
             <div className="flex gap-3 mb-6">
               {[
                 { icon: Github, href: "https://github.com/Yerosan-Girma", label: "GitHub" },
@@ -85,7 +85,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   title={soc.label}
                   whileHover={{ y: -3, scale: 1.05 }}
-                  className="w-10 h-10 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 flex items-center justify-center text-white/75 hover:text-white hover:bg-white/[0.05] transition-all shadow-md"
+                  className="w-10 h-10 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 flex items-center justify-center text-white/90 hover:text-white hover:bg-white/[0.05] transition-all shadow-md"
                 >
                   <soc.icon size={15} />
                 </motion.a>
@@ -97,7 +97,7 @@ export function Footer() {
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.97 }}
               onClick={scrollToTop}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 text-white/75 hover:text-cyan-400 transition-colors text-xs font-semibold"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 text-white/90 hover:text-cyan-400 transition-colors text-xs font-semibold"
             >
               <ArrowUp size={13} /> Back to Top
             </motion.button>
@@ -106,10 +106,10 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/50 text-xs">
+          <p className="text-white/80 text-xs">
             © {new Date().getFullYear()} Yerosan Girma. All rights reserved.
           </p>
-          <p className="text-white/50 text-xs flex items-center gap-1.5 font-medium">
+          <p className="text-white/80 text-xs flex items-center gap-1.5 font-medium">
             Built with <Heart size={12} className="text-red-500/60 fill-red-500/50 animate-pulse" /> using React & Tailwind CSS
           </p>
         </div>

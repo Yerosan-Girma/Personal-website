@@ -113,7 +113,7 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
                 />
               )}
               <span className={`relative z-10 transition-colors duration-200 ${
-                active === link.id ? "text-white" : "text-white/75 hover:text-white/80"
+                active === link.id ? "text-white" : "text-white/90 hover:text-white/90"
               }`}>
                 {link.label}
               </span>
@@ -178,7 +178,7 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
                   className={`text-left px-4 py-3 rounded-xl text-sm transition-all pointer-events-auto ${
                     active === link.id
                       ? "bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 font-bold"
-                      : "text-white/85 hover:text-white hover:bg-white/5"
+                      : "text-white/95 hover:text-white hover:bg-white/5"
                   }`}
                 >
                   {link.label}

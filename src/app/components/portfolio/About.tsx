@@ -53,7 +53,7 @@ function StatCard({ label, value, suffix, icon, trigger, delayIndex }: StatProps
         {val}
         <span className="text-cyan-400">{suffix}</span>
       </div>
-      <div className="text-white/70 text-xs mt-1 font-medium tracking-wide uppercase">{label}</div>
+      <div className="text-white/85 text-xs mt-1 font-medium tracking-wide uppercase">{label}</div>
     </motion.div>
   );
 }
@@ -198,10 +198,10 @@ export function About() {
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
-              <p className="text-white/85 text-base sm:text-lg leading-relaxed mb-4">
+              <p className="text-white/95 text-base sm:text-lg leading-relaxed mb-4">
                 I'm a dedicated <span className="text-white font-bold">Full Stack Software Engineer</span> who enjoys engineering modular web architectures. My interest sparks at the intersection of performance, design integration, and clean logic flow.
               </p>
-              <p className="text-white/85 text-sm sm:text-base leading-relaxed mb-8">
+              <p className="text-white/95 text-sm sm:text-base leading-relaxed mb-8">
                 With comprehensive experience across the <span className="text-cyan-400 font-bold">MERN stack</span>, I specialize in shipping projects from local wireframes to cloud hosting packages. I enjoy tackling query constraints, deploying REST routes, and styling high-performance user interfaces.
               </p>
             </motion.div>

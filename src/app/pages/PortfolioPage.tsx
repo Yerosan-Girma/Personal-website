@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { ArrowUp } from "lucide-react";
 import Lenis from "lenis";
 
@@ -34,6 +34,19 @@ function SectionDivider() {
         className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent origin-left"
       />
     </div>
+  );
+}
+
+// Dims the animated background behind content sections; the hero keeps it vivid
+function BackgroundScrim() {
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 500], [0.2, 0.72]);
+  return (
+    <motion.div
+      aria-hidden
+      style={{ opacity }}
+      className="fixed inset-0 z-[5] pointer-events-none bg-[#030712]"
+    />
   );
 }
 
@@ -94,6 +107,7 @@ export function PortfolioPage() {
 
       {/* Floating Canvas background containing 3D tag cloud sphere */}
       <AnimatedBackground />
+      <BackgroundScrim />
 
       {/* Sleek Percentage Loading Screen */}
       <AnimatePresence mode="wait">

@@ -115,14 +115,14 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
                 {item.title}
               </h3>
             </div>
-            <span className="text-white/85 text-xs sm:text-sm">{item.org}</span>
+            <span className="text-white/95 text-xs sm:text-sm">{item.org}</span>
           </div>
           <span className={`px-3 py-1 rounded-full text-[10px] sm:text-xs bg-gradient-to-r ${item.color} text-white font-semibold shadow-md ${item.shadow}`}>
             {item.period}
           </span>
         </div>
 
-        <p className="text-white/85 text-xs sm:text-sm leading-relaxed mb-4 pl-2.5">
+        <p className="text-white/95 text-xs sm:text-sm leading-relaxed mb-4 pl-2.5">
           {item.desc}
         </p>
 
@@ -146,7 +146,7 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
               >
                 <div className="grid sm:grid-cols-2 gap-2 mt-2 pt-2 border-t border-white/5">
                   {item.highlights.map((highlight) => (
-                    <div key={highlight} className="flex items-center gap-2 text-xs text-white/75">
+                    <div key={highlight} className="flex items-center gap-2 text-xs text-white/90">
                       <CheckCircle size={12} className="text-cyan-400 flex-shrink-0" />
                       <span>{highlight}</span>
                     </div>

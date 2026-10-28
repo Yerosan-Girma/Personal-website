@@ -140,7 +140,7 @@ export function Contact() {
             Contact Me
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />
-          <p className="text-white/85 mt-4 max-w-md mx-auto text-xs sm:text-sm">
+          <p className="text-white/95 mt-4 max-w-md mx-auto text-xs sm:text-sm">
             Have a project concept or request? Fire me an inbox query and I'll respond within a business day.
           </p>
         </motion.div>
@@ -177,7 +177,7 @@ export function Contact() {
                       <info.icon size={16} className={info.color} />
                     </div>
                     <div>
-                      <div className="text-white/65 text-[9px] uppercase tracking-wider font-semibold">{info.label}</div>
+                      <div className="text-white/85 text-[9px] uppercase tracking-wider font-semibold">{info.label}</div>
                       <span className="text-white/90 text-xs sm:text-sm font-medium line-clamp-1">{info.value}</span>
                     </div>
                   </>
@@ -246,7 +246,7 @@ export function Contact() {
                       className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                         focused.name || form.name
                           ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/60"
+                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/85"
                       }`}
                     >
                       Full Name
@@ -276,7 +276,7 @@ export function Contact() {
                       className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                         focused.email || form.email
                           ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/60"
+                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/85"
                       }`}
                     >
                       Email Address
@@ -307,7 +307,7 @@ export function Contact() {
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                       focused.subject || form.subject
                         ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                        : "top-1/2 -translate-y-1/2 text-[11px] text-white/60"
+                        : "top-1/2 -translate-y-1/2 text-[11px] text-white/85"
                     }`}
                   >
                     Subject Title
@@ -337,7 +337,7 @@ export function Contact() {
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                       focused.message || form.message
                         ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                        : "top-4 text-[11px] text-white/60"
+                        : "top-4 text-[11px] text-white/85"
                     }`}
                   >
                     Your Message (min. 20 chars)

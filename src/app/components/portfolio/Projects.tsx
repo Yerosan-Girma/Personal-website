@@ -326,7 +326,7 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">{project.description}</p>
 
           <div className="mb-6">
-            <p className="text-white/75 text-xs font-bold uppercase tracking-widest mb-3">Key Features & Architecture</p>
+            <p className="text-white/90 text-xs font-bold uppercase tracking-widest mb-3">Key Features & Architecture</p>
             <ul className="grid sm:grid-cols-2 gap-2.5">
               {project.features.map((f) => (
                 <li key={f} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 bg-[#0b1224]/90 backdrop-blur-md border border-white/5 p-3 rounded-xl">
@@ -338,7 +338,7 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
           </div>
 
           <div className="mb-8">
-            <p className="text-white/75 text-xs font-bold uppercase tracking-widest mb-3">Technologies Applied</p>
+            <p className="text-white/90 text-xs font-bold uppercase tracking-widest mb-3">Technologies Applied</p>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span

@@ -131,7 +131,7 @@ export function Hero() {
           </motion.div>
 
           {/* Introduce name */}
-          <h2 className="text-white/85 text-sm sm:text-base font-semibold tracking-wide uppercase mb-3">
+          <h2 className="text-white/95 text-sm sm:text-base font-semibold tracking-wide uppercase mb-3">
             Hello, My name is
           </h2>
 
@@ -141,7 +141,7 @@ export function Hero() {
 
           {/* Typing rotating title */}
           <div className="h-10 sm:h-12 flex items-center justify-center mb-6">
-            <span className="text-white/75 text-base sm:text-lg mr-2 font-mono">I am a</span>
+            <span className="text-white/90 text-base sm:text-lg mr-2 font-mono">I am a</span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 text-lg sm:text-2xl font-bold tracking-tight border-r-2 border-cyan-400/70 pr-1 animate-pulse font-mono min-w-[200px]">
               {role}
             </span>
@@ -179,7 +179,7 @@ export function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ y: -3, scale: 1.05 }}
-                  className="w-10 h-10 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 flex items-center justify-center text-white/75 hover:text-white hover:bg-white/[0.06] transition-all"
+                  className="w-10 h-10 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 flex items-center justify-center text-white/90 hover:text-white hover:bg-white/[0.06] transition-all"
                 >
                   <soc.icon size={16} />
                 </motion.a>
@@ -197,7 +197,7 @@ export function Hero() {
         onClick={() => scrollTo("about")}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1.5 z-20 group"
       >
-        <span className="text-[10px] uppercase font-mono tracking-widest text-white/60 group-hover:text-cyan-400 transition-colors">
+        <span className="text-[10px] uppercase font-mono tracking-widest text-white/85 group-hover:text-cyan-400 transition-colors">
           Scroll Down
         </span>
         {/* Animated Mouse indicator */}
