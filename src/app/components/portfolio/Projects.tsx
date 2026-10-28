@@ -298,7 +298,7 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
         {/* Modal Close */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/80 hover:text-white transition-colors z-20 shadow-lg"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition-colors z-20 shadow-lg"
           aria-label="Close modal"
         >
           <X size={18} />
@@ -326,10 +326,10 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">{project.description}</p>
 
           <div className="mb-6">
-            <p className="text-white/50 text-xs font-bold uppercase tracking-widest mb-3">Key Features & Architecture</p>
+            <p className="text-white/75 text-xs font-bold uppercase tracking-widest mb-3">Key Features & Architecture</p>
             <ul className="grid sm:grid-cols-2 gap-2.5">
               {project.features.map((f) => (
-                <li key={f} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 bg-white/[0.02] border border-white/5 p-3 rounded-xl">
+                <li key={f} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 bg-[#0b1224]/90 backdrop-blur-md border border-white/5 p-3 rounded-xl">
                   <CheckCircle2 size={16} className="shrink-0 mt-0.5" style={{ color: project.accent }} />
                   <span>{f}</span>
                 </li>
@@ -338,7 +338,7 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
           </div>
 
           <div className="mb-8">
-            <p className="text-white/50 text-xs font-bold uppercase tracking-widest mb-3">Technologies Applied</p>
+            <p className="text-white/75 text-xs font-bold uppercase tracking-widest mb-3">Technologies Applied</p>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span

@@ -97,7 +97,7 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
         </motion.button>
 
         {/* Desktop nav links */}
-        <div className="hidden md:flex items-center gap-0.5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-1 backdrop-blur-sm">
+        <div className="hidden md:flex items-center gap-0.5 bg-[#0b1224]/90 backdrop-blur-md border border-white/[0.06] rounded-2xl p-1 backdrop-blur-sm">
           {navLinks.map((link) => (
             <button
               key={link.id}
@@ -113,7 +113,7 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
                 />
               )}
               <span className={`relative z-10 transition-colors duration-200 ${
-                active === link.id ? "text-white" : "text-white/50 hover:text-white/80"
+                active === link.id ? "text-white" : "text-white/75 hover:text-white/80"
               }`}>
                 {link.label}
               </span>
@@ -142,7 +142,7 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
         {/* Mobile hamburger toggle */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col gap-[5px] items-center justify-center text-white relative focus:outline-none z-50 pointer-events-auto"
+          className="md:hidden w-10 h-10 rounded-xl bg-[#0f182e]/90 border border-white/10 flex flex-col gap-[5px] items-center justify-center text-white relative focus:outline-none z-50 pointer-events-auto"
           aria-label="Toggle menu"
         >
           <span className={`w-5 h-[1.5px] bg-white rounded-full transition-all duration-300 ${
@@ -178,7 +178,7 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
                   className={`text-left px-4 py-3 rounded-xl text-sm transition-all pointer-events-auto ${
                     active === link.id
                       ? "bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 font-bold"
-                      : "text-white/60 hover:text-white hover:bg-white/5"
+                      : "text-white/85 hover:text-white hover:bg-white/5"
                   }`}
                 >
                   {link.label}

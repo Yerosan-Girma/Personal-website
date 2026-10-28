@@ -107,7 +107,7 @@ export function PortfolioPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative z-10 animate-fade-in"
+            className="relative z-10 animate-fade-in readable-content"
           >
             {/* Navigation Header */}
             <Navbar darkMode={true} toggleDark={() => {}} />

@@ -124,13 +124,13 @@ function ServiceDetail({ service, index }: { service: Service; index: number }) 
           </div>
         </div>
 
-        <p className="text-white/65 text-sm sm:text-base leading-relaxed max-w-xl">{service.desc}</p>
+        <p className="text-white/85 text-sm sm:text-base leading-relaxed max-w-xl">{service.desc}</p>
 
         <div>
-          <p className="text-white/40 text-xs uppercase tracking-widest mb-3">What you get</p>
+          <p className="text-white/70 text-xs uppercase tracking-widest mb-3">What you get</p>
           <ul className="grid sm:grid-cols-2 gap-2.5">
             {service.deliverables.map((d) => (
-              <li key={d} className="flex items-start gap-2.5 text-sm text-white/80">
+              <li key={d} className="flex items-start gap-2.5 text-sm text-white/90">
                 <span className={`mt-0.5 w-5 h-5 shrink-0 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center`}>
                   <Check size={12} className="text-white" />
                 </span>
@@ -141,10 +141,10 @@ function ServiceDetail({ service, index }: { service: Service; index: number }) 
         </div>
 
         <div>
-          <p className="text-white/40 text-xs uppercase tracking-widest mb-3">Tools & stack</p>
+          <p className="text-white/70 text-xs uppercase tracking-widest mb-3">Tools & stack</p>
           <div className="flex flex-wrap gap-2">
             {service.stack.map((s) => (
-              <span key={s} className="px-3 py-1 rounded-full text-xs text-white/75 bg-white/[0.05] border border-white/10">
+              <span key={s} className="px-3 py-1 rounded-full text-xs text-white/90 bg-white/[0.05] border border-white/10">
                 {s}
               </span>
             ))}
@@ -192,7 +192,7 @@ export function Services() {
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mt-4" />
           </div>
-          <p className="text-white/55 text-sm max-w-md">
+          <p className="text-white/85 text-sm max-w-md">
             From idea to deployment — pick a service to see what's included and the tools I use to deliver it.
           </p>
         </motion.div>
@@ -215,7 +215,7 @@ export function Services() {
                     onClick={() => setActive(i)}
                     onMouseEnter={() => window.matchMedia("(min-width: 1024px)").matches && setActive(i)}
                     className={`relative w-full text-left flex items-center gap-4 rounded-2xl px-4 py-4 border transition-colors ${
-                      isActive ? "border-white/15 bg-white/[0.05]" : "border-transparent hover:bg-white/[0.03]"
+                      isActive ? "border-white/15 bg-[#111a33]/95 backdrop-blur-md" : "border-white/5 bg-[#0b1224]/80 backdrop-blur-md hover:bg-[#0f182e]/90"
                     }`}
                   >
                     {isActive && (
@@ -224,25 +224,25 @@ export function Services() {
                         className={`absolute left-0 top-3 bottom-3 w-1 rounded-full bg-gradient-to-b ${svc.gradient}`}
                       />
                     )}
-                    <span className={`text-xs font-mono w-6 ${isActive ? svc.accent : "text-white/30"}`}>
+                    <span className={`text-xs font-mono w-6 ${isActive ? svc.accent : "text-white/60"}`}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span
                       className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all ${
-                        isActive ? `bg-gradient-to-br ${svc.gradient} text-white shadow-lg` : "bg-white/[0.05] text-white/50"
+                        isActive ? `bg-gradient-to-br ${svc.gradient} text-white shadow-lg` : "bg-white/[0.05] text-white/75"
                       }`}
                     >
                       <Icon size={18} />
                     </span>
                     <span className="flex-1 min-w-0">
-                      <span className={`block font-semibold text-sm sm:text-base transition-colors ${isActive ? "text-white" : "text-white/70"}`}>
+                      <span className={`block font-semibold text-sm sm:text-base transition-colors ${isActive ? "text-white" : "text-white/90"}`}>
                         {svc.title}
                       </span>
-                      <span className="block text-xs text-white/40 truncate">{svc.tagline}</span>
+                      <span className="block text-xs text-white/70 truncate">{svc.tagline}</span>
                     </span>
                     <ArrowUpRight
                       size={16}
-                      className={`shrink-0 transition-all ${isActive ? `${svc.accent} rotate-45` : "text-white/20"}`}
+                      className={`shrink-0 transition-all ${isActive ? `${svc.accent} rotate-45` : "text-white/45"}`}
                     />
                   </button>
 
@@ -295,7 +295,7 @@ export function Services() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16"
         >
-          <p className="text-white/40 text-xs uppercase tracking-widest text-center mb-8">How I work</p>
+          <p className="text-white/70 text-xs uppercase tracking-widest text-center mb-8">How I work</p>
           <div className="relative grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="hidden md:block absolute top-6 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-blue-500/40 via-violet-500/40 to-cyan-400/40" />
             {process.map((step, i) => {
@@ -310,7 +310,7 @@ export function Services() {
                   </div>
                   <div>
                     <h4 className="text-white text-sm font-semibold">{step.title}</h4>
-                    <p className="text-white/50 text-xs mt-1">{step.desc}</p>
+                    <p className="text-white/75 text-xs mt-1">{step.desc}</p>
                   </div>
                 </div>
               );

@@ -46,14 +46,14 @@ function StatCard({ label, value, suffix, icon, trigger, delayIndex }: StatProps
       animate={trigger ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ duration: 0.5, delay: delayIndex * 0.08, type: "spring" }}
       whileHover={{ y: -5, scale: 1.03 }}
-      className="text-center p-5 rounded-2xl bg-white/[0.03] border border-white/8 hover:border-blue-500/30 hover:bg-white/[0.05] transition-all cursor-default shadow-lg"
+      className="text-center p-5 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 hover:border-blue-500/30 hover:bg-white/[0.05] transition-all cursor-default shadow-lg"
     >
       <div className="text-2xl mb-1.5">{icon}</div>
       <div className="text-3xl text-white font-extrabold font-mono tracking-tight">
         {val}
         <span className="text-cyan-400">{suffix}</span>
       </div>
-      <div className="text-white/40 text-xs mt-1 font-medium tracking-wide uppercase">{label}</div>
+      <div className="text-white/70 text-xs mt-1 font-medium tracking-wide uppercase">{label}</div>
     </motion.div>
   );
 }
@@ -182,7 +182,7 @@ export function About() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 3.5 + idx, repeat: Infinity, ease: "easeInOut", delay: 0.3 + idx * 0.2 }}
-                  className={`absolute ${idx === 0 ? "-right-6 top-8" : "-left-6 bottom-12"} px-3 py-2 rounded-xl bg-[#091124] border border-blue-500/20 text-white/70 text-[11px] flex items-center gap-2 shadow-xl backdrop-blur-sm`}
+                  className={`absolute ${idx === 0 ? "-right-6 top-8" : "-left-6 bottom-12"} px-3 py-2 rounded-xl bg-[#091124] border border-blue-500/20 text-white/90 text-[11px] flex items-center gap-2 shadow-xl backdrop-blur-sm`}
                 >
                   <fact.icon size={13} className="text-cyan-400" />
                   {fact.text}
@@ -198,10 +198,10 @@ export function About() {
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
-              <p className="text-white/60 text-base sm:text-lg leading-relaxed mb-4">
+              <p className="text-white/85 text-base sm:text-lg leading-relaxed mb-4">
                 I'm a dedicated <span className="text-white font-bold">Full Stack Software Engineer</span> who enjoys engineering modular web architectures. My interest sparks at the intersection of performance, design integration, and clean logic flow.
               </p>
-              <p className="text-white/65 text-sm sm:text-base leading-relaxed mb-8">
+              <p className="text-white/85 text-sm sm:text-base leading-relaxed mb-8">
                 With comprehensive experience across the <span className="text-cyan-400 font-bold">MERN stack</span>, I specialize in shipping projects from local wireframes to cloud hosting packages. I enjoy tackling query constraints, deploying REST routes, and styling high-performance user interfaces.
               </p>
             </motion.div>

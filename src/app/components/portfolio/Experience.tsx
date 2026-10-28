@@ -103,7 +103,7 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
       <motion.div
         onClick={() => setExpanded(!expanded)}
         whileHover={{ x: 4 }}
-        className={`relative p-5 rounded-2xl bg-white/[0.03] border ${item.border} hover:bg-white/[0.05] transition-all overflow-hidden group cursor-pointer shadow-lg`}
+        className={`relative p-5 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border ${item.border} hover:bg-white/[0.05] transition-all overflow-hidden group cursor-pointer shadow-lg`}
       >
         {/* Glow border segment */}
         <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b ${item.color} rounded-l-2xl`} />
@@ -115,14 +115,14 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
                 {item.title}
               </h3>
             </div>
-            <span className="text-white/60 text-xs sm:text-sm">{item.org}</span>
+            <span className="text-white/85 text-xs sm:text-sm">{item.org}</span>
           </div>
           <span className={`px-3 py-1 rounded-full text-[10px] sm:text-xs bg-gradient-to-r ${item.color} text-white font-semibold shadow-md ${item.shadow}`}>
             {item.period}
           </span>
         </div>
 
-        <p className="text-white/65 text-xs sm:text-sm leading-relaxed mb-4 pl-2.5">
+        <p className="text-white/85 text-xs sm:text-sm leading-relaxed mb-4 pl-2.5">
           {item.desc}
         </p>
 
@@ -146,7 +146,7 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
               >
                 <div className="grid sm:grid-cols-2 gap-2 mt-2 pt-2 border-t border-white/5">
                   {item.highlights.map((highlight) => (
-                    <div key={highlight} className="flex items-center gap-2 text-xs text-white/50">
+                    <div key={highlight} className="flex items-center gap-2 text-xs text-white/75">
                       <CheckCircle size={12} className="text-cyan-400 flex-shrink-0" />
                       <span>{highlight}</span>
                     </div>

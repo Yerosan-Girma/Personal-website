@@ -56,7 +56,7 @@ function TiltCard({ children, className }: { children: React.ReactNode; classNam
 
 const contactInfo = [
   { icon: Mail, label: "Email", value: "yerosang463@gmail.com", href: "mailto:yerosang463@gmail.com", color: "text-blue-400" },
-  { icon: Github, label: "GitHub", value: "Yerosan-Girma", href: "https://github.com/Yerosan-Girma", color: "text-white/70" },
+  { icon: Github, label: "GitHub", value: "Yerosan-Girma", href: "https://github.com/Yerosan-Girma", color: "text-white/90" },
   { icon: Linkedin, label: "LinkedIn", value: "yerosan-girma-30005b37a", href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", color: "text-blue-400" },
   { icon: MapPin, label: "Location", value: "Addis Ababa, Ethiopia 🇪🇹", href: null, color: "text-cyan-400" },
 ];
@@ -140,7 +140,7 @@ export function Contact() {
             Contact Me
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />
-          <p className="text-white/65 mt-4 max-w-md mx-auto text-xs sm:text-sm">
+          <p className="text-white/85 mt-4 max-w-md mx-auto text-xs sm:text-sm">
             Have a project concept or request? Fire me an inbox query and I'll respond within a business day.
           </p>
         </motion.div>
@@ -173,12 +173,12 @@ export function Contact() {
               {contactInfo.map((info, idx) => {
                 const inner = (
                   <>
-                    <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/8 flex items-center justify-center flex-shrink-0 group-hover:border-white/18 transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 flex items-center justify-center flex-shrink-0 group-hover:border-white/18 transition-all">
                       <info.icon size={16} className={info.color} />
                     </div>
                     <div>
-                      <div className="text-white/35 text-[9px] uppercase tracking-wider font-semibold">{info.label}</div>
-                      <span className="text-white/70 text-xs sm:text-sm font-medium line-clamp-1">{info.value}</span>
+                      <div className="text-white/65 text-[9px] uppercase tracking-wider font-semibold">{info.label}</div>
+                      <span className="text-white/90 text-xs sm:text-sm font-medium line-clamp-1">{info.value}</span>
                     </div>
                   </>
                 );
@@ -193,7 +193,7 @@ export function Contact() {
                     animate={inView ? { opacity: 1, x: 0 } : {}}
                     transition={{ delay: 0.15 + idx * 0.08 }}
                     whileHover={{ x: 4 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/6 hover:bg-white/[0.04] hover:border-white/12 transition-all group shadow-sm"
+                    className="flex items-center gap-4 p-4 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/6 hover:bg-white/[0.04] hover:border-white/12 transition-all group shadow-sm"
                   >
                     {inner}
                   </motion.a>
@@ -204,7 +204,7 @@ export function Contact() {
                     animate={inView ? { opacity: 1, x: 0 } : {}}
                     transition={{ delay: 0.15 + idx * 0.08 }}
                     whileHover={{ x: 4 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/6 hover:bg-white/[0.04] hover:border-white/12 transition-all group shadow-sm cursor-default"
+                    className="flex items-center gap-4 p-4 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/6 hover:bg-white/[0.04] hover:border-white/12 transition-all group shadow-sm cursor-default"
                   >
                     {inner}
                   </motion.div>
@@ -223,7 +223,7 @@ export function Contact() {
             <TiltCard className="group">
               <form
                 onSubmit={handleSubmit}
-                className="p-6 rounded-2xl bg-white/[0.03] border border-white/8 backdrop-blur-sm space-y-5 shadow-2xl relative overflow-hidden"
+                className="p-6 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 backdrop-blur-sm space-y-5 shadow-2xl relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-500/5 to-transparent rounded-2xl pointer-events-none" />
 
@@ -237,7 +237,7 @@ export function Contact() {
                       onFocus={() => handleFocus("name")}
                       onBlur={() => handleBlur("name")}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className={`w-full px-4 py-3 rounded-xl bg-white/[0.02] border ${
+                      className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
                         errors.name ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
                       } text-white text-xs sm:text-sm outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
                     />
@@ -246,7 +246,7 @@ export function Contact() {
                       className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                         focused.name || form.name
                           ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/30"
+                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/60"
                       }`}
                     >
                       Full Name
@@ -267,7 +267,7 @@ export function Contact() {
                       onFocus={() => handleFocus("email")}
                       onBlur={() => handleBlur("email")}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className={`w-full px-4 py-3 rounded-xl bg-white/[0.02] border ${
+                      className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
                         errors.email ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
                       } text-white text-xs sm:text-sm outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
                     />
@@ -276,7 +276,7 @@ export function Contact() {
                       className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                         focused.email || form.email
                           ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/30"
+                          : "top-1/2 -translate-y-1/2 text-[11px] text-white/60"
                       }`}
                     >
                       Email Address
@@ -298,7 +298,7 @@ export function Contact() {
                     onFocus={() => handleFocus("subject")}
                     onBlur={() => handleBlur("subject")}
                     onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/[0.02] border ${
+                    className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
                       errors.subject ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
                     } text-white text-xs sm:text-sm outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
                   />
@@ -307,7 +307,7 @@ export function Contact() {
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                       focused.subject || form.subject
                         ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                        : "top-1/2 -translate-y-1/2 text-[11px] text-white/30"
+                        : "top-1/2 -translate-y-1/2 text-[11px] text-white/60"
                     }`}
                   >
                     Subject Title
@@ -328,7 +328,7 @@ export function Contact() {
                     onFocus={() => handleFocus("message")}
                     onBlur={() => handleBlur("message")}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/[0.02] border ${
+                    className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
                       errors.message ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
                     } text-white text-xs sm:text-sm outline-none focus:bg-white/[0.04] transition-all pt-6 pb-2 resize-none`}
                   />
@@ -337,7 +337,7 @@ export function Contact() {
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                       focused.message || form.message
                         ? "top-1.5 text-[9px] text-cyan-400 font-bold"
-                        : "top-4 text-[11px] text-white/30"
+                        : "top-4 text-[11px] text-white/60"
                     }`}
                   >
                     Your Message (min. 20 chars)

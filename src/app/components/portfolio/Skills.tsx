@@ -62,7 +62,7 @@ function SkillTile({ skill, index, trigger }: { skill: Skill; index: number; tri
           )}
         </div>
 
-        <span className="relative text-xs sm:text-sm font-semibold text-white/60 group-hover:text-white transition-colors">
+        <span className="relative text-xs sm:text-sm font-semibold text-white/85 group-hover:text-white transition-colors">
           {skill.label}
         </span>
       </motion.div>
