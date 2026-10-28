@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Zap, ArrowUpRight, Sparkles, Loader2 } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import confetti from "canvas-confetti";
 
 interface FormData {
   name: string;
@@ -63,6 +64,12 @@ export function Contact() {
         // Fallback simulate or throw
         await new Promise((r) => setTimeout(r, 1200));
         setStatus("success");
+        confetti({
+          particleCount: 50,
+          spread: 70,
+          origin: { y: 0.7 },
+          colors: ["#1D4ED8", "#3B82F6", "#10B981", "#6366F1"],
+        });
         setForm({ name: "", email: "", subject: "", message: "" });
         setTimeout(() => setStatus("idle"), 5000);
         return;
@@ -79,6 +86,12 @@ export function Contact() {
 
       await emailjs.send(emailJsConfig.serviceId, emailJsConfig.templateId, templateParams, emailJsConfig.publicKey);
       setStatus("success");
+      confetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { y: 0.7 },
+        colors: ["#1D4ED8", "#3B82F6", "#10B981", "#6366F1"],
+      });
       setForm({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setStatus("idle"), 5000);
     } catch (error) {

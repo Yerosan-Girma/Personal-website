@@ -15,6 +15,7 @@ import { Footer } from "../components/portfolio/Footer";
 
 // New components
 import { Services } from "../components/portfolio/Services";
+import { InteractiveBackground } from "../components/portfolio/InteractiveBackground";
 
 // ── Enhanced Animated Section Divider ──
 function SectionDivider() {
@@ -115,6 +116,9 @@ export function PortfolioPage() {
         style={{ scaleX }}
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1D4ED8] via-indigo-500 to-cyan-400 origin-left z-50 pointer-events-none"
       />
+
+      {/* Interactive Constellation Particle Mesh */}
+      <InteractiveBackground />
 
       {/* Global Interactive Mouse Spotlight Glow */}
       <div

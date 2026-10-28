@@ -551,24 +551,27 @@ export function Projects() {
           />
         </motion.div>
 
-        {/* Filter Pills */}
-        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-8 sm:mb-10 no-scrollbar">
+        {/* Filter Pills with animated sliding pill */}
+        <div className="flex items-center justify-center gap-1 p-1.5 rounded-2xl bg-white border border-gray-200/90 shadow-2xs max-w-fit mx-auto overflow-x-auto mb-8 sm:mb-10">
           {projectFilters.map((f) => {
             const isSelected = activeFilter === f.id;
             return (
-              <motion.button
+              <button
                 key={f.id}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
                 onClick={() => setActiveFilter(f.id)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all shrink-0 cursor-pointer ${
-                  isSelected
-                    ? "bg-[#1D4ED8] text-white shadow-xs"
-                    : "bg-white text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300"
+                className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors shrink-0 cursor-pointer ${
+                  isSelected ? "text-white" : "text-gray-600 hover:text-gray-900"
                 }`}
               >
-                {f.label}
-              </motion.button>
+                {isSelected && (
+                  <motion.div
+                    layoutId="projectActiveFilter"
+                    className="absolute inset-0 bg-[#1D4ED8] rounded-xl shadow-xs -z-0"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{f.label}</span>
+              </button>
             );
           })}
         </div>
