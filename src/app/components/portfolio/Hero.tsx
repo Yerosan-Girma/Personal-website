@@ -1,15 +1,65 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
-import { Github, Linkedin, Mail, ArrowDown, ArrowRight, Code2, Sparkles, CheckCircle2 } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "motion/react";
+import {
+  Github,
+  Linkedin,
+  Mail,
+  ArrowRight,
+  Code2,
+  Sparkles,
+  Check,
+  Copy,
+  MapPin,
+  ExternalLink,
+  Layers,
+  Database,
+  Terminal,
+} from "lucide-react";
 import heroImg from "../image/yeroimage1.jpg";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 40]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  const [copied, setCopied] = useState(false);
+
+  // Parallax on scroll
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.6], [0, 50]);
+
+  // Interactive 3D Card Tilt with spring physics
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 25, stiffness: 200 };
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), springConfig);
+  const glareX = useSpring(useTransform(mouseX, [-0.5, 0.5], [0, 100]), springConfig);
+  const glareY = useSpring(useTransform(mouseY, [-0.5, 0.5], [0, 100]), springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(xPct);
+    mouseY.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  const handleCopyEmail = () => {
+    navigator.clipboard?.writeText("yerosang463@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
+  };
 
   const scrollTo = (id: string) => {
     const target = document.getElementById(id);
@@ -24,135 +74,164 @@ export function Hero() {
     }
   };
 
+  const quickStack = [
+    { name: "React", icon: Code2, color: "#0284C7" },
+    { name: "TypeScript", icon: Terminal, color: "#2563EB" },
+    { name: "Node.js", icon: Layers, color: "#16A34A" },
+    { name: "PostgreSQL", icon: Database, color: "#3B82F6" },
+  ];
+
   return (
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-[600px] sm:min-h-[700px] lg:min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-14 lg:py-24"
+      className="relative min-h-[640px] lg:min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16 lg:py-24"
     >
-      {/* Subtle Animated Ambient Background Blobs */}
+      {/* Subtle Animated Background Gradients */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
         <motion.div
           animate={{
-            x: [0, 30, 0],
-            y: [0, -30, 0],
+            x: [0, 35, 0],
+            y: [0, -25, 0],
             scale: [1, 1.08, 1],
           }}
           transition={{
-            duration: 12,
+            duration: 14,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute -top-24 -left-24 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-blue-100/60 blur-3xl"
+          className="absolute -top-20 -left-20 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-blue-100/50 blur-3xl"
         />
         <motion.div
           animate={{
-            x: [0, -40, 0],
-            y: [0, 40, 0],
-            scale: [1, 1.12, 1],
+            x: [0, -35, 0],
+            y: [0, 30, 0],
+            scale: [1, 1.1, 1],
           }}
           transition={{
-            duration: 15,
+            duration: 16,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-1/2 -right-24 w-80 sm:w-[420px] h-80 sm:h-[420px] rounded-full bg-indigo-100/50 blur-3xl"
+          className="absolute top-1/2 -right-20 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-indigo-100/40 blur-3xl"
         />
       </div>
 
       <motion.div
-        style={{ opacity, y, scale }}
-        className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-12 grid lg:grid-cols-12 gap-10 lg:gap-16 items-center"
+        style={{ opacity, y }}
+        className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-12 grid lg:grid-cols-12 gap-10 lg:gap-12 items-center"
       >
-        {/* Left column - Text */}
+        {/* Left Column: Headline, Bio & CTAs */}
         <div className="lg:col-span-7 flex flex-col items-start order-2 lg:order-1">
-          {/* Availability Badge */}
+          {/* Availability Beacon Pill */}
           <motion.div
-            initial={{ opacity: 0, y: -15, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
-            whileHover={{ scale: 1.04 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 mb-5 cursor-default shadow-xs"
+            whileHover={{ scale: 1.03 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 mb-5 shadow-xs"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span className="text-emerald-700 text-xs font-semibold uppercase tracking-wider">
-              Available for work & projects
+              Available for Full-time & Contract Roles
             </span>
           </motion.div>
 
           {/* Greeting */}
           <motion.p
-            initial={{ opacity: 0, x: -15 }}
+            initial={{ opacity: 0, x: -12 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, type: "spring", stiffness: 100 }}
-            className="text-gray-600 text-xs sm:text-sm font-semibold tracking-wider uppercase mb-2"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-gray-500 text-xs sm:text-sm font-mono tracking-wider uppercase mb-2 flex items-center gap-1.5"
           >
-            Hello, my name is
+            <Sparkles size={14} className="text-[#1D4ED8]" />
+            <span>Hello world, I'm</span>
           </motion.p>
 
-          {/* Name */}
+          {/* Full Name with accent */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15, type: "spring", stiffness: 100 }}
-            className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 leading-tight mb-3"
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight mb-3"
           >
             Yerosan Girma<span className="text-[#1D4ED8]">.</span>
           </motion.h1>
 
-          {/* Role */}
+          {/* Animated Role Badge */}
           <motion.div
-            initial={{ opacity: 0, x: 15 }}
+            initial={{ opacity: 0, x: 12 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.25, type: "spring", stiffness: 100 }}
-            className="flex items-center gap-2 mb-5"
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="mb-5 inline-block"
           >
-            <span className="text-base sm:text-xl font-semibold text-[#1D4ED8] bg-[#1D4ED8]/10 px-3 py-1 rounded-lg">
+            <span className="inline-flex items-center gap-2 text-base sm:text-xl font-bold bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-600 bg-clip-text text-transparent px-3 py-1 rounded-lg bg-blue-50/80 border border-blue-100">
+              <Code2 size={18} className="text-[#1D4ED8]" />
               Full Stack Software Engineer
             </span>
           </motion.div>
 
           {/* Description */}
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.35, type: "spring", stiffness: 100 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
             className="text-gray-600 text-sm sm:text-base leading-relaxed mb-7 max-w-xl"
           >
-            Specializing in engineering robust, secure, and user-centric web applications. Harnessing modern stacks (React, Node.js, Express, MongoDB, PostgreSQL) to build production-ready digital products.
+            Engineering robust, high-performance web products with clean modular architectures.
+            Connecting responsive React frontends with scalable Node/Express backends and optimized PostgreSQL/MongoDB databases.
           </motion.p>
 
-          {/* CTAs */}
+          {/* Quick Stack Ribbon */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.45, type: "spring", stiffness: 100 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex flex-wrap items-center gap-2 mb-7 text-xs"
+          >
+            <span className="text-gray-400 font-mono text-[11px] uppercase mr-1">Core Stack:</span>
+            {quickStack.map((tech) => (
+              <span
+                key={tech.name}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white border border-gray-200/90 text-gray-700 font-semibold shadow-2xs hover:border-[#1D4ED8]/30 transition-colors"
+              >
+                <tech.icon size={12} style={{ color: tech.color }} />
+                <span>{tech.name}</span>
+              </span>
+            ))}
+          </motion.div>
+
+          {/* Action CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.45 }}
             className="flex flex-wrap gap-3 sm:gap-4 items-center w-full sm:w-auto"
           >
             <motion.button
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.96 }}
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => scrollTo("projects")}
-              className="w-full sm:w-auto px-6 py-3 rounded-lg bg-[#1D4ED8] text-white font-semibold text-sm hover:bg-[#1E40AF] transition-colors shadow-sm hover:shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#1D4ED8] text-white font-semibold text-sm hover:bg-[#1E40AF] transition-all shadow-md shadow-blue-600/20 hover:shadow-lg hover:shadow-blue-600/30 flex items-center justify-center gap-2 cursor-pointer group"
             >
-              View Projects
-              <ArrowRight size={16} />
+              <span>Explore Projects</span>
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={() => scrollTo("contact")}
-              className="w-full sm:w-auto px-6 py-3 rounded-lg bg-white border border-gray-300 text-gray-800 font-semibold text-sm hover:border-gray-400 hover:bg-gray-50 transition-colors shadow-sm hover:shadow-md flex items-center justify-center cursor-pointer"
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => scrollTo("services")}
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white border border-gray-300 text-gray-800 font-semibold text-sm hover:border-gray-400 hover:bg-gray-50 transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
             >
-              Contact Me
+              <span>View Services</span>
             </motion.button>
 
             {/* Social Links */}
-            <div className="flex gap-2.5 sm:ml-2 mt-2 sm:mt-0 justify-center w-full sm:w-auto">
+            <div className="flex gap-2 sm:ml-2 mt-2 sm:mt-0 justify-center w-full sm:w-auto">
               {[
                 { icon: Github, href: "https://github.com/Yerosan-Girma", label: "GitHub" },
                 { icon: Linkedin, href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", label: "LinkedIn" },
@@ -163,12 +242,12 @@ export function Hero() {
                   href={soc.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.35, delay: 0.55 + idx * 0.08, type: "spring", stiffness: 200 }}
-                  whileHover={{ y: -3, scale: 1.1 }}
+                  transition={{ duration: 0.35, delay: 0.5 + idx * 0.08 }}
+                  whileHover={{ y: -3, scale: 1.08 }}
                   whileTap={{ scale: 0.92 }}
-                  className="w-10 h-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:border-gray-300 hover:shadow-sm transition-all"
+                  className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#1D4ED8] hover:border-blue-300 hover:shadow-xs transition-all"
                   aria-label={soc.label}
                 >
                   <soc.icon size={16} />
@@ -178,123 +257,142 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Right column - Redesigned Modern Profile Avatar Showcase */}
+        {/* Right Column: Redesigned Interactive 3D Engineer Profile Card */}
         <motion.div
-          initial={{ opacity: 0, x: 40, scale: 0.92 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.25, type: "spring", stiffness: 90 }}
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
           className="lg:col-span-5 flex justify-center order-1 lg:order-2"
         >
-          <div className="relative w-full max-w-[260px] sm:max-w-[310px] md:max-w-[340px]">
-            {/* Ambient Background Aura Glow */}
-            <div className="absolute -inset-4 bg-gradient-to-tr from-[#1D4ED8]/25 via-indigo-400/20 to-sky-300/25 rounded-[3rem] blur-2xl -z-10 animate-pulse" />
-
-            {/* Decorative Rotating Orbital Dashed Ring */}
+          <div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{ perspective: 1200 }}
+            className="w-full max-w-[320px] sm:max-w-[360px]"
+          >
+            {/* 3D Motion Card Container */}
             <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute -inset-3 sm:-inset-4 rounded-[2.75rem] border border-dashed border-[#1D4ED8]/25 pointer-events-none -z-10"
-            />
-
-            {/* Main Portrait Card (Elevated Squircle with Gradient Frame) */}
-            <motion.div
-              whileHover={{ y: -6, scale: 1.015 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
-              className="relative rounded-[2.25rem] bg-gradient-to-b from-white via-blue-50/50 to-white p-2 sm:p-2.5 md:p-3 border border-blue-100/90 shadow-xl shadow-blue-900/5 group"
+              style={{
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d",
+              }}
+              className="relative rounded-3xl bg-white border border-gray-200/90 p-4 sm:p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-xl group transition-shadow duration-300 hover:shadow-blue-500/15"
             >
-              {/* Inner Picture Container */}
-              <div className="relative aspect-[4/5] rounded-[1.75rem] overflow-hidden bg-slate-100 shadow-inner">
+              {/* Card Window Header Bar */}
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100 text-xs">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+                  <span className="text-[11px] font-mono text-gray-400 ml-1.5">yerosan.ts</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Online
+                </span>
+              </div>
+
+              {/* Portrait Image Container with Proportional Golden Framing */}
+              <div className="relative h-64 sm:h-72 rounded-2xl overflow-hidden bg-slate-900 shadow-inner">
                 <img
                   src={heroImg}
                   alt="Yerosan Girma Portrait"
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-[center_22%] transition-transform duration-700 group-hover:scale-105"
                   loading="eager"
                 />
 
-                {/* Subtle Gradient Shade at bottom for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 via-transparent to-transparent pointer-events-none" />
+                {/* Atmospheric gradient overlay for contrast and depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent pointer-events-none" />
 
-                {/* Online Status Dot (Top Left inside image) */}
-                <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-[11px] font-medium shadow-sm">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
-                  <span className="text-[10px] tracking-wide">Online</span>
+                {/* Verified Name & Role Overlay inside photo base */}
+                <div className="absolute bottom-3 left-3 right-3 text-white pointer-events-none">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <p className="font-bold text-sm sm:text-base tracking-tight text-white drop-shadow-sm">
+                      Yerosan Girma
+                    </p>
+                    <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#1D4ED8] text-white text-[9px] font-bold">
+                      ✓
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-blue-200 font-medium tracking-wide">
+                    Full Stack Software Engineer
+                  </p>
+                  <p className="text-[10px] text-gray-300 font-mono flex items-center gap-1 mt-0.5">
+                    <MapPin size={10} className="text-emerald-400" />
+                    <span>Addis Ababa, Ethiopia</span>
+                  </p>
                 </div>
               </div>
-            </motion.div>
 
-            {/* Floating Satellite Badge 1 (Top Right) */}
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-3 right-1 sm:-right-3 px-3 py-2 rounded-xl bg-white/95 backdrop-blur-md border border-gray-200/90 shadow-lg shadow-black/5 flex items-center gap-2 z-20"
-            >
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1D4ED8]/10 text-[#1D4ED8] flex items-center justify-center font-bold">
-                <Code2 size={15} strokeWidth={2.5} />
+              {/* Quick Spec Metrics Grid */}
+              <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-gray-100 text-center">
+                <div className="p-2 rounded-xl bg-gray-50 border border-gray-100">
+                  <p className="text-[10px] font-mono text-gray-400 uppercase">Exp.</p>
+                  <p className="text-xs sm:text-sm font-bold text-gray-900 mt-0.5">3+ Yrs</p>
+                </div>
+                <div className="p-2 rounded-xl bg-gray-50 border border-gray-100">
+                  <p className="text-[10px] font-mono text-gray-400 uppercase">Built</p>
+                  <p className="text-xs sm:text-sm font-bold text-[#1D4ED8] mt-0.5">10+ Apps</p>
+                </div>
+                <div className="p-2 rounded-xl bg-gray-50 border border-gray-100">
+                  <p className="text-[10px] font-mono text-gray-400 uppercase">Stack</p>
+                  <p className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">MERN</p>
+                </div>
               </div>
-              <div>
-                <p className="text-[11px] sm:text-xs font-bold text-gray-900 leading-tight">Full Stack</p>
-                <p className="text-[9px] sm:text-[10px] text-gray-500 font-medium">MERN & APIs</p>
-              </div>
-            </motion.div>
 
-            {/* Floating Satellite Badge 2 (Bottom Left) */}
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute -bottom-3 left-1 sm:-left-3 px-3 py-2 rounded-xl bg-white/95 backdrop-blur-md border border-gray-200/90 shadow-lg shadow-black/5 flex items-center gap-2 z-20"
-            >
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-xs">
-                3+
-              </div>
-              <div>
-                <p className="text-[11px] sm:text-xs font-bold text-gray-900 leading-tight">Years Experience</p>
-                <p className="text-[9px] sm:text-[10px] text-gray-500 font-medium">Production Code</p>
-              </div>
-            </motion.div>
+              {/* Interactive One-Click Connect Deck */}
+              <div className="mt-3 flex items-center justify-between gap-2">
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
+                  onClick={handleCopyEmail}
+                  className="flex-1 py-2 px-3 rounded-xl bg-gray-100 hover:bg-gray-200/80 text-gray-700 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  {copied ? (
+                    <>
+                      <Check size={13} className="text-emerald-600" />
+                      <span className="text-emerald-700 font-bold">Email Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={13} className="text-gray-500" />
+                      <span>Copy Email</span>
+                    </>
+                  )}
+                </motion.button>
 
-            {/* Floating Tech Pill 3 (Middle Right) */}
-            <motion.div
-              animate={{ x: [0, 4, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="hidden sm:flex absolute top-1/2 -right-5 -translate-y-1/2 px-2.5 py-1.5 rounded-lg bg-white/95 backdrop-blur-md border border-gray-200/80 shadow-md items-center gap-1.5 z-20 text-[11px] font-semibold text-gray-700"
-            >
-              <Sparkles size={12} className="text-[#1D4ED8]" />
-              <span>Clean Code</span>
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => scrollTo("contact")}
+                  className="py-2 px-4 rounded-xl bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-xs font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer shadow-xs"
+                >
+                  <span>Hire Me</span>
+                  <ExternalLink size={12} />
+                </motion.button>
+              </div>
             </motion.div>
           </div>
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Modern Scroll Down Indicator */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ delay: 0.9, duration: 0.5 }}
         onClick={() => scrollTo("about")}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 cursor-pointer hidden lg:flex flex-col items-center gap-2"
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 cursor-pointer hidden lg:flex flex-col items-center gap-1.5 group"
       >
-        <span className="text-[11px] uppercase font-semibold tracking-widest text-gray-400">
-          Scroll Down
+        <span className="text-[10px] uppercase font-mono tracking-widest text-gray-400 group-hover:text-gray-600 transition-colors">
+          Scroll
         </span>
         <motion.div
-          whileHover={{ scale: 1.1 }}
-          className="w-5 h-8 rounded-full border border-gray-300 flex justify-center p-1"
+          animate={{ y: [0, 5, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          className="w-4 h-6 rounded-full border border-gray-300 flex justify-center p-0.5"
         >
-          <motion.div
-            animate={{
-              y: [0, 8, 0],
-              opacity: [0.3, 1, 0.3],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="w-1 h-1.5 rounded-full bg-[#1D4ED8]"
-          />
+          <div className="w-1 h-1.5 rounded-full bg-[#1D4ED8]" />
         </motion.div>
       </motion.div>
     </section>
