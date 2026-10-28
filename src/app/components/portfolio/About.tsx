@@ -1,8 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform, useInView } from "motion/react";
-import { Code2, Coffee, Heart, Database, Terminal } from "lucide-react";
-
-const PROFILE_URL = new URL("../image/yeroimage1.jpg", import.meta.url).href;
+import { motion, useInView } from "motion/react";
 
 // CountUp hook to animate stats
 function useCountUp(target: number, duration = 1200, trigger = false) {
@@ -60,12 +57,7 @@ function StatCard({ label, value, suffix, icon, trigger, delayIndex }: StatProps
 
 export function About() {
   const ref = useRef(null);
-  const containerRef = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
-  // Parallax translation on image
-  const imgY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+    const inView = useInView(ref, { once: true, margin: "-100px" });
 
   const stats = [
     { label: "Projects Built", value: 10, suffix: "+", icon: "🚀" },
@@ -74,20 +66,8 @@ export function About() {
     { label: "GitHub Repos", value: 20, suffix: "+", icon: "💻" },
   ];
 
-  const funFacts = [
-    { icon: Coffee, text: "Powered by double espresso" },
-    { icon: Heart, text: "Passionate about open-source" },
-  ];
-
-  // Orbiting Tech Icons for the profile circle
-  const orbitingIcons = [
-    { Icon: Code2, color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20", delay: 0 },
-    { Icon: Database, color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20", delay: 1.5 },
-    { Icon: Terminal, color: "text-purple-400", bg: "bg-purple-500/10 border-purple-500/20", delay: 3 },
-  ];
-
   return (
-    <section id="about" ref={containerRef} className="py-24 relative overflow-hidden">
+    <section id="about" className="py-16 sm:py-24 relative overflow-hidden">
       {/* Background glowing circles */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 right-0 w-80 h-80 bg-blue-500/[0.03] rounded-full blur-3xl" />
@@ -100,7 +80,7 @@ export function About() {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-14"
         >
           <span className="text-cyan-400 text-sm tracking-widest uppercase">Overview</span>
           <h2 className="text-white mt-2" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
@@ -109,93 +89,10 @@ export function About() {
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="lg:col-span-5 flex justify-center"
-          >
-            <div className="relative w-64 h-64 sm:w-76 sm:h-76 flex items-center justify-center select-none">
-              {/* Animated outer glowing borders */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-15px] rounded-full border border-dashed border-cyan-400/18"
-              />
-              
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-30px] rounded-full border border-white/5"
-              />
-
-              {/* Orbiting nodes */}
-              {orbitingIcons.map((node, i) => (
-                <motion.div
-                  key={i}
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear",
-                    delay: node.delay
-                  }}
-                  className="absolute w-full h-full pointer-events-none"
-                >
-                  <motion.div
-                    animate={{ y: [0, -6, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i }}
-                    className={`absolute w-10 h-10 rounded-xl ${node.bg} border flex items-center justify-center shadow-lg pointer-events-auto`}
-                    style={{
-                      top: "-5px",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                    }}
-                  >
-                    <node.Icon size={18} className={node.color} />
-                  </motion.div>
-                </motion.div>
-              ))}
-
-              {/* Circular profile image floating */}
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-full h-full rounded-full border-2 border-white/10 overflow-hidden shadow-2xl shadow-blue-500/15"
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-[#030712]/50 via-transparent to-transparent z-10" />
-                <img
-                  src={PROFILE_URL}
-                  alt="Yerosan Girma Portrait"
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  style={{ filter: "brightness(1.08) contrast(1.1) saturate(1.15)" }}
-                />
-              </motion.div>
-
-              {/* Float overlays */}
-              {funFacts.map((fact, idx) => (
-                <motion.div
-                  key={fact.text}
-                  animate={{ y: [0, idx % 2 === 0 ? -6 : 6, 0] }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 3.5 + idx, repeat: Infinity, ease: "easeInOut", delay: 0.3 + idx * 0.2 }}
-                  className={`absolute ${idx === 0 ? "-right-6 top-8" : "-left-6 bottom-12"} px-3 py-2 rounded-xl bg-[#091124] border border-blue-500/20 text-white/90 text-[11px] flex items-center gap-2 shadow-xl backdrop-blur-sm`}
-                >
-                  <fact.icon size={13} className="text-cyan-400" />
-                  {fact.text}
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Right Column: Bio details and stats grid */}
-          <div className="lg:col-span-7 flex flex-col justify-center text-left">
+        <div className="max-w-3xl mx-auto flex flex-col text-center">
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
+              initial={{ opacity: 0, y: 24 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
               <p className="text-white/95 text-base sm:text-lg leading-relaxed mb-4">
@@ -220,7 +117,6 @@ export function About() {
                 />
               ))}
             </div>
-          </div>
         </div>
       </div>
     </section>

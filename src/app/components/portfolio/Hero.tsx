@@ -1,6 +1,97 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "motion/react";
-import { Github, Linkedin, Mail, ArrowDown, Sparkles } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowDown, Sparkles, Code2, Coffee, Heart, Database, Terminal } from "lucide-react";
+
+const PROFILE_URL = new URL("../image/yeroimage1.jpg", import.meta.url).href;
+
+const funFacts = [
+  { icon: Coffee, text: "Powered by double espresso" },
+  { icon: Heart, text: "Passionate about open-source" },
+];
+
+const orbitingIcons = [
+  { Icon: Code2, color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20", delay: 0 },
+  { Icon: Database, color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20", delay: 1.5 },
+  { Icon: Terminal, color: "text-purple-400", bg: "bg-purple-500/10 border-purple-500/20", delay: 3 },
+];
+
+function ProfileOrbit() {
+  return (
+            <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 flex items-center justify-center select-none">
+              {/* Animated outer glowing borders */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-[-15px] rounded-full border border-dashed border-cyan-400/18"
+              />
+              
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-[-30px] rounded-full border border-white/5"
+              />
+
+              {/* Orbiting nodes */}
+              {orbitingIcons.map((node, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                    delay: node.delay
+                  }}
+                  className="absolute w-full h-full pointer-events-none"
+                >
+                  <motion.div
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i }}
+                    className={`absolute w-10 h-10 rounded-xl ${node.bg} border flex items-center justify-center shadow-lg pointer-events-auto`}
+                    style={{
+                      top: "-5px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
+                  >
+                    <node.Icon size={18} className={node.color} />
+                  </motion.div>
+                </motion.div>
+              ))}
+
+              {/* Circular profile image floating */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative w-full h-full rounded-full border-2 border-white/10 overflow-hidden shadow-2xl shadow-blue-500/15"
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-[#030712]/50 via-transparent to-transparent z-10" />
+                <img
+                  src={PROFILE_URL}
+                  alt="Yerosan Girma Portrait"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  style={{ filter: "brightness(1.08) contrast(1.1) saturate(1.15)" }}
+                />
+              </motion.div>
+
+              {/* Float overlays */}
+              {funFacts.map((fact, idx) => (
+                <motion.div
+                  key={fact.text}
+                  animate={{ y: [0, idx % 2 === 0 ? -6 : 6, 0] }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 3.5 + idx, repeat: Infinity, ease: "easeInOut", delay: 0.3 + idx * 0.2 }}
+                  className={`absolute ${idx === 0 ? "-right-6 top-8" : "-left-6 bottom-12"} px-3 py-2 rounded-xl bg-[#091124] border border-blue-500/20 text-white/90 text-[11px] flex items-center gap-2 shadow-xl backdrop-blur-sm`}
+                >
+                  <fact.icon size={13} className="text-cyan-400" />
+                  {fact.text}
+                </motion.div>
+              ))}
+            </div>
+  );
+}
 
 // ── Typewriter hook ──
 function useTypewriter(words: string[], speed = 75, pause = 1600) {
@@ -101,7 +192,7 @@ export function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden py-24"
+      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-28 pb-16 lg:py-24"
     >
       {/* Background aurora light flare */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/[0.04] rounded-full blur-[120px] pointer-events-none" />
@@ -109,10 +200,20 @@ export function Hero() {
       {/* Main hero content container */}
       <motion.div
         style={{ opacity, scale, y }}
-        className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center"
+        className="relative z-10 w-full max-w-6xl mx-auto px-6 grid lg:grid-cols-12 gap-12 lg:gap-8 items-center"
       >
-        {/* Text intro - centered full width */}
-        <div className="flex flex-col items-center">
+        {/* Profile photo: above the text on mobile, right column on desktop */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="lg:col-span-5 lg:order-2 flex justify-center pt-4"
+        >
+          <ProfileOrbit />
+        </motion.div>
+
+        {/* Text intro */}
+        <div className="lg:col-span-7 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left">
           {/* Availability Badge */}
           <motion.div
             initial={{ opacity: 0, y: -15, scale: 0.9 }}
@@ -140,19 +241,19 @@ export function Hero() {
           </h1>
 
           {/* Typing rotating title */}
-          <div className="h-10 sm:h-12 flex items-center justify-center mb-6">
+          <div className="h-10 sm:h-12 flex items-center justify-center lg:justify-start mb-6">
             <span className="text-white/90 text-base sm:text-lg mr-2 font-mono">I am a</span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 text-lg sm:text-2xl font-bold tracking-tight border-r-2 border-cyan-400/70 pr-1 animate-pulse font-mono min-w-[200px]">
               {role}
             </span>
           </div>
 
-          <p className="text-white/90 text-sm sm:text-base leading-relaxed mb-8 max-w-xl text-center">
+          <p className="text-white/90 text-sm sm:text-base leading-relaxed mb-8 max-w-xl">
             A software engineer specializing in engineering robust, secure, and user-centric web applications. Harnessing modern stacks to build production-ready digital tools.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-4 items-center justify-center">
+          <div className="flex flex-wrap gap-4 items-center justify-center lg:justify-start">
             <MagneticButton
               onClick={() => scrollTo("projects")}
               className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-shadow"
@@ -195,7 +296,7 @@ export function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
         onClick={() => scrollTo("about")}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1.5 z-20 group"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer hidden lg:flex flex-col items-center gap-1.5 z-20 group"
       >
         <span className="text-[10px] uppercase font-mono tracking-widest text-white/85 group-hover:text-cyan-400 transition-colors">
           Scroll Down
