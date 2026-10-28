@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "motion/react";
-import { Code2, Lightbulb, Target, TrendingUp, Coffee, Heart, Database, Terminal } from "lucide-react";
+import { Code2, Coffee, Heart, Database, Terminal } from "lucide-react";
 
 const PROFILE_URL = new URL("../image/yeroimage1.jpg", import.meta.url).href;
 
@@ -72,13 +72,6 @@ export function About() {
     { label: "Technologies", value: 15, suffix: "+", icon: "⚙️" },
     { label: "Years Coding", value: 3, suffix: "+", icon: "📚" },
     { label: "GitHub Repos", value: 20, suffix: "+", icon: "💻" },
-  ];
-
-  const traits = [
-    { icon: Code2, title: "Full-Stack Focus", desc: "End-to-end development from database design to responsive client interfaces.", color: "from-blue-500 to-blue-600" },
-    { icon: Lightbulb, title: "Problem Solver", desc: "Analytical mindset—deconstructing complex challenges into modular solutions.", color: "from-amber-500 to-orange-500" },
-    { icon: Target, title: "Detail-Oriented", desc: "Crafting pixel-perfect layouts, dry code structures, and fast animations.", color: "from-violet-500 to-purple-600" },
-    { icon: TrendingUp, title: "Always Learning", desc: "Continuously digesting documentation to stay current with modern paradigms.", color: "from-emerald-500 to-teal-600" },
   ];
 
   const funFacts = [
@@ -198,7 +191,7 @@ export function About() {
             </div>
           </motion.div>
 
-          {/* Right Column: Bio details, Stats grid and traits */}
+          {/* Right Column: Bio details and stats grid */}
           <div className="lg:col-span-7 flex flex-col justify-center text-left">
             <motion.div
               initial={{ opacity: 0, x: 40 }}
@@ -214,7 +207,7 @@ export function About() {
             </motion.div>
 
             {/* Stats counter list */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {stats.map((stat, i) => (
                 <StatCard
                   key={stat.label}
@@ -225,28 +218,6 @@ export function About() {
                   trigger={inView}
                   delayIndex={i}
                 />
-              ))}
-            </div>
-
-            {/* Trait grids */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              {traits.map((trait, i) => (
-                <motion.div
-                  key={trait.title}
-                  initial={{ opacity: 0, y: 25 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.4 + i * 0.08 }}
-                  whileHover={{ scale: 1.02 }}
-                  className="p-4 rounded-xl bg-white/[0.02] border border-white/6 hover:border-white/12 transition-all flex items-start gap-4"
-                >
-                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${trait.color} flex items-center justify-center flex-shrink-0 text-white shadow-md`}>
-                    <trait.icon size={18} />
-                  </div>
-                  <div>
-                    <h4 className="text-white text-sm font-semibold mb-0.5">{trait.title}</h4>
-                    <p className="text-white/60 text-xs leading-relaxed">{trait.desc}</p>
-                  </div>
-                </motion.div>
               ))}
             </div>
           </div>
