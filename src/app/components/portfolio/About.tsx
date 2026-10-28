@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
+import { Code2, Sparkles } from "lucide-react";
 
 // CountUp hook to animate stats
 function useCountUp(target: number, duration = 1200, trigger = false) {
@@ -89,18 +90,42 @@ export function About() {
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />
         </motion.div>
 
-        <div className="max-w-3xl mx-auto flex flex-col text-center">
+        <div className="max-w-5xl mx-auto flex flex-col">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
+              className="grid md:grid-cols-2 gap-5 mb-8"
             >
-              <p className="text-white/95 text-base sm:text-lg leading-relaxed mb-4">
-                I'm a dedicated <span className="text-white font-bold">Full Stack Software Engineer</span> who enjoys engineering modular web architectures. My interest sparks at the intersection of performance, design integration, and clean logic flow.
-              </p>
-              <p className="text-white/95 text-sm sm:text-base leading-relaxed mb-8">
-                With comprehensive experience across the <span className="text-cyan-400 font-bold">MERN stack</span>, I specialize in shipping projects from local wireframes to cloud hosting packages. I enjoy tackling query constraints, deploying REST routes, and styling high-performance user interfaces.
-              </p>
+              {/* Paragraph 1 - Equal Card */}
+              <div className="p-6 sm:p-7 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/10 hover:border-cyan-500/40 transition-all flex flex-col justify-between shadow-xl text-left">
+                <div>
+                  <div className="flex items-center gap-2.5 mb-3.5">
+                    <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
+                      <Code2 size={16} />
+                    </div>
+                    <span className="text-xs uppercase font-mono tracking-wider text-cyan-400 font-bold">Engineering Philosophy</span>
+                  </div>
+                  <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
+                    I'm a dedicated <span className="text-white font-bold">Full Stack Software Engineer</span> who enjoys engineering modular web architectures. My interest sparks at the intersection of performance, design integration, and clean logic flow.
+                  </p>
+                </div>
+              </div>
+
+              {/* Paragraph 2 - Equal Card */}
+              <div className="p-6 sm:p-7 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/10 hover:border-blue-500/40 transition-all flex flex-col justify-between shadow-xl text-left">
+                <div>
+                  <div className="flex items-center gap-2.5 mb-3.5">
+                    <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+                      <Sparkles size={16} />
+                    </div>
+                    <span className="text-xs uppercase font-mono tracking-wider text-blue-400 font-bold">Full Stack & Deployment</span>
+                  </div>
+                  <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
+                    With comprehensive experience across the <span className="text-cyan-400 font-bold">MERN stack</span>, I specialize in shipping projects from local wireframes to cloud hosting packages. I enjoy tackling query constraints, deploying REST routes, and styling high-performance user interfaces.
+                  </p>
+                </div>
+              </div>
             </motion.div>
 
             {/* Stats counter list */}
