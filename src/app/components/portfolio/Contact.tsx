@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "motion/react";
 import { useInView } from "motion/react";
-import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Zap } from "lucide-react";
+import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Zap, ArrowUpRight } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
 interface FormData {
@@ -54,11 +54,11 @@ function TiltCard({ children, className }: { children: React.ReactNode; classNam
   );
 }
 
-const contactInfo = [
-  { icon: Mail, label: "Email", value: "yerosang463@gmail.com", href: "mailto:yerosang463@gmail.com", color: "text-blue-400" },
-  { icon: Github, label: "GitHub", value: "Yerosan-Girma", href: "https://github.com/Yerosan-Girma", color: "text-white/90" },
-  { icon: Linkedin, label: "LinkedIn", value: "yerosan-girma-30005b37a", href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", color: "text-blue-400" },
-  { icon: MapPin, label: "Location", value: "Addis Ababa, Ethiopia 🇪🇹", href: null, color: "text-cyan-400" },
+const contactLinks = [
+  { icon: Mail, label: "Email", href: "mailto:yerosang463@gmail.com", bg: "from-rose-500 to-orange-400", glow: "rgba(244,63,94,0.35)" },
+  { icon: Github, label: "GitHub", href: "https://github.com/Yerosan-Girma", bg: "from-slate-600 to-slate-900", glow: "rgba(148,163,184,0.35)" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", bg: "from-[#0A66C2] to-[#0b4f96]", glow: "rgba(10,102,194,0.45)" },
+  { icon: MapPin, label: "Addis Ababa", href: "https://maps.google.com/?q=Addis+Ababa,+Ethiopia", bg: "from-cyan-500 to-teal-500", glow: "rgba(6,182,212,0.35)" },
 ];
 
 const emailJsConfig = {
@@ -163,53 +163,34 @@ export function Contact() {
               </div>
               <div>
                 <div className="text-emerald-400 text-xs sm:text-sm font-bold">Open to Opportunities</div>
-                <div className="text-emerald-400/50 text-[10px] sm:text-xs mt-0.5">Seeking full-time roles & project deliverables</div>
+                <div className="text-emerald-300/90 text-[10px] sm:text-xs mt-0.5">Seeking full-time roles & project deliverables</div>
               </div>
               <span className="ml-auto w-2 h-2 rounded-full bg-emerald-400 animate-ping flex-shrink-0" />
             </motion.div>
 
-            {/* Info cards list */}
-            <div className="grid gap-3">
-              {contactInfo.map((info, idx) => {
-                const inner = (
-                  <>
-                    <div className="w-10 h-10 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 flex items-center justify-center flex-shrink-0 group-hover:border-white/18 transition-all">
-                      <info.icon size={16} className={info.color} />
-                    </div>
-                    <div>
-                      <div className="text-white/85 text-[9px] uppercase tracking-wider font-semibold">{info.label}</div>
-                      <span className="text-white/90 text-xs sm:text-sm font-medium line-clamp-1">{info.value}</span>
-                    </div>
-                  </>
-                );
-
-                return info.href ? (
-                  <motion.a
-                    key={info.label}
-                    href={info.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.15 + idx * 0.08 }}
-                    whileHover={{ x: 4 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/6 hover:bg-white/[0.04] hover:border-white/12 transition-all group shadow-sm"
-                  >
-                    {inner}
-                  </motion.a>
-                ) : (
-                  <motion.div
-                    key={info.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.15 + idx * 0.08 }}
-                    whileHover={{ x: 4 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/6 hover:bg-white/[0.04] hover:border-white/12 transition-all group shadow-sm cursor-default"
-                  >
-                    {inner}
-                  </motion.div>
-                );
-              })}
+            {/* Contact links: logo + name only */}
+            <div className="grid grid-cols-2 gap-3">
+              {contactLinks.map((link, idx) => (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.15 + idx * 0.08 }}
+                  whileHover={{ y: -4, boxShadow: `0 12px 30px -10px ${link.glow}` }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group relative flex flex-col items-center justify-center gap-3 py-6 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/10 hover:border-white/20 transition-colors overflow-hidden"
+                >
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${link.bg} flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                    <link.icon size={26} className="text-white" />
+                  </div>
+                  <span className="text-white text-sm font-semibold tracking-wide">{link.label}</span>
+                  <ArrowUpRight size={14} className="absolute top-3 right-3 text-white/50 group-hover:text-white transition-colors" />
+                </motion.a>
+              ))}
             </div>
           </motion.div>
 
