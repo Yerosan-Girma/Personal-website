@@ -80,7 +80,7 @@ export function GithubSection() {
   const pinnedProjects = [
     {
       name: "Kiray-bet",
-      desc: "Ethiopia's premier home rental marketplace platform built with MERN stack, Socket.io real-time inquiries, and verified property listings.",
+      desc: "Ethiopia's premier home rental marketplace platform built with MERN stack, real-time inquiries, and verified property listings.",
       lang: "TypeScript",
       langColor: "bg-blue-500",
       stars: 16,

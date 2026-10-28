@@ -13,11 +13,6 @@ import { Experience } from "../components/portfolio/Experience";
 import { Contact } from "../components/portfolio/Contact";
 import { Footer } from "../components/portfolio/Footer";
 
-// Redesigned components
-import { AnimatedBackground } from "../components/portfolio/AnimatedBackground";
-import { CustomCursor } from "../components/portfolio/CustomCursor";
-import { LoadingScreen } from "../components/portfolio/LoadingScreen";
-
 // New components
 import { Services } from "../components/portfolio/Services";
 
@@ -25,33 +20,20 @@ import { Services } from "../components/portfolio/Services";
 // ── Section divider ──
 function SectionDivider() {
   return (
-    <div className="max-w-6xl mx-auto px-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
       <motion.div
         initial={{ scaleX: 0, opacity: 0 }}
         whileInView={{ scaleX: 1, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent origin-left"
+        className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent origin-left"
       />
     </div>
   );
 }
 
-// Dims the animated background behind content sections; the hero keeps it vivid
-function BackgroundScrim() {
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 500], [0.2, 0.72]);
-  return (
-    <motion.div
-      aria-hidden
-      style={{ opacity }}
-      className="fixed inset-0 z-[5] pointer-events-none bg-[#030712]"
-    />
-  );
-}
-
 export function PortfolioPage() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [showTop, setShowTop] = useState(false);
 
   // Initialize Lenis smooth scroll
@@ -101,71 +83,56 @@ export function PortfolioPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white overflow-x-hidden selection:bg-cyan-500/20 selection:text-cyan-300">
-      {/* Interactive custom cursor */}
-      <CustomCursor />
-
-      {/* Floating Canvas background containing 3D tag cloud sphere */}
-      <AnimatedBackground />
-      <BackgroundScrim />
-
-      {/* Sleek Percentage Loading Screen */}
-      <AnimatePresence mode="wait">
-        {loading && <LoadingScreen onDone={() => setLoading(false)} />}
-      </AnimatePresence>
-
+    <div className="min-h-screen bg-[#F8F9FB] text-gray-900 overflow-x-hidden selection:bg-blue-500/20 selection:text-blue-700">
       {/* Page layout wrapper */}
       <AnimatePresence>
         {!loading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="relative z-10 animate-fade-in readable-content"
+            transition={{ duration: 0.5 }}
+            className="relative z-10"
           >
             {/* Navigation Header */}
-            <Navbar darkMode={true} toggleDark={() => {}} />
+            <Navbar darkMode={false} toggleDark={() => {}} />
 
             {/* Sections Flow */}
             <Hero />
-            
+
             <SectionDivider />
             <About />
-            
+
             <SectionDivider />
             <Services />
-            
+
             <SectionDivider />
             <Skills />
-            
+
             <SectionDivider />
             <Projects />
-            
 
-            
             <SectionDivider />
             <Experience />
-            
+
             <SectionDivider />
             <Contact />
-            
+
             <Footer />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating scroll to top spring-trigger */}
+      {/* Floating scroll to top */}
       <AnimatePresence>
         {showTop && (
           <motion.button
-            initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            exit={{ opacity: 0, scale: 0.5, rotate: -45 }}
-            whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 20px rgba(6,182,212,0.4)" }}
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleScrollToTop}
-            className="fixed bottom-6 right-6 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/20 z-50 border border-white/10"
-            style={{ width: 48, height: 48 }}
+            className="fixed bottom-6 right-6 w-12 h-12 rounded-lg bg-[#1D4ED8] text-white flex items-center justify-center shadow-lg hover:bg-[#1E40AF] transition-colors z-50"
             aria-label="Back to top"
           >
             <ArrowUp size={18} />

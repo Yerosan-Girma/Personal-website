@@ -36,7 +36,7 @@ export function TechVisualization() {
       { name: "HTML5", color: "#E34F26" },
       { name: "CSS3", color: "#1572B6" },
       { name: "Tailwind CSS", color: "#06B6D4" },
-      { name: "Next.js", color: "#FFFFFF" },
+      { name: "WebSockets", color: "#1D4ED8" },
       { name: "Docker", color: "#2496ED" },
       { name: "Git", color: "#F05032" },
       { name: "GitHub", color: "#FFFFFF" },
@@ -44,8 +44,8 @@ export function TechVisualization() {
       { name: "MySQL", color: "#4479A1" },
       { name: "REST APIs", color: "#009688" },
       { name: "JWT Auth", color: "#FF007F" },
-      { name: "Socket.io", color: "#010101" },
-      { name: "Redux", color: "#764ABC" },
+      { name: "Bootstrap", color: "#7952B3" },
+      { name: "MERN Stack", color: "#10B981" },
     ];
 
     // Sphere radius

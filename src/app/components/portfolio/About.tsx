@@ -1,26 +1,37 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "motion/react";
-import { Code2, Sparkles } from "lucide-react";
+import {
+  Sparkles,
+  ArrowRight,
+  Terminal,
+} from "lucide-react";
 
-// CountUp hook to animate stats
-function useCountUp(target: number, duration = 1200, trigger = false) {
+// High performance requestAnimationFrame counter hook with easeOutExpo easing
+function useCountUp(target: number, duration = 1600, trigger = false) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (!trigger) return;
-    let start = 0;
-    const end = target;
-    if (start === end) return;
+    let startTime: number | null = null;
+    let animId: number;
 
-    const totalMiliseconds = duration;
-    const incrementTime = Math.abs(Math.floor(totalMiliseconds / end));
-    const timer = setInterval(() => {
-      start += 1;
-      setCount(start);
-      if (start === end) clearInterval(timer);
-    }, Math.max(incrementTime, 8));
+    const easeOutExpo = (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
 
-    return () => clearInterval(timer);
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutExpo(progress);
+
+      setCount(Math.round(easedProgress * target));
+
+      if (progress < 1) {
+        animId = requestAnimationFrame(step);
+      }
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
   }, [target, duration, trigger]);
 
   return count;
@@ -36,29 +47,38 @@ interface StatProps {
 }
 
 function StatCard({ label, value, suffix, icon, trigger, delayIndex }: StatProps) {
-  const val = useCountUp(value, 1500, trigger);
+  const val = useCountUp(value, 1800, trigger);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={trigger ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{ duration: 0.5, delay: delayIndex * 0.08, type: "spring" }}
-      whileHover={{ y: -5, scale: 1.03 }}
-      className="text-center p-5 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 hover:border-blue-500/30 hover:bg-white/[0.05] transition-all cursor-default shadow-lg"
+      animate={trigger ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 20, scale: 0.95 }}
+      transition={{ duration: 0.5, delay: 0.1 + delayIndex * 0.08, type: "spring", stiffness: 120 }}
+      whileHover={{ y: -5, scale: 1.02, boxShadow: "0 14px 30px -10px rgba(29, 78, 216, 0.12)" }}
+      className="relative text-center p-5 sm:p-6 rounded-2xl bg-white border border-gray-200/90 shadow-xs hover:border-[#1D4ED8]/40 transition-all duration-300 group overflow-hidden"
     >
-      <div className="text-2xl mb-1.5">{icon}</div>
-      <div className="text-3xl text-white font-extrabold font-mono tracking-tight">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1D4ED8]/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <motion.div
+        whileHover={{ scale: 1.15, rotate: 10 }}
+        transition={{ type: "spring", stiffness: 300 }}
+        className="text-2xl sm:text-3xl mb-2.5 inline-block"
+      >
+        {icon}
+      </motion.div>
+      <div className="text-3xl sm:text-4xl text-gray-900 font-bold font-mono tracking-tight">
         {val}
-        <span className="text-cyan-400">{suffix}</span>
+        <span className="text-[#1D4ED8] ml-0.5">{suffix}</span>
       </div>
-      <div className="text-white/85 text-xs mt-1 font-medium tracking-wide uppercase">{label}</div>
+      <div className="text-gray-600 text-xs mt-2 font-medium tracking-wider uppercase">
+        {label}
+      </div>
     </motion.div>
   );
 }
 
 export function About() {
-  const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-100px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
 
   const stats = [
     { label: "Projects Built", value: 10, suffix: "+", icon: "🚀" },
@@ -67,81 +87,122 @@ export function About() {
     { label: "GitHub Repos", value: 20, suffix: "+", icon: "💻" },
   ];
 
-  return (
-    <section id="about" className="py-16 sm:py-24 relative overflow-hidden">
-      {/* Background glowing circles */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 right-0 w-80 h-80 bg-blue-500/[0.03] rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-cyan-500/[0.03] rounded-full blur-3xl" />
-      </div>
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const lenis = (window as any).lenis;
+    if (lenis) lenis.scrollTo(el, { offset: -80 });
+    else el.scrollIntoView({ behavior: "smooth" });
+  };
 
-      <div className="max-w-7xl mx-auto px-6" ref={ref}>
-        {/* Header */}
+  return (
+    <section id="about" className="py-20 md:py-28 relative overflow-hidden">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12" ref={ref}>
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10 sm:mb-14"
+          className="text-center mb-12 md:mb-16"
         >
-          <span className="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs font-bold tracking-[0.25em] uppercase">Overview</span>
-          <h2 className="text-white mt-4 leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800 }}>
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1D4ED8]/10 border border-[#1D4ED8]/20 text-[#1D4ED8] text-xs font-bold tracking-[0.22em] uppercase"
+          >
+            <Sparkles size={12} className="text-[#1D4ED8]" />
+            Overview
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 15 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-gray-900 mt-3 sm:mt-4 leading-tight text-3xl sm:text-4xl font-bold"
+          >
             About Me
-          </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto mt-2"
+          >
+            Bridging architectural logic with clean, high-performance web applications.
+          </motion.p>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="w-16 h-1 bg-[#1D4ED8] rounded-full mx-auto mt-4 origin-left"
+          />
         </motion.div>
 
-        <div className="max-w-5xl mx-auto flex flex-col">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
-              className="grid md:grid-cols-2 gap-5 mb-8"
+        {/* Narrative Bio */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="rounded-2xl bg-white border border-gray-200/90 p-6 sm:p-9 md:p-10 shadow-xs mb-12 sm:mb-14"
+        >
+          <div className="inline-flex items-center gap-2 text-[#1D4ED8] text-xs font-mono uppercase tracking-wider font-semibold mb-3">
+            <Terminal size={14} />
+            <span>Full Stack Engineering & Systems Design</span>
+          </div>
+
+          <h3 className="text-gray-900 text-2xl sm:text-3xl font-bold tracking-tight leading-snug mb-5">
+            Engineering reliable, scalable web applications with <span className="text-[#1D4ED8]">modern web architectures</span>.
+          </h3>
+
+          <div className="space-y-4 text-gray-600 text-sm sm:text-base leading-relaxed mb-8">
+            <p>
+              I'm a dedicated <strong className="text-gray-900 font-semibold">Full Stack Software Engineer</strong> currently pursuing my Software Engineering degree at <strong className="text-gray-900 font-semibold">Haramaya University</strong>. My work unites clean backend logic, normalized database architectures, and responsive, fluid user interfaces.
+            </p>
+            <p>
+              Throughout my journey, I have engineered and deployed complete digital platforms including <strong className="text-gray-900 font-semibold">Kiray Bet</strong> (Ethiopia's online home rental marketplace), real-time live seminar suites (<strong className="text-gray-900 font-semibold">WabiSeminar</strong>), and fintech rotational savings circles (<strong className="text-gray-900 font-semibold">Digital Equb</strong>).
+            </p>
+            <p>
+              I thrive on solving complex query performance constraints, designing modular component hierarchies, maintaining high code quality, and building applications that users enjoy interacting with every day.
+            </p>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2 border-t border-gray-100">
+            <motion.button
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => scrollTo("projects")}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#1D4ED8] text-white text-sm font-semibold hover:bg-[#1E40AF] transition-colors shadow-xs cursor-pointer"
             >
-              {/* Paragraph 1 - Equal Card */}
-              <div className="p-6 sm:p-7 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/10 hover:border-cyan-500/40 transition-all flex flex-col justify-between shadow-xl text-left">
-                <div>
-                  <div className="flex items-center gap-2.5 mb-3.5">
-                    <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
-                      <Code2 size={16} />
-                    </div>
-                    <span className="text-xs uppercase font-mono tracking-wider text-cyan-400 font-bold">Engineering Philosophy</span>
-                  </div>
-                  <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
-                    I'm a dedicated <span className="text-white font-bold">Full Stack Software Engineer</span> who enjoys engineering modular web architectures. My interest sparks at the intersection of performance, design integration, and clean logic flow.
-                  </p>
-                </div>
-              </div>
+              View Featured Work
+              <ArrowRight size={16} />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => scrollTo("contact")}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-gray-300 text-gray-700 text-sm font-semibold hover:border-gray-400 hover:text-gray-900 transition-colors shadow-xs cursor-pointer"
+            >
+              Let's Discuss a Project
+            </motion.button>
+          </div>
+        </motion.div>
 
-              {/* Paragraph 2 - Equal Card */}
-              <div className="p-6 sm:p-7 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/10 hover:border-blue-500/40 transition-all flex flex-col justify-between shadow-xl text-left">
-                <div>
-                  <div className="flex items-center gap-2.5 mb-3.5">
-                    <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
-                      <Sparkles size={16} />
-                    </div>
-                    <span className="text-xs uppercase font-mono tracking-wider text-blue-400 font-bold">Full Stack & Deployment</span>
-                  </div>
-                  <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
-                    With comprehensive experience across the <span className="text-cyan-400 font-bold">MERN stack</span>, I specialize in shipping projects from local wireframes to cloud hosting packages. I enjoy tackling query constraints, deploying REST routes, and styling high-performance user interfaces.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Stats counter list */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {stats.map((stat, i) => (
-                <StatCard
-                  key={stat.label}
-                  label={stat.label}
-                  value={stat.value}
-                  suffix={stat.suffix}
-                  icon={stat.icon}
-                  trigger={inView}
-                  delayIndex={i}
-                />
-              ))}
-            </div>
+        {/* Stats Counter Section */}
+        <div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6">
+            {stats.map((stat, i) => (
+              <StatCard
+                key={stat.label}
+                label={stat.label}
+                value={stat.value}
+                suffix={stat.suffix}
+                icon={stat.icon}
+                trigger={inView}
+                delayIndex={i}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

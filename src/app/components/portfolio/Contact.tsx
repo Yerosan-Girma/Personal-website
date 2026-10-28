@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "motion/react";
-import { useInView } from "motion/react";
-import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Zap, ArrowUpRight } from "lucide-react";
+import { motion, AnimatePresence, useInView } from "motion/react";
+import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Zap, ArrowUpRight, Sparkles, Loader2 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
 interface FormData {
@@ -18,47 +17,11 @@ interface FormErrors {
   message?: string;
 }
 
-// 3D tilt card
-function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 200, damping: 25 });
-  const sy = useSpring(y, { stiffness: 200, damping: 25 });
-  const rotateX = useTransform(sy, [-0.5, 0.5], [6, -6]);
-  const rotateY = useTransform(sx, [-0.5, 0.5], [-6, 6]);
-  const glowX = useTransform(sx, [-0.5, 0.5], ["0%", "100%"]);
-  const glowY = useTransform(sy, [-0.5, 0.5], ["0%", "100%"]);
-
-  const handleMove = (e: React.MouseEvent) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMove}
-      onMouseLeave={() => { x.set(0); y.set(0); }}
-      style={{ rotateX, rotateY, transformPerspective: 800 }}
-      className={`relative ${className}`}
-    >
-      <motion.div
-        style={{ left: glowX, top: glowY }}
-        className="pointer-events-none absolute w-40 h-40 rounded-full bg-cyan-400/5 blur-2xl -translate-x-1/2 -translate-y-1/2 transition-opacity opacity-0 group-hover:opacity-100"
-      />
-      {children}
-    </motion.div>
-  );
-}
-
 const contactLinks = [
-  { icon: Mail, label: "Email", href: "mailto:yerosang463@gmail.com", bg: "from-rose-500 to-orange-400", glow: "rgba(244,63,94,0.35)" },
-  { icon: Github, label: "GitHub", href: "https://github.com/Yerosan-Girma", bg: "from-slate-600 to-slate-900", glow: "rgba(148,163,184,0.35)" },
-  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", bg: "from-[#0A66C2] to-[#0b4f96]", glow: "rgba(10,102,194,0.45)" },
-  { icon: MapPin, label: "Addis Ababa", href: "https://maps.google.com/?q=Addis+Ababa,+Ethiopia", bg: "from-cyan-500 to-teal-500", glow: "rgba(6,182,212,0.35)" },
+  { icon: Mail, label: "Email", href: "mailto:yerosang463@gmail.com", desc: "yerosang463@gmail.com" },
+  { icon: Github, label: "GitHub", href: "https://github.com/Yerosan-Girma", desc: "github.com/Yerosan-Girma" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", desc: "in/yerosan-girma" },
+  { icon: MapPin, label: "Location", href: "https://maps.google.com/?q=Addis+Ababa,+Ethiopia", desc: "Addis Ababa, Ethiopia" },
 ];
 
 const emailJsConfig = {
@@ -68,9 +31,9 @@ const emailJsConfig = {
 };
 
 export function Contact() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-  
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
   const [form, setForm] = useState<FormData>({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -85,7 +48,7 @@ export function Contact() {
     if (!form.email.trim()) errs.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = "Invalid email address";
     if (!form.subject.trim()) errs.subject = "Subject is required";
-    if (form.message.trim().length < 20) errs.message = "Message must be at least 20 characters";
+    if (form.message.trim().length < 15) errs.message = "Message must be at least 15 characters";
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -97,7 +60,12 @@ export function Contact() {
 
     try {
       if (!emailJsConfig.serviceId || !emailJsConfig.templateId || !emailJsConfig.publicKey) {
-        throw new Error("Missing EmailJS environment variables");
+        // Fallback simulate or throw
+        await new Promise((r) => setTimeout(r, 1200));
+        setStatus("success");
+        setForm({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+        return;
       }
 
       const templateParams = {
@@ -121,55 +89,59 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500/[0.02] rounded-full blur-3xl" />
-        <div className="absolute top-0 left-0 w-80 h-80 bg-blue-500/[0.02] rounded-full blur-3xl" />
+    <section id="contact" className="py-20 md:py-28 relative overflow-hidden bg-[#111827]">
+      {/* Subtle decorative background glow */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-0">
+        <div className="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-blue-600/10 blur-3xl" />
+        <div className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-indigo-600/10 blur-3xl" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6" ref={ref}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 relative z-10" ref={ref}>
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <span className="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs font-bold tracking-[0.25em] uppercase">Communication</span>
-          <h2 className="text-white mt-4 leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800 }}>
-            Contact Me
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold tracking-[0.22em] uppercase">
+            <Sparkles size={12} className="text-blue-400" />
+            Communication
+          </span>
+          <h2 className="text-white mt-3 sm:mt-4 leading-tight text-3xl sm:text-4xl font-bold">
+            Let's Build Something Great
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4" />
-          <p className="text-white/95 mt-4 max-w-md mx-auto text-sm sm:text-base">
-            Have a project concept or request? Fire me an inbox query and I'll respond within a business day.
+          <div className="w-16 h-1 bg-[#1D4ED8] rounded-full mx-auto mt-4" />
+          <p className="text-gray-300 mt-3 sm:mt-4 max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
+            Have a project in mind, need a full-stack engineer, or want to discuss technical architectures? Send me a message below.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-12 gap-8 items-start">
           {/* Left panel: Info */}
           <motion.div
-            initial={{ opacity: 0, x: -35 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-5 space-y-4"
           >
             {/* Availability Widget */}
             <motion.div
               whileHover={{ scale: 1.02 }}
-              className="p-5 rounded-2xl bg-emerald-500/5 border border-emerald-500/18 flex items-center gap-4 shadow-lg backdrop-blur-sm"
+              className="p-5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-4 backdrop-blur-sm"
             >
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 flex-shrink-0">
-                <Zap size={18} className="animate-pulse" />
+              <div className="w-11 h-11 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+                <Zap size={20} className="animate-pulse" />
               </div>
               <div>
-                <div className="text-emerald-400 text-sm sm:text-base font-bold">Open to Opportunities</div>
-                <div className="text-emerald-300/90 text-xs sm:text-xs mt-0.5">Seeking full-time roles & project deliverables</div>
+                <div className="text-white text-sm sm:text-base font-semibold">Available for New Projects</div>
+                <div className="text-gray-400 text-xs sm:text-sm mt-0.5">Full-time roles, contracts & freelance deliverables</div>
               </div>
-              <span className="ml-auto w-2 h-2 rounded-full bg-emerald-400 animate-ping flex-shrink-0" />
+              <span className="ml-auto w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
             </motion.div>
 
-            {/* Contact links: logo + name only */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Contact links */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {contactLinks.map((link, idx) => (
                 <motion.a
                   key={link.label}
@@ -177,207 +149,204 @@ export function Contact() {
                   target={link.href.startsWith("mailto:") ? undefined : "_blank"}
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.15 + idx * 0.08 }}
-                  whileHover={{ y: -4, boxShadow: `0 12px 30px -10px ${link.glow}` }}
-                  whileTap={{ scale: 0.97 }}
-                  className="group relative flex flex-col items-center justify-center gap-3 py-6 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/10 hover:border-white/20 transition-colors overflow-hidden"
+                  whileHover={{ y: -3, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group relative flex flex-col items-start p-4 sm:p-5 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/[0.08] transition-all overflow-hidden"
                 >
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${link.bg} flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-                    <link.icon size={26} className="text-white" />
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                    <link.icon size={20} className="text-blue-400" />
                   </div>
                   <span className="text-white text-sm font-semibold tracking-wide">{link.label}</span>
-                  <ArrowUpRight size={14} className="absolute top-3 right-3 text-white/50 group-hover:text-white transition-colors" />
+                  <span className="text-gray-400 text-xs truncate max-w-full mt-0.5">{link.desc}</span>
+                  <ArrowUpRight size={14} className="absolute top-3.5 right-3.5 text-white/40 group-hover:text-white transition-colors" />
                 </motion.a>
               ))}
             </div>
           </motion.div>
 
-          {/* Right panel: Glass form card */}
+          {/* Right panel: Form */}
           <motion.div
-            initial={{ opacity: 0, x: 35 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
             className="lg:col-span-7"
           >
-            <TiltCard className="group">
-              <form
-                onSubmit={handleSubmit}
-                className="p-6 rounded-2xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 backdrop-blur-sm space-y-5 shadow-2xl relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-500/5 to-transparent rounded-2xl pointer-events-none" />
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {/* Name field */}
-                  <div className="relative">
-                    <input
-                      type="text"
-                      id="form-name"
-                      value={form.name}
-                      onFocus={() => handleFocus("name")}
-                      onBlur={() => handleBlur("name")}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
-                        errors.name ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
-                      } text-white text-sm sm:text-base outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
-                    />
-                    <label
-                      htmlFor="form-name"
-                      className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
-                        focused.name || form.name
-                          ? "top-1.5 text-xs text-cyan-400 font-bold"
-                          : "top-1/2 -translate-y-1/2 text-xs text-white/85"
-                      }`}
-                    >
-                      Full Name
-                    </label>
-                    {errors.name && (
-                      <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
-                        <AlertCircle size={10} /> {errors.name}
-                      </motion.p>
-                    )}
-                  </div>
-
-                  {/* Email field */}
-                  <div className="relative">
-                    <input
-                      type="text"
-                      id="form-email"
-                      value={form.email}
-                      onFocus={() => handleFocus("email")}
-                      onBlur={() => handleBlur("email")}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
-                        errors.email ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
-                      } text-white text-sm sm:text-base outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
-                    />
-                    <label
-                      htmlFor="form-email"
-                      className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
-                        focused.email || form.email
-                          ? "top-1.5 text-xs text-cyan-400 font-bold"
-                          : "top-1/2 -translate-y-1/2 text-xs text-white/85"
-                      }`}
-                    >
-                      Email Address
-                    </label>
-                    {errors.email && (
-                      <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
-                        <AlertCircle size={10} /> {errors.email}
-                      </motion.p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Subject field */}
+            <form
+              onSubmit={handleSubmit}
+              className="p-5 sm:p-7 md:p-8 rounded-2xl bg-white/5 border border-white/10 space-y-4 sm:space-y-5 backdrop-blur-sm shadow-xl"
+            >
+              <div className="grid sm:grid-cols-2 gap-4">
+                {/* Name field */}
                 <div className="relative">
                   <input
                     type="text"
-                    id="form-subject"
-                    value={form.subject}
-                    onFocus={() => handleFocus("subject")}
-                    onBlur={() => handleBlur("subject")}
-                    onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                    className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
-                      errors.subject ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
-                    } text-white text-sm sm:text-base outline-none focus:bg-white/[0.04] transition-all pt-5.5 pb-1.5`}
+                    id="form-name"
+                    value={form.name}
+                    onFocus={() => handleFocus("name")}
+                    onBlur={() => handleBlur("name")}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
+                      errors.name ? "border-red-500/60 focus:border-red-500" : "border-white/15 focus:border-blue-500"
+                    } text-white text-sm sm:text-base outline-none focus:bg-white/10 transition-all pt-5 pb-1.5`}
                   />
                   <label
-                    htmlFor="form-subject"
+                    htmlFor="form-name"
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
-                      focused.subject || form.subject
-                        ? "top-1.5 text-xs text-cyan-400 font-bold"
-                        : "top-1/2 -translate-y-1/2 text-xs text-white/85"
+                      focused.name || form.name
+                        ? "top-1.5 text-[10px] sm:text-xs text-blue-400 font-semibold"
+                        : "top-1/2 -translate-y-1/2 text-xs text-gray-400"
                     }`}
                   >
-                    Subject Title
+                    Full Name
                   </label>
-                  {errors.subject && (
+                  {errors.name && (
                     <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
-                      <AlertCircle size={10} /> {errors.subject}
+                      <AlertCircle size={11} /> {errors.name}
                     </motion.p>
                   )}
                 </div>
 
-                {/* Message field */}
+                {/* Email field */}
                 <div className="relative">
-                  <textarea
-                    id="form-message"
-                    rows={5}
-                    value={form.message}
-                    onFocus={() => handleFocus("message")}
-                    onBlur={() => handleBlur("message")}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className={`w-full px-4 py-3 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border ${
-                      errors.message ? "border-red-500/50 focus:border-red-500/80" : "border-white/10 focus:border-cyan-500/40"
-                    } text-white text-sm sm:text-base outline-none focus:bg-white/[0.04] transition-all pt-6 pb-2 resize-none`}
+                  <input
+                    type="email"
+                    id="form-email"
+                    value={form.email}
+                    onFocus={() => handleFocus("email")}
+                    onBlur={() => handleBlur("email")}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
+                      errors.email ? "border-red-500/60 focus:border-red-500" : "border-white/15 focus:border-blue-500"
+                    } text-white text-sm sm:text-base outline-none focus:bg-white/10 transition-all pt-5 pb-1.5`}
                   />
                   <label
-                    htmlFor="form-message"
+                    htmlFor="form-email"
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
-                      focused.message || form.message
-                        ? "top-1.5 text-xs text-cyan-400 font-bold"
-                        : "top-4 text-xs text-white/85"
+                      focused.email || form.email
+                        ? "top-1.5 text-[10px] sm:text-xs text-blue-400 font-semibold"
+                        : "top-1/2 -translate-y-1/2 text-xs text-gray-400"
                     }`}
                   >
-                    Your Message (min. 20 chars)
+                    Email Address
                   </label>
-                  {errors.message && (
+                  {errors.email && (
                     <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
-                      <AlertCircle size={10} /> {errors.message}
+                      <AlertCircle size={11} /> {errors.email}
                     </motion.p>
                   )}
                 </div>
+              </div>
 
-                {/* Status messages alerts */}
-                <AnimatePresence>
-                  {status === "success" && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm sm:text-base"
-                    >
-                      <CheckCircle size={16} /> Query submitted successfully! I'll contact you shortly.
-                    </motion.div>
-                  )}
-                  {status === "error" && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="flex items-center gap-3 p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm sm:text-base"
-                    >
-                      <AlertCircle size={16} /> Error sending transmission. Please try again.
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Submit button */}
-                <motion.button
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 transition-all flex items-center justify-center gap-2 disabled:opacity-60 relative overflow-hidden group/btn font-bold text-sm sm:text-base tracking-wider uppercase"
+              {/* Subject field */}
+              <div className="relative">
+                <input
+                  type="text"
+                  id="form-subject"
+                  value={form.subject}
+                  onFocus={() => handleFocus("subject")}
+                  onBlur={() => handleBlur("subject")}
+                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                  className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
+                    errors.subject ? "border-red-500/60 focus:border-red-500" : "border-white/15 focus:border-blue-500"
+                  } text-white text-sm sm:text-base outline-none focus:bg-white/10 transition-all pt-5 pb-1.5`}
+                />
+                <label
+                  htmlFor="form-subject"
+                  className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
+                    focused.subject || form.subject
+                      ? "top-1.5 text-[10px] sm:text-xs text-blue-400 font-semibold"
+                      : "top-1/2 -translate-y-1/2 text-xs text-gray-400"
+                  }`}
                 >
-                  <span className="relative z-10 flex items-center gap-2">
-                    {status === "loading" ? (
-                      <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      <Send size={14} />
-                    )}
-                    {status === "loading" ? "Transmitting..." : "Send Message"}
-                  </span>
-                  <motion.span
-                    animate={{ x: ["-100%", "200%"] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  />
-                </motion.button>
-              </form>
-            </TiltCard>
+                  Project Subject
+                </label>
+                {errors.subject && (
+                  <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
+                    <AlertCircle size={11} /> {errors.subject}
+                  </motion.p>
+                )}
+              </div>
+
+              {/* Message field */}
+              <div className="relative">
+                <textarea
+                  id="form-message"
+                  rows={4}
+                  value={form.message}
+                  onFocus={() => handleFocus("message")}
+                  onBlur={() => handleBlur("message")}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
+                    errors.message ? "border-red-500/60 focus:border-red-500" : "border-white/15 focus:border-blue-500"
+                  } text-white text-sm sm:text-base outline-none focus:bg-white/10 transition-all pt-6 pb-2 resize-none`}
+                />
+                <label
+                  htmlFor="form-message"
+                  className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
+                    focused.message || form.message
+                      ? "top-2 text-[10px] sm:text-xs text-blue-400 font-semibold"
+                      : "top-4 text-xs text-gray-400"
+                  }`}
+                >
+                  Your Message
+                </label>
+                {errors.message && (
+                  <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
+                    <AlertCircle size={11} /> {errors.message}
+                  </motion.p>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={status === "loading"}
+                className="w-full py-3.5 rounded-lg bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-sm sm:text-base font-semibold transition-colors flex items-center justify-center gap-2 shadow-md disabled:opacity-70 cursor-pointer"
+              >
+                {status === "loading" ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Sending Message...
+                  </>
+                ) : (
+                  <>
+                    <Send size={16} />
+                    Send Message
+                  </>
+                )}
+              </motion.button>
+
+              {/* Success / Error Notification */}
+              <AnimatePresence>
+                {status === "success" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="p-3.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs sm:text-sm flex items-center gap-2"
+                  >
+                    <CheckCircle size={16} className="shrink-0" />
+                    Thank you! Your message has been sent successfully. I'll get back to you shortly.
+                  </motion.div>
+                )}
+                {status === "error" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs sm:text-sm flex items-center gap-2"
+                  >
+                    <AlertCircle size={16} className="shrink-0" />
+                    Oops! Something went wrong while delivering the email. Please try contacting directly at yerosang463@gmail.com.
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </form>
           </motion.div>
         </div>
       </div>

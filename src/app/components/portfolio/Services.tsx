@@ -7,93 +7,132 @@ import {
   Cpu,
   Layout,
   FileJson,
-  Check,
+  CheckCircle2,
   ArrowUpRight,
-  Search,
-  PenTool,
   Code2,
-  Rocket,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 
 interface Service {
+  id: string;
+  category: "frontend" | "backend" | "fullstack";
+  number: string;
   title: string;
   tagline: string;
   desc: string;
   icon: React.ElementType;
-  gradient: string;
-  accent: string;
   deliverables: string[];
   stack: string[];
+  featured?: boolean;
 }
 
 const services: Service[] = [
   {
-    title: "Frontend Development",
-    tagline: "Fast, responsive interfaces",
-    desc: "Creating high-performance, accessible, and responsive user interfaces with smooth animations. Experienced in React, Next.js, Redux, and modern layout systems.",
+    id: "frontend",
+    category: "frontend",
+    number: "01",
+    title: "Frontend Engineering",
+    tagline: "Fast, responsive & interactive interfaces",
+    desc: "Crafting accessible, high-performance web applications with fluid 60fps micro-interactions, responsive mobile layouts, and modern state architecture.",
     icon: Monitor,
-    gradient: "from-blue-500 to-cyan-400",
-    accent: "text-cyan-400",
-    deliverables: ["Responsive, mobile-first layouts", "Reusable component libraries", "Smooth, accessible animations"],
-    stack: ["React", "Next.js", "TypeScript", "Redux", "Tailwind CSS"],
+    deliverables: [
+      "Responsive, mobile-first design systems",
+      "Reusable, type-safe React component libraries",
+      "Fluid micro-interactions & motion design",
+      "SEO-ready, accessible web markup (WCAG)",
+    ],
+    stack: ["React", "TypeScript", "Tailwind CSS", "JavaScript", "HTML5", "CSS3"],
+    featured: true,
   },
   {
-    title: "Backend Development",
-    tagline: "Secure, modular servers",
-    desc: "Architecting modular, secure server architectures with robust database connections and authentication schemes using Node.js, Express, and JWT APIs.",
+    id: "backend",
+    category: "backend",
+    number: "02",
+    title: "Backend Architecture",
+    tagline: "Secure, modular & scalable servers",
+    desc: "Architecting modular, secure server architectures with robust database connections, JWT authentication, and high-throughput endpoints.",
     icon: Server,
-    gradient: "from-emerald-500 to-teal-400",
-    accent: "text-emerald-400",
-    deliverables: ["Authentication & role-based access", "Clean, layered architecture", "Validation and error handling"],
-    stack: ["Node.js", "Express.js", "JWT", "Socket.io"],
+    deliverables: [
+      "JWT authentication & role-based access control",
+      "Clean, layered MVC modular architecture",
+      "Input validation, rate limiting & error handling",
+      "Asynchronous tasks & worker queues",
+    ],
+    stack: ["Node.js", "Express.js", "JWT", "Bcrypt", "Cors", "Dotenv"],
   },
   {
+    id: "fullstack",
+    category: "fullstack",
+    number: "03",
     title: "Full Stack Integration",
-    tagline: "End-to-end applications",
-    desc: "Building clean end-to-end applications where data flows smoothly between PostgreSQL/MongoDB and the client-side using WebSockets and REST APIs.",
+    tagline: "End-to-end production web applications",
+    desc: "Connecting responsive client interfaces with database layers and external APIs. Integrating real-time communication and automated cloud deployments.",
     icon: Cpu,
-    gradient: "from-violet-500 to-purple-400",
-    accent: "text-violet-400",
-    deliverables: ["Real-time features with WebSockets", "Client ↔ API data layer", "Deployment to Vercel / Render"],
-    stack: ["MERN", "PostgreSQL", "WebSockets", "REST"],
+    deliverables: [
+      "Real-time bidirectional client-server synchronization",
+      "End-to-end type safety & reliable data flow",
+      "Third-party API & payment integrations (Stripe)",
+      "Zero-downtime deployment to Vercel & Render",
+    ],
+    stack: ["MERN Stack", "PostgreSQL", "REST APIs", "Stripe API", "Vercel"],
+    featured: true,
   },
   {
-    title: "Database Design",
-    tagline: "Schemas built to scale",
-    desc: "Designing clean relational and non-relational database schemas. Optimizing indices, model aggregations, and query structures for fast page deliveries.",
+    id: "database",
+    category: "backend",
+    number: "04",
+    title: "Database Design & Tuning",
+    tagline: "Schemas structured to scale seamlessly",
+    desc: "Designing clean relational and document schemas for maximum performance. Optimizing query indexing, relational integrity, and aggregation pipelines.",
     icon: Database,
-    gradient: "from-orange-500 to-amber-400",
-    accent: "text-amber-400",
-    deliverables: ["Relational & document schemas", "Indexes and query tuning", "Aggregations and reporting"],
-    stack: ["MongoDB", "PostgreSQL", "MySQL", "Mongoose"],
+    deliverables: [
+      "Relational & NoSQL schema modeling",
+      "Query indexing & execution time tuning",
+      "Data migrations & normalization",
+      "Complex aggregations & analytics pipelines",
+    ],
+    stack: ["MongoDB", "PostgreSQL", "MySQL", "Mongoose", "Prisma"],
   },
   {
-    title: "UI Implementation",
-    tagline: "Figma to pixel-perfect code",
-    desc: "Pixel-perfect translations of Figma concepts into production React files. Striving for micro-interactions that make websites feel interactive and alive.",
+    id: "ui-ux",
+    category: "frontend",
+    number: "05",
+    title: "Responsive UI & Design Systems",
+    tagline: "Pixel-perfect translations into React",
+    desc: "Transforming creative wireframes and mockups into clean, production-ready React code. Integrating micro-interactions, responsive typography, and tactile UI states.",
     icon: Layout,
-    gradient: "from-pink-500 to-rose-400",
-    accent: "text-pink-400",
-    deliverables: ["Faithful Figma-to-React builds", "Micro-interactions & motion", "Design-system consistency"],
-    stack: ["Figma", "Tailwind CSS", "Motion", "Material UI"],
+    deliverables: [
+      "Faithful, pixel-accurate wireframe-to-code translation",
+      "Custom component libraries & design tokens",
+      "Dark mode & themed palette support",
+      "Cross-browser testing (Chrome, Safari, Firefox)",
+    ],
+    stack: ["React", "Tailwind CSS", "Motion", "Radix UI", "Lucide"],
   },
   {
+    id: "rest-api",
+    category: "backend",
+    number: "06",
     title: "RESTful API Engineering",
-    tagline: "Documented, reliable APIs",
-    desc: "Deploying secure server routes with structured JSON responses, robust CORS management, and detailed Swagger documentation or API collection test files.",
+    tagline: "Well-documented, reliable endpoints",
+    desc: "Engineering structured RESTful APIs with predictable JSON schemas, complete CRUD operations, thorough Swagger documentation, and test collections.",
     icon: FileJson,
-    gradient: "from-indigo-500 to-purple-400",
-    accent: "text-indigo-400",
-    deliverables: ["Structured JSON endpoints", "CORS & security hardening", "Swagger / Postman docs"],
-    stack: ["Express.js", "Swagger", "Postman", "REST"],
+    deliverables: [
+      "Structured, idempotent JSON REST endpoints",
+      "Comprehensive Swagger / Postman documentation",
+      "CORS management & security headers (Helmet)",
+      "Automated route verification & tests",
+    ],
+    stack: ["Express.js", "Swagger", "Postman", "REST", "Helmet"],
   },
 ];
 
-const process = [
-  { title: "Discover", desc: "Understand goals, users and scope.", icon: Search },
-  { title: "Design", desc: "Plan architecture and UI flows.", icon: PenTool },
-  { title: "Build", desc: "Develop, test and iterate quickly.", icon: Code2 },
-  { title: "Launch", desc: "Deploy, monitor and support.", icon: Rocket },
+const categories = [
+  { id: "all", label: "All Services" },
+  { id: "frontend", label: "Frontend & UI" },
+  { id: "backend", label: "Backend & APIs" },
+  { id: "fullstack", label: "Full Stack & Cloud" },
 ];
 
 function scrollToContact() {
@@ -104,219 +143,184 @@ function scrollToContact() {
   else el.scrollIntoView({ behavior: "smooth" });
 }
 
-function ServiceDetail({ service, index }: { service: Service; index: number }) {
-  const Icon = service.icon;
-  return (
-    <div className="relative h-full rounded-3xl border border-white/10 bg-[#070c1a]/85 backdrop-blur-md p-6 sm:p-8 overflow-hidden">
-      <div className={`pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br ${service.gradient} opacity-[0.12] blur-3xl`} />
-      <span className="pointer-events-none absolute top-4 right-6 text-white/[0.04] font-black leading-none select-none" style={{ fontSize: "clamp(5rem, 10vw, 8rem)" }}>
-        {String(index + 1).padStart(2, "0")}
-      </span>
-
-      <div className="relative flex flex-col gap-6">
-        <div className="flex items-center gap-4">
-          <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center text-white shadow-lg`}>
-            <Icon size={26} />
-          </div>
-          <div>
-            <p className={`text-xs uppercase tracking-widest ${service.accent}`}>{service.tagline}</p>
-            <h3 className="text-white text-xl sm:text-2xl font-bold">{service.title}</h3>
-          </div>
-        </div>
-
-        <p className="text-white/95 text-sm sm:text-base leading-relaxed max-w-xl">{service.desc}</p>
-
-        <div>
-          <p className="text-white/85 text-xs uppercase tracking-widest mb-3">What you get</p>
-          <ul className="grid sm:grid-cols-2 gap-2.5">
-            {service.deliverables.map((d) => (
-              <li key={d} className="flex items-start gap-2.5 text-sm text-white/90">
-                <span className={`mt-0.5 w-5 h-5 shrink-0 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center`}>
-                  <Check size={12} className="text-white" />
-                </span>
-                {d}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <p className="text-white/85 text-xs uppercase tracking-widest mb-3">Tools & stack</p>
-          <div className="flex flex-wrap gap-2">
-            {service.stack.map((s) => (
-              <span key={s} className="px-3 py-1 rounded-full text-xs text-white/90 bg-white/[0.05] border border-white/10">
-                {s}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <button
-          onClick={scrollToContact}
-          className={`group self-start inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r ${service.gradient} text-white text-sm font-semibold shadow-lg hover:shadow-xl transition-shadow`}
-        >
-          Start a project
-          <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </button>
-      </div>
-    </div>
-  );
-}
-
 export function Services() {
-  const containerRef = useRef(null);
-  const inView = useInView(containerRef, { once: true, margin: "-80px" });
-  const [active, setActive] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(containerRef, { once: true, margin: "-40px" });
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const filteredServices = services.filter(
+    (s) => activeFilter === "all" || s.category === activeFilter
+  );
 
   return (
-    <section id="services" ref={containerRef} className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
+    <section id="services" ref={containerRef} className="py-20 md:py-28 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
+        {/* Header */}
         <motion.div
-          animate={{ scale: [1, 1.15, 1], opacity: [0.04, 0.08, 0.04] }}
-          transition={{ duration: 11, repeat: Infinity }}
-          className="absolute top-1/3 left-0 w-80 h-80 bg-indigo-500 rounded-full blur-3xl"
-        />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12"
+          className="text-center mb-10 md:mb-14"
         >
-          <div>
-            <span className="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs font-bold tracking-[0.25em] uppercase">My Offerings</span>
-            <h2 className="text-white mt-4 leading-tight" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800 }}>
-              Services I Provide
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mt-4" />
-          </div>
-          <p className="text-white/95 text-sm max-w-md">
-            From idea to deployment — pick a service to see what's included and the tools I use to deliver it.
-          </p>
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1D4ED8]/10 border border-[#1D4ED8]/20 text-[#1D4ED8] text-xs font-bold tracking-[0.22em] uppercase"
+          >
+            <Sparkles size={12} className="text-[#1D4ED8]" />
+            What I Deliver
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 15 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-gray-900 mt-3 sm:mt-4 leading-tight text-3xl sm:text-4xl font-bold"
+          >
+            Services & Solutions
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto mt-2"
+          >
+            Comprehensive full-stack services engineered for performance, maintainability, and seamless user experiences.
+          </motion.p>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="w-16 h-1 bg-[#1D4ED8] rounded-full mx-auto mt-4 origin-left"
+          />
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
-          <div className="lg:col-span-5 flex flex-col gap-2" role="tablist" aria-label="Services">
-            {services.map((svc, i) => {
-              const Icon = svc.icon;
-              const isActive = active === i;
-              return (
-                <motion.div
-                  key={svc.title}
-                  initial={{ opacity: 0, x: -24 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.1 + i * 0.07 }}
-                >
-                  <button
-                    role="tab"
-                    aria-selected={isActive}
-                    onClick={() => setActive(i)}
-                    onMouseEnter={() => window.matchMedia("(min-width: 1024px)").matches && setActive(i)}
-                    className={`relative w-full text-left flex items-center gap-4 rounded-2xl px-4 py-4 border transition-colors ${
-                      isActive ? "border-white/15 bg-[#111a33]/95 backdrop-blur-md" : "border-white/5 bg-[#0b1224]/80 backdrop-blur-md hover:bg-[#0f182e]/90"
-                    }`}
-                  >
-                    {isActive && (
-                      <motion.span
-                        layoutId="service-indicator"
-                        className={`absolute left-0 top-3 bottom-3 w-1 rounded-full bg-gradient-to-b ${svc.gradient}`}
-                      />
-                    )}
-                    <span className={`text-xs font-mono w-6 ${isActive ? svc.accent : "text-white/85"}`}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all ${
-                        isActive ? `bg-gradient-to-br ${svc.gradient} text-white shadow-lg` : "bg-white/[0.05] text-white/90"
-                      }`}
-                    >
-                      <Icon size={18} />
-                    </span>
-                    <span className="flex-1 min-w-0">
-                      <span className={`block font-semibold text-sm sm:text-base transition-colors ${isActive ? "text-white" : "text-white/90"}`}>
-                        {svc.title}
-                      </span>
-                      <span className="block text-xs text-white/85 truncate">{svc.tagline}</span>
-                    </span>
-                    <ArrowUpRight
-                      size={16}
-                      className={`shrink-0 transition-all ${isActive ? `${svc.accent} rotate-45` : "text-white/80"}`}
-                    />
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isActive && (
-                      <motion.div
-                        key="mobile-detail"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="lg:hidden overflow-hidden"
-                      >
-                        <div className="pt-3 pb-2">
-                          <ServiceDetail service={svc} index={i} />
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="hidden lg:block lg:col-span-7"
-          >
-            <div>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={active}
-                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ServiceDetail service={services[active]} index={active} />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
+        {/* Category Filter Pills */}
+        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-8 sm:mb-12 no-scrollbar">
+          {categories.map((cat) => {
+            const isSelected = activeFilter === cat.id;
+            return (
+              <motion.button
+                key={cat.id}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => setActiveFilter(cat.id)}
+                className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shrink-0 cursor-pointer ${
+                  isSelected
+                    ? "bg-[#1D4ED8] text-white shadow-xs"
+                    : "bg-white text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300"
+                }`}
+              >
+                {cat.label}
+              </motion.button>
+            );
+          })}
         </div>
 
+        {/* Services Grid (Card Layout) */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16"
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 mb-12 sm:mb-16"
         >
-          <p className="text-white/85 text-xs uppercase tracking-widest text-center mb-8">How I work</p>
-          <div className="relative grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="hidden md:block absolute top-6 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-blue-500/40 via-violet-500/40 to-cyan-400/40" />
-            {process.map((step, i) => {
-              const StepIcon = step.icon;
+          <AnimatePresence>
+            {filteredServices.map((svc, idx) => {
+              const Icon = svc.icon;
               return (
-                <div key={step.title} className="relative flex flex-col items-center text-center gap-3">
-                  <div className="relative z-10 w-12 h-12 rounded-full bg-[#030712] border border-white/15 flex items-center justify-center text-cyan-400">
-                    <StepIcon size={18} />
-                    <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-xs font-bold text-white flex items-center justify-center">
-                      {i + 1}
-                    </span>
-                  </div>
+                <motion.div
+                  key={svc.id}
+                  layout
+                  initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.4, delay: idx * 0.05 }}
+                  whileHover={{ y: -6, boxShadow: "0 16px 35px -10px rgba(29, 78, 216, 0.12)" }}
+                  className="relative rounded-2xl bg-white border border-gray-200/90 p-6 sm:p-7 flex flex-col justify-between group transition-all duration-300 hover:border-[#1D4ED8]/40 shadow-xs"
+                >
                   <div>
-                    <h4 className="text-white text-sm font-semibold">{step.title}</h4>
-                    <p className="text-white/90 text-xs mt-1">{step.desc}</p>
+                    {/* Top Row: Icon + Number */}
+                    <div className="flex items-center justify-between gap-3 mb-5">
+                      <div className="w-12 h-12 rounded-xl bg-[#1D4ED8]/10 text-[#1D4ED8] flex items-center justify-center group-hover:bg-[#1D4ED8] group-hover:text-white transition-colors duration-300 shadow-xs">
+                        <Icon size={22} />
+                      </div>
+                      <span className="text-xs font-mono font-bold text-gray-400 group-hover:text-[#1D4ED8] transition-colors">
+                        {svc.number}
+                      </span>
+                    </div>
+
+                    {/* Title & Tagline */}
+                    <h3 className="text-gray-900 text-lg sm:text-xl font-bold group-hover:text-[#1D4ED8] transition-colors leading-snug">
+                      {svc.title}
+                    </h3>
+                    <p className="text-[#1D4ED8] text-xs font-semibold mt-1 mb-3">
+                      {svc.tagline}
+                    </p>
+
+                    {/* Description */}
+                    <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-5">
+                      {svc.desc}
+                    </p>
+
+                    {/* Deliverables Checklist */}
+                    <div className="space-y-2 mb-6 pt-4 border-t border-gray-100">
+                      <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-400">
+                        Deliverables
+                      </p>
+                      {svc.deliverables.map((item, dIdx) => (
+                        <div key={dIdx} className="flex items-start gap-2 text-xs text-gray-700">
+                          <CheckCircle2 size={14} className="text-[#1D4ED8] shrink-0 mt-0.5" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+
+                  {/* Bottom: Tech Stack & CTA */}
+                  <div>
+                    <div className="flex flex-wrap gap-1.5 mb-5">
+                      {svc.stack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-600 text-[11px] font-medium"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={scrollToContact}
+                      className="w-full py-2.5 px-4 rounded-xl border border-gray-200 text-gray-700 font-semibold text-xs hover:border-[#1D4ED8] hover:bg-[#1D4ED8] hover:text-white transition-all flex items-center justify-center gap-1.5 group/btn cursor-pointer"
+                    >
+                      <span>Inquire About This Service</span>
+                      <ArrowUpRight size={14} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                    </button>
+                  </div>
+                </motion.div>
               );
             })}
-          </div>
+          </AnimatePresence>
         </motion.div>
+
+        {/* Bottom Consultation Banner */}
+        <div className="rounded-2xl bg-white border border-gray-200/90 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-xs">
+          <div>
+            <p className="text-gray-900 font-bold text-base sm:text-lg">
+              Have a custom software requirement or project?
+            </p>
+            <p className="text-gray-500 text-xs sm:text-sm mt-0.5">
+              Let's discuss requirements, architecture, and timeline.
+            </p>
+          </div>
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={scrollToContact}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1D4ED8] text-white text-xs sm:text-sm font-semibold hover:bg-[#1E40AF] transition-colors shadow-xs shrink-0 cursor-pointer"
+          >
+            Get In Touch
+            <ArrowRight size={15} />
+          </motion.button>
+        </div>
       </div>
     </section>
   );

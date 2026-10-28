@@ -5,13 +5,12 @@ export function Footer() {
   const scrollTo = (id: string) => {
     const target = document.getElementById(id);
     if (!target) return;
-    
-    // Support Lenis smooth scroll or fallback to standard scroll
+
     const lenis = (window as any).lenis;
     if (lenis) {
-      lenis.scrollTo(target, { offset: -76 });
+      lenis.scrollTo(target, { offset: -80 });
     } else {
-      const yOffset = -76;
+      const yOffset = -80;
       const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
@@ -27,28 +26,30 @@ export function Footer() {
   };
 
   return (
-    <footer className="border-t border-white/[0.06] bg-[#030712]/40 backdrop-blur-sm py-14 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-12 gap-8 mb-10 items-start">
+    <footer className="border-t border-gray-200 bg-white py-12 sm:py-16 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10 items-start">
           {/* Brand Panel */}
           <div className="md:col-span-5 text-left">
-            <div className="flex items-center gap-2.5 mb-4 group cursor-pointer" onClick={scrollToTop}>
-              <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/10">
-                <span className="text-white text-xs" style={{ fontWeight: 800 }}>YG</span>
+            <div className="flex items-center gap-2.5 mb-3 group cursor-pointer" onClick={scrollToTop}>
+              <div className="relative w-9 h-9 rounded-xl bg-[#1D4ED8] flex items-center justify-center shadow-xs">
+                <span className="text-white text-xs font-bold">YG</span>
               </div>
-              <span className="text-white font-bold" style={{ fontWeight: 700 }}>
-                Yerosan Girma<span className="text-cyan-400">.</span>
+              <span className="text-gray-900 font-bold tracking-tight text-lg">
+                Yerosan Girma<span className="text-[#1D4ED8]">.</span>
               </span>
             </div>
-            <p className="text-white/95 text-sm sm:text-base leading-relaxed max-w-sm">
-              Full Stack Software Engineer building scalable, user-centric web applications. Harnessing clean code structures and modern frontend stacks.
+            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed max-w-sm">
+              Full Stack Software Engineer building scalable, user-centric web applications. Harnessing clean code structures, robust databases, and modern frontend stacks.
             </p>
           </div>
 
-          {/* Quick links Panel (removed GitHub and Tech Stack links) */}
+          {/* Quick links Panel */}
           <div className="md:col-span-4 text-left">
-            <h4 className="text-white/95 text-xs font-bold tracking-widest uppercase mb-4">Quick Links</h4>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+            <h4 className="text-gray-900 text-xs font-bold tracking-wider uppercase mb-3 sm:mb-4">
+              Navigation
+            </h4>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {[
                 { label: "Home", id: "home" },
                 { label: "About", id: "about" },
@@ -61,7 +62,7 @@ export function Footer() {
                 <button
                   key={link.id}
                   onClick={() => scrollTo(link.id)}
-                  className="text-left text-white/95 hover:text-cyan-400 text-sm sm:text-base transition-colors font-medium"
+                  className="text-left text-gray-600 hover:text-[#1D4ED8] text-xs sm:text-sm transition-colors font-medium cursor-pointer"
                 >
                   {link.label}
                 </button>
@@ -71,8 +72,10 @@ export function Footer() {
 
           {/* Connect Panel */}
           <div className="md:col-span-3 text-left flex flex-col items-start">
-            <h4 className="text-white/95 text-xs font-bold tracking-widest uppercase mb-4">Connect</h4>
-            <div className="flex gap-3 mb-6">
+            <h4 className="text-gray-900 text-xs font-bold tracking-wider uppercase mb-3 sm:mb-4">
+              Connect
+            </h4>
+            <div className="flex gap-2.5 mb-5">
               {[
                 { icon: Github, href: "https://github.com/Yerosan-Girma", label: "GitHub" },
                 { icon: Linkedin, href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", label: "LinkedIn" },
@@ -84,20 +87,21 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={soc.label}
-                  whileHover={{ y: -3, scale: 1.05 }}
-                  className="w-10 h-10 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 flex items-center justify-center text-white/90 hover:text-white hover:bg-white/[0.05] transition-all shadow-md"
+                  whileHover={{ y: -3, scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:border-gray-300 transition-colors cursor-pointer"
                 >
-                  <soc.icon size={15} />
+                  <soc.icon size={16} />
                 </motion.a>
               ))}
             </div>
 
             {/* Back to top button */}
             <motion.button
-              whileHover={{ scale: 1.03, y: -2 }}
+              whileHover={{ scale: 1.03, y: -1 }}
               whileTap={{ scale: 0.97 }}
               onClick={scrollToTop}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0b1224]/90 backdrop-blur-md border border-white/8 text-white/90 hover:text-cyan-400 transition-colors text-xs font-semibold"
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 hover:text-[#1D4ED8] hover:border-gray-300 transition-colors text-xs font-semibold cursor-pointer"
             >
               <ArrowUp size={13} /> Back to Top
             </motion.button>
@@ -105,12 +109,12 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/80 text-xs">
+        <div className="pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <p className="text-gray-500 text-xs">
             © {new Date().getFullYear()} Yerosan Girma. All rights reserved.
           </p>
-          <p className="text-white/80 text-xs flex items-center gap-1.5 font-medium">
-            Built with <Heart size={12} className="text-red-500/60 fill-red-500/50 animate-pulse" /> using React & Tailwind CSS
+          <p className="text-gray-500 text-xs flex items-center gap-1.5 font-medium">
+            Engineered with <Heart size={11} className="text-red-500 fill-red-500" /> using React, Motion & Tailwind CSS
           </p>
         </div>
       </div>

@@ -73,11 +73,11 @@ export function AnimatedBackground() {
     const techNames = [
       "React", "Node.js", "Express.js", "MongoDB", 
       "TypeScript", "JavaScript", "HTML5", "CSS3", 
-      "Tailwind CSS", "Next.js", "Docker", "Git", 
+      "Tailwind CSS", "TypeScript", "Docker", "Git", 
       "GitHub", "PostgreSQL", "MySQL", "REST APIs", 
-      "JWT Auth", "Socket.io", "Redux", "Bootstrap",
+      "JWT Auth", "WebSockets", "Context API", "Bootstrap",
       "Vite", "Prisma", "GraphQL", "Firebase",
-      "Linux", "AWS", "Figma", "Python",
+      "Linux", "AWS", "MongoDB", "Python",
       "CI/CD", "Webpack"
     ];
 

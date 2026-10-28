@@ -1,17 +1,15 @@
 import { useState, useRef } from "react";
-import { motion, AnimatePresence, useInView, useMotionValue, useSpring, useTransform } from "motion/react";
+import { motion, AnimatePresence, useInView, useScroll, useTransform } from "motion/react";
 import {
   ExternalLink,
   Github,
   X,
   CheckCircle2,
-  Search,
   ChevronLeft,
   ChevronRight,
-  Layers,
-  LayoutGrid,
-  Maximize2,
-  Lock,
+  Sparkles,
+  ArrowRight,
+  Eye,
 } from "lucide-react";
 import eLearnImage from "../image/e-learn.png";
 import kirayBetHero from "../image/kiray-bet-hero.png";
@@ -22,31 +20,36 @@ import equbImage from "../image/equb.png";
 import chatImage from "../image/chat.png";
 import cafeImage from "../image/cafe.png";
 
-const tags = ["All", "Full Stack", "Real Estate", "Real-time", "E-Commerce", "FinTech", "E-learning"];
+interface Project {
+  id: number;
+  category: "all" | "realestate" | "edtech" | "ecommerce" | "fintech";
+  title: string;
+  subtitle: string;
+  description: string;
+  tags: string[];
+  tech: string[];
+  features: string[];
+  image: string;
+  screenshots: string[];
+  demo: string;
+  github: string;
+}
 
-const getHostname = (url: string) => {
-  try {
-    if (!url || url === "#") return "project.preview";
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return "project.preview";
-  }
-};
-
-const projects = [
+const projects: Project[] = [
   {
     id: 1,
+    category: "realestate",
     title: "Kiray Bet (ኪራይ ቤት)",
     subtitle: "Ethiopia's #1 Home Rental Marketplace",
     description:
       "Ethiopia's premier home rental marketplace connecting tenants, property owners, and verified brokers across Addis Ababa and beyond. Features real-time property discovery, interactive map search, direct inquiries, role-based dashboards, and digital lease agreements.",
     tags: ["Full Stack", "Real Estate"],
-    tech: ["React", "TypeScript", "Node.js", "Express.js", "MongoDB", "Socket.io", "Tailwind CSS"],
+    tech: ["React", "TypeScript", "Node.js", "Express.js", "MongoDB", "WebSockets", "Tailwind CSS"],
     features: [
       "Verified home & apartment listings with high-resolution photo galleries",
       "Interactive map search and neighborhood exploration across Ethiopia",
       "Role-based portals: Tenant discovery, Owner property management, and Broker dashboards",
-      "Direct tenant-broker messaging and inquiry handling via Socket.io",
+      "Direct tenant-broker messaging and real-time inquiry handling",
       "Admin approval workflows for broker credentials and listings",
       "Instant digital lease generation and transparent rental pricing",
     ],
@@ -56,15 +59,12 @@ const projects = [
       kirayBetListings,
       kirayBetFeatures,
     ],
-    color: "from-amber-500 to-orange-600",
-    accent: "#F59E0B",
-    glow: "shadow-amber-500/25",
-    border: "hover:border-amber-500/60",
     demo: "https://kiray-bet-wine.vercel.app",
     github: "https://github.com/Yerosan-Girma/Kiray-bet",
   },
   {
     id: 2,
+    category: "edtech",
     title: "E-Learning Platform",
     subtitle: "Comprehensive Online Education & Certification",
     description:
@@ -82,21 +82,18 @@ const projects = [
     screenshots: [
       eLearnImage,
     ],
-    color: "from-blue-600 to-indigo-700",
-    accent: "#3B82F6",
-    glow: "shadow-blue-500/25",
-    border: "hover:border-blue-500/60",
     demo: "https://e-learning-three-phi.vercel.app/",
     github: "https://github.com/Yerosan-Girma/E-leraning",
   },
   {
     id: 3,
+    category: "ecommerce",
     title: "MarketHub — Multi-Vendor E-Commerce",
     subtitle: "Multi-Storefront Marketplace & Seller Dashboard",
     description:
       "A full-featured multi-vendor marketplace platform enabling sellers to manage their own storefronts, products, and incoming orders. Features include vendor analytics dashboards, real-time catalog search, shopping cart, Stripe payment processing, and admin management.",
     tags: ["Full Stack", "E-Commerce"],
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "Redux Toolkit", "Stripe"],
+    tech: ["React", "Node.js", "Express.js", "MongoDB", "Context API", "Stripe"],
     features: [
       "Multi-vendor marketplace with custom seller dashboard panels",
       "Product catalog with dynamic category filters & instant search",
@@ -108,24 +105,21 @@ const projects = [
     screenshots: [
       ecommerceImage,
     ],
-    color: "from-violet-600 to-purple-700",
-    accent: "#8B5CF6",
-    glow: "shadow-violet-500/25",
-    border: "hover:border-violet-500/60",
     demo: "https://e-commerce-navy-mu-90.vercel.app/",
     github: "https://github.com/Yerosan-Girma/E-commerce",
   },
   {
     id: 4,
+    category: "fintech",
     title: "WabiSeminar — Real-Time Meeting & Chat",
     subtitle: "Live Webcast & Seminar Communication App",
     description:
       "A real-time communication platform engineered for live seminar events and masterclasses. Enables instant room creation, live video & text messaging via WebSockets, attendee presence tracking, and feedback collection.",
     tags: ["Full Stack", "Real-time"],
-    tech: ["React", "Node.js", "Socket.io", "MongoDB", "Express.js", "JWT", "Tailwind CSS"],
+    tech: ["React", "Node.js", "WebSockets", "MongoDB", "Express.js", "JWT", "Tailwind CSS"],
     features: [
       "Instant meeting room creation and custom join links",
-      "Low-latency real-time chat & signaling powered by Socket.io",
+      "Low-latency real-time chat & signaling powered by WebSockets",
       "Live user presence, attendee badges, and active typing indicators",
       "Secure authentication, participant permissions, and seminar controls",
     ],
@@ -133,15 +127,12 @@ const projects = [
     screenshots: [
       chatImage,
     ],
-    color: "from-pink-600 to-rose-700",
-    accent: "#E11D48",
-    glow: "shadow-pink-500/25",
-    border: "hover:border-pink-500/60",
     demo: "https://wabiskills-seminar-1.onrender.com",
     github: "https://github.com/Yerosan-Girma/Wabiskills-Seminar",
   },
   {
     id: 5,
+    category: "fintech",
     title: "Digital Equb (ዲጂታል እቁብ)",
     subtitle: "Modern Ethiopian Fintech Savings Circle",
     description:
@@ -158,20 +149,17 @@ const projects = [
     screenshots: [
       equbImage,
     ],
-    color: "from-teal-600 to-cyan-700",
-    accent: "#0891B2",
-    glow: "shadow-teal-500/25",
-    border: "hover:border-teal-500/60",
     demo: "https://digitaequb.onrender.com",
     github: "https://github.com/Yerosan-Girma/Digital-equb",
   },
   {
     id: 6,
+    category: "all",
     title: "Haven Cafe & Bistro",
     subtitle: "Artisan Coffeehouse & Table Reservation Web App",
     description:
       "An elegant modern cafe website featuring artisan coffee story showcases, interactive menu browsing by categories, online ordering, and seamless table reservation booking with high responsiveness across all devices.",
-    tags: ["Full Stack"],
+    tags: ["Full Stack", "Hospitality"],
     tech: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
     features: [
       "Interactive categorized menu with rich culinary photos and prices",
@@ -183,42 +171,30 @@ const projects = [
     screenshots: [
       cafeImage,
     ],
-    color: "from-amber-600 to-orange-700",
-    accent: "#F59E0B",
-    glow: "shadow-amber-500/25",
-    border: "hover:border-amber-500/60",
     demo: "https://haven-cafe-five.vercel.app",
     github: "https://github.com/Yerosan-Girma/Cafe",
   },
 ];
 
+const projectFilters = [
+  { id: "all", label: "All Projects" },
+  { id: "realestate", label: "Real Estate" },
+  { id: "edtech", label: "E-Learning" },
+  { id: "ecommerce", label: "E-Commerce" },
+  { id: "fintech", label: "FinTech & Real-Time" },
+];
+
 // Screenshot Carousel Component inside the Modal
-function ScreenshotsCarousel({ images, demoUrl }: { images: string[]; demoUrl: string }) {
+function ScreenshotsCarousel({ images }: { images: string[] }) {
   const [index, setIndex] = useState(0);
 
   const prev = () => setIndex((i) => (i === 0 ? images.length - 1 : i - 1));
   const next = () => setIndex((i) => (i === images.length - 1 ? 0 : i + 1));
 
   return (
-    <div className="flex flex-col bg-[#060B17] border-b border-white/10">
-      {/* Top Browser Bar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-[#040711] border-b border-white/10 select-none">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-rose-500/90" />
-          <div className="w-3 h-3 rounded-full bg-amber-500/90" />
-          <div className="w-3 h-3 rounded-full bg-emerald-500/90" />
-        </div>
-        <div className="flex items-center gap-2 px-4 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs text-slate-300 font-mono">
-          <Lock size={11} className="text-emerald-400" />
-          <span>{getHostname(demoUrl)}</span>
-        </div>
-        <div className="text-xs text-slate-400 font-mono">
-          {index + 1} / {images.length}
-        </div>
-      </div>
-
+    <div className="flex flex-col bg-gray-100 border-b border-gray-200">
       {/* Main Image Stage */}
-      <div className="relative h-72 sm:h-96 md:h-[460px] w-full overflow-hidden bg-slate-950 flex items-center justify-center">
+      <div className="relative h-60 sm:h-80 md:h-[400px] w-full overflow-hidden bg-gray-900 flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.img
             key={index}
@@ -235,37 +211,43 @@ function ScreenshotsCarousel({ images, demoUrl }: { images: string[]; demoUrl: s
         {/* Prev / Next controls */}
         {images.length > 1 && (
           <>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               onClick={prev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/75 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/95 transition-all shadow-2xl"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur-md border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-white transition-all shadow-md cursor-pointer"
               aria-label="Previous image"
             >
-              <ChevronLeft size={22} />
-            </button>
-            <button
+              <ChevronLeft size={20} />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               onClick={next}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/75 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/95 transition-all shadow-2xl"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur-md border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-white transition-all shadow-md cursor-pointer"
               aria-label="Next image"
             >
-              <ChevronRight size={22} />
-            </button>
+              <ChevronRight size={20} />
+            </motion.button>
           </>
         )}
       </div>
 
       {/* Thumbnail Selector Row if more than 1 image */}
       {images.length > 1 && (
-        <div className="flex gap-2.5 p-3 bg-[#040814] border-t border-white/10 overflow-x-auto justify-center">
+        <div className="flex gap-2 p-2.5 bg-gray-50 border-t border-gray-200 overflow-x-auto justify-center">
           {images.map((img, i) => (
-            <button
+            <motion.button
               key={i}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setIndex(i)}
-              className={`relative h-14 w-24 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${
-                index === i ? "border-cyan-400 ring-2 ring-cyan-400/40" : "border-white/15 opacity-55 hover:opacity-100"
+              className={`relative h-12 w-20 rounded-md overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                index === i ? "border-[#1D4ED8]" : "border-gray-200 opacity-60 hover:opacity-100"
               }`}
             >
               <img src={img} alt={`Thumb ${i + 1}`} className="w-full h-full object-cover object-top" />
-            </button>
+            </motion.button>
           ))}
         </div>
       )}
@@ -274,7 +256,7 @@ function ScreenshotsCarousel({ images, demoUrl }: { images: string[]; demoUrl: s
 }
 
 // Modal Detail View
-function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () => void }) {
+function Modal({ project, onClose }: { project: Project; onClose: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -283,39 +265,41 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
       onClick={onClose}
     >
-      <div className="absolute inset-0 bg-black/85 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-gray-950/70 backdrop-blur-sm" />
       <motion.div
-        initial={{ scale: 0.92, y: 30, opacity: 0 }}
+        initial={{ scale: 0.94, y: 25, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
-        exit={{ scale: 0.92, y: 30, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 240, damping: 25 }}
-        className="relative max-w-4xl w-full bg-[#080E1E] border border-slate-700/80 rounded-2xl overflow-hidden shadow-2xl z-10 max-h-[92vh] flex flex-col"
+        exit={{ scale: 0.94, y: 25, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 26 }}
+        className="relative max-w-4xl w-full bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2xl z-10 max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Screenshots Carousel */}
-        <ScreenshotsCarousel images={project.screenshots || [project.image]} demoUrl={project.demo} />
+        <ScreenshotsCarousel images={project.screenshots || [project.image]} />
 
-        {/* Modal Close */}
-        <button
+        {/* Modal Close Button */}
+        <motion.button
+          whileHover={{ scale: 1.1, rotate: 90 }}
+          whileTap={{ scale: 0.9 }}
           onClick={onClose}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition-colors z-20 shadow-lg"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/95 backdrop-blur-md border border-gray-200 flex items-center justify-center text-gray-700 hover:text-gray-900 transition-colors z-20 shadow-md cursor-pointer"
           aria-label="Close modal"
         >
           <X size={18} />
-        </button>
+        </motion.button>
 
         {/* Modal body (scrollable) */}
-        <div className="p-6 sm:p-8 overflow-y-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div className="p-5 sm:p-7 overflow-y-auto space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-white text-2xl font-bold tracking-tight">{project.title}</h3>
-              <p className="text-cyan-400 text-sm sm:text-base font-medium mt-0.5">{project.subtitle}</p>
+              <h3 className="text-gray-900 text-xl sm:text-2xl font-bold tracking-tight">{project.title}</h3>
+              <p className="text-[#1D4ED8] text-xs sm:text-sm font-semibold mt-0.5">{project.subtitle}</p>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {project.tags.map((t) => (
                 <span
                   key={t}
-                  className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold"
+                  className="px-2.5 py-1 rounded-full bg-[#1D4ED8]/10 border border-[#1D4ED8]/20 text-[#1D4ED8] text-xs font-semibold"
                 >
                   {t}
                 </span>
@@ -323,27 +307,34 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
             </div>
           </div>
 
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">{project.description}</p>
+          <p className="text-gray-600 text-xs sm:text-sm sm:leading-relaxed">
+            {project.description}
+          </p>
 
-          <div className="mb-6">
-            <p className="text-white/90 text-xs font-bold uppercase tracking-widest mb-3">Key Features & Architecture</p>
-            <ul className="grid sm:grid-cols-2 gap-2.5">
-              {project.features.map((f) => (
-                <li key={f} className="flex items-start gap-2.5 text-sm sm:text-base text-slate-300 bg-[#0b1224]/90 backdrop-blur-md border border-white/5 p-3 rounded-xl">
-                  <CheckCircle2 size={16} className="shrink-0 mt-0.5" style={{ color: project.accent }} />
+          <div>
+            <p className="text-gray-900 text-xs font-bold uppercase tracking-wider mb-2.5">
+              Key Features & Implementation
+            </p>
+            <ul className="grid sm:grid-cols-2 gap-2">
+              {project.features.map((f, idx) => (
+                <li
+                  key={idx}
+                  className="flex items-start gap-2 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200/80 p-2.5 rounded-lg"
+                >
+                  <CheckCircle2 size={15} className="shrink-0 mt-0.5 text-[#1D4ED8]" />
                   <span>{f}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="mb-8">
-            <p className="text-white/90 text-xs font-bold uppercase tracking-widest mb-3">Technologies Applied</p>
-            <div className="flex flex-wrap gap-2">
+          <div>
+            <p className="text-gray-900 text-xs font-bold uppercase tracking-wider mb-2.5">Technologies Used</p>
+            <div className="flex flex-wrap gap-1.5">
               {project.tech.map((t) => (
                 <span
                   key={t}
-                  className="px-3 py-1.5 rounded-lg bg-[#111A30] border border-slate-700 text-cyan-300 text-xs font-mono font-medium"
+                  className="px-2.5 py-1 rounded-md bg-gray-100 border border-gray-200 text-gray-700 text-xs font-mono font-medium"
                 >
                   {t}
                 </span>
@@ -352,26 +343,30 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
           </div>
 
           {/* Action Links */}
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 pt-3 border-t border-gray-100">
             {project.demo !== "#" && (
-              <a
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex-1 py-3.5 rounded-xl bg-gradient-to-r ${project.color} text-white text-sm font-bold text-center flex items-center justify-center gap-2 hover:opacity-95 shadow-lg shadow-cyan-500/20 transition-all`}
+                className="flex-1 py-3 rounded-lg bg-[#1D4ED8] text-white text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2 hover:bg-[#1E40AF] transition-colors shadow-sm"
               >
-                <ExternalLink size={16} /> Open Live Website
-              </a>
+                <ExternalLink size={15} /> Open Live Website
+              </motion.a>
             )}
             {project.github !== "#" && (
-              <a
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-3.5 rounded-xl bg-[#111A30] border border-slate-700 text-slate-200 hover:text-white text-sm font-semibold text-center flex items-center justify-center gap-2 hover:bg-[#162240] transition-all"
+                className="flex-1 py-3 rounded-lg bg-white border border-gray-300 text-gray-700 hover:text-gray-900 text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2 hover:border-gray-400 transition-colors shadow-sm"
               >
-                <Github size={16} /> View Source Code
-              </a>
+                <Github size={15} /> View Source Code
+              </motion.a>
             )}
           </div>
         </div>
@@ -380,195 +375,117 @@ function Modal({ project, onClose }: { project: typeof projects[0]; onClose: () 
   );
 }
 
-// Project Item Card with clean browser mockup frame and bold display
+// Project Item Card
 function ProjectCard({
   project,
   onClick,
   index,
-  isExpanded = false,
 }: {
-  project: typeof projects[0];
+  project: Project;
   onClick: () => void;
   index: number;
-  isExpanded?: boolean;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  
-  // Spring vectors for card tilt
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 220, damping: 22 });
-  const sy = useSpring(y, { stiffness: 220, damping: 22 });
-
-  const rotateX = useTransform(sy, [-0.5, 0.5], [4, -4]);
-  const rotateY = useTransform(sx, [-0.5, 0.5], [-4, 4]);
-
-  const handleMove = (e: React.MouseEvent) => {
-    const card = ref.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  const hostname = getHostname(project.demo);
-
   return (
     <motion.div
-      ref={ref}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      initial={{ opacity: 0, y: 35 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.45, delay: index * 0.06 }}
-      style={{ rotateX, rotateY, transformPerspective: 900 }}
-      className={`group relative rounded-2xl bg-[#0B1224] border border-slate-800 hover:border-cyan-500/60 overflow-hidden cursor-pointer transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/10 flex flex-col`}
+      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, delay: index * 0.08, type: "spring", stiffness: 130 }}
+      whileHover={{ y: -6, boxShadow: "0 16px 35px -10px rgba(29, 78, 216, 0.14)" }}
+      whileTap={{ scale: 0.99 }}
+      className="group relative rounded-2xl bg-white border border-gray-200/90 overflow-hidden cursor-pointer transition-all duration-300 flex flex-col shadow-xs"
       onClick={onClick}
     >
-      {/* Top Browser Chrome Mockup Bar */}
-      <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#060A14] border-b border-white/10 select-none">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-rose-500/90" />
-          <div className="w-2.5 h-2.5 rounded-full bg-amber-500/90" />
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/90" />
-        </div>
-        <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-xs text-slate-300 font-mono">
-          <Lock size={10} className="text-emerald-400 shrink-0" />
-          <span className="truncate max-w-[150px] sm:max-w-[200px]">{hostname}</span>
-        </div>
-        <div className="flex items-center gap-1.5 text-slate-400">
-          <span className="text-xs uppercase font-bold tracking-wider opacity-60">Live</span>
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-        </div>
-      </div>
-
-      {/* Website Screenshot Preview Frame (Full Visibility, No Dimming!) */}
-      <div className={`relative ${isExpanded ? "h-72 sm:h-84 lg:h-96" : "h-56 sm:h-64"} overflow-hidden bg-slate-950/80`}>
+      {/* Image with zoom on hover */}
+      <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
         <motion.img
-          whileHover={{ scale: 1.03 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          whileHover={{ scale: 1.06 }}
+          transition={{ duration: 0.4 }}
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover object-top filter brightness-[1.02] contrast-[1.03]"
+          className="w-full h-full object-cover object-top"
+          loading="lazy"
         />
+
+        {/* View Details Overlay */}
+        <div className="absolute inset-0 bg-gray-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <span className="px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-gray-900 text-xs font-semibold flex items-center gap-1.5 shadow-md">
+            <Eye size={13} /> View Details
+          </span>
+        </div>
 
         {/* Top Badges */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 pointer-events-none">
           {project.tags.map((t) => (
             <span
               key={t}
-              className="px-2.5 py-1 rounded-md bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-md"
+              className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-gray-200/80 text-gray-800 text-[11px] font-semibold shadow-xs"
             >
               {t}
             </span>
           ))}
         </div>
-
-        {/* Hover Quick Action Buttons */}
-        <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 p-4 pointer-events-none group-hover:pointer-events-auto">
-          {project.demo !== "#" && (
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-cyan-500/30 transition-transform hover:scale-105"
-            >
-              <ExternalLink size={13} /> Visit Site
-            </a>
-          )}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onClick();
-            }}
-            className="px-4 py-2 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-md text-white border border-white/25 text-xs font-bold flex items-center gap-1.5 transition-transform hover:scale-105"
-          >
-            <Maximize2 size={13} /> Inspect Page
-          </button>
-        </div>
       </div>
 
-      {/* Card Content body */}
-      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+      {/* Content */}
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
         <div>
-          <div className="flex items-start justify-between gap-3 mb-2">
-            <h3 className="text-white text-base sm:text-lg font-bold group-hover:text-cyan-400 transition-colors leading-snug">
-              {project.title}
-            </h3>
-            <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${project.color} flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5`}>
-              <Layers size={13} />
-            </div>
-          </div>
-
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-4 line-clamp-3">
+          <h3 className="text-gray-900 text-lg sm:text-xl font-bold mb-1 group-hover:text-[#1D4ED8] transition-colors leading-snug">
+            {project.title}
+          </h3>
+          <p className="text-gray-500 text-xs sm:text-sm mb-2.5 font-medium">{project.subtitle}</p>
+          <p className="text-gray-600 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-3.5">
             {project.description}
           </p>
 
-          {/* Tech tags list */}
-          <div className="flex flex-wrap gap-1.5 mb-5">
+          {/* Tech tags */}
+          <div className="flex flex-wrap gap-1.5 mb-4">
             {project.tech.slice(0, 4).map((t) => (
               <span
                 key={t}
-                className="px-2.5 py-1 rounded-md bg-[#131C35] border border-slate-700/80 text-cyan-300 text-xs font-mono font-medium"
+                className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-600 text-[11px] font-medium"
               >
                 {t}
               </span>
             ))}
             {project.tech.length > 4 && (
-              <span className="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-slate-400 text-xs font-mono">
+              <span className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-500 text-[11px]">
                 +{project.tech.length - 4}
               </span>
             )}
           </div>
         </div>
 
-        {/* Card bottom action buttons */}
-        <div className="flex items-center gap-2.5 pt-3 border-t border-white/10">
-          {project.demo !== "#" ? (
-            <a
+        {/* Links */}
+        <div className="flex gap-2 pt-2 border-t border-gray-100">
+          {project.demo !== "#" && (
+            <motion.a
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className={`flex-1 py-2.5 rounded-xl bg-gradient-to-r ${project.color} text-white text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-md hover:opacity-95 hover:shadow-lg transition-all`}
+              className="flex-1 py-2 rounded-lg bg-[#1D4ED8] text-white text-xs font-semibold text-center hover:bg-[#1E40AF] transition-colors shadow-xs flex items-center justify-center gap-1.5"
             >
-              <ExternalLink size={13} /> Live Demo
-            </a>
-          ) : (
-            <span className="flex-1 py-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-500 text-xs font-medium text-center">
-              Internal Demo
-            </span>
+              Live Demo
+              <ExternalLink size={12} />
+            </motion.a>
           )}
-
           {project.github !== "#" && (
-            <a
+            <motion.a
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="flex-1 py-2.5 rounded-xl bg-[#131C35] border border-slate-700 hover:border-slate-500 text-slate-200 hover:text-white text-xs font-semibold text-center flex items-center justify-center gap-1.5 transition-all"
+              className="flex-1 py-2 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-xs font-semibold text-center hover:bg-gray-200 transition-colors shadow-xs flex items-center justify-center gap-1.5"
             >
-              <Github size={13} /> GitHub
-            </a>
+              GitHub
+              <Github size={12} />
+            </motion.a>
           )}
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onClick();
-            }}
-            className="px-3.5 py-2.5 rounded-xl bg-[#131C35] border border-slate-700 hover:border-cyan-500/50 text-slate-300 hover:text-white text-xs font-medium transition-all"
-            title="Screenshots & Details"
-          >
-            <Maximize2 size={13} />
-          </button>
         </div>
       </div>
     </motion.div>
@@ -576,142 +493,98 @@ function ProjectCard({
 }
 
 export function Projects() {
-  const [activeTag, setActiveTag] = useState("All");
-  const [search, setSearch] = useState("");
-  const [viewMode, setViewMode] = useState<"grid" | "showcase">("grid");
-  const [selected, setSelected] = useState<typeof projects[0] | null>(null);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
-  // Filtering + Searching logic
-  const filtered = projects.filter((p) => {
-    const matchesTag = activeTag === "All" || p.tags.includes(activeTag);
-    const matchesSearch =
-      p.title.toLowerCase().includes(search.toLowerCase()) ||
-      p.description.toLowerCase().includes(search.toLowerCase()) ||
-      p.tech.some((t) => t.toLowerCase().includes(search.toLowerCase()));
-    return matchesTag && matchesSearch;
+  const [selected, setSelected] = useState<Project | null>(null);
+  const [activeFilter, setActiveFilter] = useState("all");
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
   });
+  const opacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0, 1, 1, 0.2]);
+  const y = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [40, 0, 0, -30]);
+
+  const filteredProjects = projects.filter(
+    (p) => activeFilter === "all" || p.category === activeFilter
+  );
 
   return (
-    <section id="projects" ref={ref} className="py-24 relative overflow-hidden">
-      {/* Subtle section glow behind */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-0 w-96 h-96 bg-blue-500/[0.03] rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-cyan-500/[0.03] rounded-full blur-3xl" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+    <section id="projects" ref={ref} className="py-20 md:py-28 relative overflow-hidden">
+      <motion.div style={{ opacity, y }} className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-10 md:mb-14"
         >
-          <span className="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-cyan-300 text-xs font-bold tracking-[0.25em] uppercase">Web Portfolio</span>
-          <h2 className="text-white mt-4 leading-tight" style={{ fontSize: "clamp(2rem, 3.5vw, 2.75rem)", fontWeight: 800 }}>
-            Featured Web Applications
-          </h2>
-          <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mt-3">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1D4ED8]/10 border border-[#1D4ED8]/20 text-[#1D4ED8] text-xs font-bold tracking-[0.22em] uppercase"
+          >
+            <Sparkles size={12} className="text-[#1D4ED8]" />
+            Portfolio
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 15 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-gray-900 mt-3 sm:mt-4 leading-tight"
+          >
+            Featured Projects
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto mt-2"
+          >
             Explore live deployed web platforms with real landing pages, role-based dashboards, and interactive features.
-          </p>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-400 rounded-full mx-auto mt-5" />
+          </motion.p>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={inView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="w-16 h-1 bg-[#1D4ED8] rounded-full mx-auto mt-4 origin-left"
+          />
         </motion.div>
 
-        {/* Filter controls + View Mode row */}
-        <div className="flex flex-col lg:flex-row gap-4 items-center justify-between mb-10">
-          {/* Category Tabs */}
-          <div className="flex flex-wrap gap-2 justify-center">
-            {tags.map((tag) => (
+        {/* Filter Pills */}
+        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-8 sm:mb-10 no-scrollbar">
+          {projectFilters.map((f) => {
+            const isSelected = activeFilter === f.id;
+            return (
               <motion.button
-                key={tag}
-                onClick={() => setActiveTag(tag)}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition-all ${
-                  activeTag === tag
-                    ? "bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 text-slate-950 shadow-lg shadow-cyan-500/25"
-                    : "bg-[#0B1224] border border-slate-800 text-slate-300 hover:text-white hover:border-slate-600"
+                key={f.id}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => setActiveFilter(f.id)}
+                className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all shrink-0 cursor-pointer ${
+                  isSelected
+                    ? "bg-[#1D4ED8] text-white shadow-xs"
+                    : "bg-white text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300"
                 }`}
               >
-                {tag}
+                {f.label}
               </motion.button>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3 w-full lg:w-auto justify-center">
-            {/* View Mode Switcher */}
-            <div className="flex items-center p-1 rounded-full bg-[#0B1224] border border-slate-800">
-              <button
-                onClick={() => setViewMode("grid")}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                  viewMode === "grid" ? "bg-cyan-500 text-slate-950 font-bold shadow-sm" : "text-slate-400 hover:text-white"
-                }`}
-                title="Grid layout (3 columns)"
-              >
-                <LayoutGrid size={13} /> Grid
-              </button>
-              <button
-                onClick={() => setViewMode("showcase")}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                  viewMode === "showcase" ? "bg-cyan-500 text-slate-950 font-bold shadow-sm" : "text-slate-400 hover:text-white"
-                }`}
-                title="Showcase layout (Expanded 2 columns for large view)"
-              >
-                <Maximize2 size={13} /> Showcase
-              </button>
-            </div>
-
-            {/* Search bar */}
-            <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search projects or tech..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-full bg-[#0B1224] border border-slate-800 focus:border-cyan-400 text-white placeholder-slate-500 text-xs outline-none transition-all"
-              />
-            </div>
-          </div>
+            );
+          })}
         </div>
 
         {/* Projects grid */}
-        <AnimatePresence mode="wait">
-          {filtered.length > 0 ? (
-            <motion.div
-              key={`${activeTag}-${search}-${viewMode}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className={
-                viewMode === "showcase"
-                  ? "grid grid-cols-1 lg:grid-cols-2 gap-8"
-                  : "grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-              }
-            >
-              {filtered.map((project, idx) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  onClick={() => setSelected(project)}
-                  index={idx}
-                  isExpanded={viewMode === "showcase"}
-                />
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20 bg-[#0B1224] border border-slate-800 rounded-2xl text-slate-400 text-sm font-mono"
-            >
-              No projects found matching search constraints.
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+          {filteredProjects.map((project, idx) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              onClick={() => setSelected(project)}
+              index={idx}
+            />
+          ))}
+        </div>
+      </motion.div>
 
       {/* Modal Detail Screen */}
       <AnimatePresence>
