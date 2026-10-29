@@ -164,8 +164,8 @@ export function Skills() {
   });
 
   return (
-    <section id="skills" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+    <section id="skills" ref={ref} className="py-14 sm:py-18 lg:py-20 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="04"

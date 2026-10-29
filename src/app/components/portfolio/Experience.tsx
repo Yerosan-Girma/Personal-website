@@ -173,8 +173,8 @@ export function Experience() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="experience" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+    <section id="experience" ref={ref} className="py-14 sm:py-18 lg:py-20 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="05"

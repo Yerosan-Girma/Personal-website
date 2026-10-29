@@ -550,11 +550,11 @@ export function Projects() {
   });
 
   return (
-    <section id="projects" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+    <section id="projects" ref={ref} className="py-14 sm:py-18 lg:py-20 relative overflow-hidden">
       {/* Background radial highlight */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[1000px] max-h-[1000px] bg-blue-600/5 dark:bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="01"

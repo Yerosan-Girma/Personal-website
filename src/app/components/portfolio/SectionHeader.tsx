@@ -28,7 +28,7 @@ export function SectionHeader({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className={`mb-12 sm:mb-16 md:mb-20 ${
+      className={`mb-8 sm:mb-10 md:mb-12 ${
         isCenter ? "text-center flex flex-col items-center" : "text-left"
       } ${className}`}
     >

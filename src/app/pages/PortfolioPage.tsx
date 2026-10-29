@@ -11,7 +11,6 @@ import { Services } from "../components/portfolio/Services";
 import { Skills } from "../components/portfolio/Skills";
 import { Projects } from "../components/portfolio/Projects";
 import { Experience } from "../components/portfolio/Experience";
-import { GithubSection } from "../components/portfolio/GithubSection";
 import { Contact } from "../components/portfolio/Contact";
 import { Footer } from "../components/portfolio/Footer";
 import { CustomCursor } from "../components/portfolio/CustomCursor";
@@ -21,13 +20,13 @@ import { useTheme } from "../context/ThemeContext";
 // ── Animated Section Divider ──
 function SectionDivider() {
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 my-4 sm:my-8 pointer-events-none">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 my-1 sm:my-2 pointer-events-none">
       <motion.div
         initial={{ scaleX: 0, opacity: 0 }}
         whileInView={{ scaleX: 1, opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.9, ease: "easeOut" }}
-        className="h-px bg-gradient-to-r from-transparent via-blue-500/20 dark:via-cyan-400/20 to-transparent origin-center"
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="h-px bg-gradient-to-r from-transparent via-blue-500/25 dark:via-cyan-400/25 to-transparent origin-center"
       />
     </div>
   );
@@ -108,7 +107,10 @@ export function PortfolioPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#080A10] text-slate-900 dark:text-white overflow-x-hidden selection:bg-blue-500/20 dark:selection:bg-cyan-400/25 relative transition-colors duration-300">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#060814] text-slate-900 dark:text-white overflow-x-hidden selection:bg-blue-500/20 dark:selection:bg-cyan-400/25 relative transition-colors duration-300">
+      {/* Continuous Subtle Tech Grid across all pages to eliminate empty black voids */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-[linear-gradient(to_right,rgba(37,99,235,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(37,99,235,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] opacity-70" />
+
       {/* Custom Follow Cursor */}
       <CustomCursor />
 
@@ -125,9 +127,9 @@ export function PortfolioPage() {
       <div
         className="fixed inset-0 pointer-events-none z-0 transition-opacity duration-300 hidden md:block"
         style={{
-          background: `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, ${
-            isDark ? "rgba(56, 189, 248, 0.05)" : "rgba(29, 78, 216, 0.04)"
-          }, transparent 80%)`,
+          background: `radial-gradient(700px circle at ${mousePos.x}px ${mousePos.y}px, ${
+            isDark ? "rgba(56, 189, 248, 0.06)" : "rgba(29, 78, 216, 0.04)"
+          }, transparent 75%)`,
         }}
       />
 
@@ -144,7 +146,7 @@ export function PortfolioPage() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-blue-500/5 dark:bg-blue-600/10 blur-3xl"
+          className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-3xl"
         />
         <motion.div
           animate={{
@@ -157,7 +159,7 @@ export function PortfolioPage() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-2/3 -right-32 w-[420px] h-[420px] rounded-full bg-indigo-500/5 dark:bg-cyan-500/10 blur-3xl"
+          className="absolute top-2/3 -right-32 w-[420px] h-[420px] rounded-full bg-indigo-500/10 dark:bg-cyan-500/15 blur-3xl"
         />
       </div>
 
@@ -183,9 +185,6 @@ export function PortfolioPage() {
 
         <SectionDivider />
         <Experience />
-
-        <SectionDivider />
-        <GithubSection />
 
         <SectionDivider />
         <Contact />

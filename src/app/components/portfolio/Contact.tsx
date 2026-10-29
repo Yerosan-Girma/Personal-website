@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Copy, Check, Loader2, Sparkles, MessageSquare } from "lucide-react";
-import emailjs from "@emailjs/browser";
 import confetti from "canvas-confetti";
 import { SectionHeader } from "./SectionHeader";
 
@@ -26,11 +25,9 @@ const contactLinks = [
   { icon: MapPin, label: "Location", href: "https://maps.google.com/?q=Addis+Ababa,+Ethiopia", desc: "Addis Ababa, Ethiopia" },
 ];
 
-const emailJsConfig = {
-  serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-  templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-  publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-};
+// Free Web3Forms access key (no expiration, directly sends to yerosang463@gmail.com)
+const WEB3FORMS_ACCESS_KEY =
+  import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "5114320f-8202-46c0-a706-f21bc385f91a";
 
 export function Contact() {
   const ref = useRef<HTMLDivElement>(null);
@@ -39,6 +36,7 @@ export function Contact() {
   const [form, setForm] = useState<FormData>({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const [focused, setFocused] = useState({ name: false, email: false, subject: false, message: false });
   const [copiedEmail, setCopiedEmail] = useState(false);
 
@@ -51,7 +49,7 @@ export function Contact() {
     if (!form.email.trim()) errs.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = "Invalid email address";
     if (!form.subject.trim()) errs.subject = "Subject is required";
-    if (form.message.trim().length < 15) errs.message = "Message must be at least 15 characters";
+    if (form.message.trim().length < 5) errs.message = "Message must be at least 5 characters";
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -62,15 +60,40 @@ export function Contact() {
     setTimeout(() => setCopiedEmail(false), 2400);
   };
 
+  const handleDirectEmail = () => {
+    const subject = encodeURIComponent(form.subject || "Project Inquiry");
+    const body = encodeURIComponent(
+      `Hi Yerosan,\n\n${form.message || ""}\n\nBest regards,\n${form.name || "Client"}\n${form.email || ""}`
+    );
+    window.open(`mailto:yerosang463@gmail.com?subject=${subject}&body=${body}`, "_blank");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
     setStatus("loading");
+    setErrorMessage("");
 
     try {
-      if (!emailJsConfig.serviceId || !emailJsConfig.templateId || !emailJsConfig.publicKey) {
-        // Fallback simulation for local/dev preview
-        await new Promise((r) => setTimeout(r, 1200));
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name: form.name,
+          email: form.email,
+          subject: form.subject || "Portfolio Contact Inquiry",
+          message: form.message,
+          from_name: `${form.name} (Portfolio Inquiry)`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
         setStatus("success");
         confetti({
           particleCount: 50,
@@ -79,43 +102,24 @@ export function Contact() {
           colors: ["#1D4ED8", "#38BDF8", "#10B981", "#6366F1"],
         });
         setForm({ name: "", email: "", subject: "", message: "" });
-        setTimeout(() => setStatus("idle"), 5000);
-        return;
+        setTimeout(() => setStatus("idle"), 6000);
+      } else {
+        throw new Error(data.message || "Failed to deliver message via Web3Forms.");
       }
-
-      const templateParams = {
-        from_name: form.name,
-        from_email: form.email,
-        subject: form.subject,
-        message: form.message,
-        to_name: "Yerosan Girma",
-        to_email: "yerosang463@gmail.com",
-      };
-
-      await emailjs.send(emailJsConfig.serviceId, emailJsConfig.templateId, templateParams, emailJsConfig.publicKey);
-      setStatus("success");
-      confetti({
-        particleCount: 50,
-        spread: 70,
-        origin: { y: 0.7 },
-        colors: ["#1D4ED8", "#38BDF8", "#10B981", "#6366F1"],
-      });
-      setForm({ name: "", email: "", subject: "", message: "" });
-      setTimeout(() => setStatus("idle"), 5000);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Email sending failed:", error);
+      setErrorMessage(error?.message || "Failed to send through automated gateway.");
       setStatus("error");
-      setTimeout(() => setStatus("idle"), 5000);
     }
   };
 
   return (
-    <section id="contact" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+    <section id="contact" ref={ref} className="py-14 sm:py-18 lg:py-20 relative overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 -right-24 w-96 h-96 bg-blue-600/10 dark:bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 -left-24 w-96 h-96 bg-indigo-600/10 dark:bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="07"
@@ -386,10 +390,31 @@ export function Contact() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs sm:text-sm flex items-center gap-2.5"
+                    className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs sm:text-sm space-y-3"
                   >
-                    <AlertCircle size={18} className="shrink-0 text-rose-600 dark:text-rose-400" />
-                    <span>Something went wrong while delivering the email. Please reach out directly at yerosang463@gmail.com.</span>
+                    <div className="flex items-start gap-2.5">
+                      <AlertCircle size={18} className="shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="font-semibold">Unable to deliver message through automated API:</p>
+                        <p className="mt-0.5 text-xs text-rose-500/90 dark:text-rose-300/90 font-mono">
+                          {errorMessage || "Connection error."}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-rose-500/20 flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-[11px] text-slate-600 dark:text-slate-300">
+                        Don't lose your message — send with 1 click:
+                      </span>
+                      <button
+                        type="button"
+                        onClick={handleDirectEmail}
+                        className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+                      >
+                        <Mail size={13} />
+                        <span>Send via Email App</span>
+                      </button>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
