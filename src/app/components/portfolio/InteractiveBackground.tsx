@@ -37,6 +37,13 @@ export function InteractiveBackground() {
       mouse.y = e.clientY;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+      }
+    };
+
     const handleMouseLeave = () => {
       mouse.x = -1000;
       mouse.y = -1000;
@@ -44,6 +51,8 @@ export function InteractiveBackground() {
 
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchstart", handleTouchMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
 
     // Particle pool
@@ -131,6 +140,8 @@ export function InteractiveBackground() {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchstart", handleTouchMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
