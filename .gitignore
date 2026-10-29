@@ -21,3 +21,15 @@ npm-debug.log*
 .idea
 .DS_Store
 Thumbs.db
+
+# AI Agent / Generated files
+.qodo
+.devin
+.claude
+.cursor
+
+# Vite cache
+.vite
+
+# TypeScript cache
+*.tsbuildinfo
