@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "motion/react";
 import { GraduationCap, Briefcase, Award, CheckCircle, ChevronDown, Sparkles } from "lucide-react";
+import { SectionHeader } from "./SectionHeader";
 
 interface TimelineItem {
   type: string;
@@ -86,10 +87,10 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
         initial={{ scale: 0, rotate: -180 }}
         animate={trigger ? { scale: 1, rotate: 0 } : {}}
         transition={{ delay: 0.3 + index * 0.12, type: "spring", stiffness: 200 }}
-        whileHover={{ scale: 1.1, rotate: 20 }}
-        className="absolute left-0 top-3.5 sm:top-5 w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#1D4ED8] flex items-center justify-center shadow-md ring-4 ring-white z-10 text-white"
+        whileHover={{ scale: 1.15, rotate: 10 }}
+        className="absolute left-0 top-3.5 sm:top-5 w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 flex items-center justify-center shadow-lg shadow-blue-500/30 dark:shadow-cyan-400/20 ring-4 ring-white dark:ring-[#080A10] z-10"
       >
-        <item.icon size={17} />
+        <item.icon size={18} strokeWidth={2.2} />
       </motion.div>
 
       {/* Horizontal connector line on desktop */}
@@ -97,40 +98,40 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
         initial={{ scaleX: 0 }}
         animate={trigger ? { scaleX: 1 } : {}}
         transition={{ delay: 0.4 + index * 0.12, duration: 0.3 }}
-        className="absolute left-5 top-8 w-6 h-px hidden md:block bg-[#1D4ED8]/30 origin-left"
+        className="absolute left-5 sm:left-6 top-8 w-6 h-px hidden md:block bg-blue-500/30 dark:bg-cyan-400/30 origin-left"
       />
 
       {/* Timeline item card */}
       <motion.div
         onClick={() => setExpanded(!expanded)}
-        whileHover={{ x: 3, y: -2 }}
+        whileHover={{ y: -3 }}
         whileTap={{ scale: 0.99 }}
-        className="relative p-4 sm:p-5 rounded-xl bg-white border border-gray-200/90 hover:border-[#1D4ED8]/30 hover:shadow-md transition-all overflow-hidden group cursor-pointer shadow-xs"
+        className="relative p-5 sm:p-7 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(56,189,248,0.08)] transition-all overflow-hidden group cursor-pointer shadow-xs"
       >
-        {/* Left border accent */}
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#1D4ED8] rounded-l-xl" />
+        {/* Left border accent line */}
+        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600 dark:bg-cyan-400 rounded-l-3xl" />
 
-        <div className="flex flex-wrap items-start justify-between gap-2.5 mb-2 pl-2">
+        <div className="flex flex-wrap items-start justify-between gap-3 mb-2.5 pl-2">
           <div>
-            <h3 className="text-gray-900 text-base sm:text-lg font-semibold group-hover:text-[#1D4ED8] transition-colors leading-tight">
+            <h3 className="text-slate-900 dark:text-white text-lg sm:text-xl font-bold group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors leading-snug">
               {item.title}
             </h3>
-            <span className="text-gray-500 text-xs sm:text-sm font-medium">{item.org}</span>
+            <span className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">{item.org}</span>
           </div>
-          <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#1D4ED8]/10 text-[#1D4ED8] border border-[#1D4ED8]/20 shrink-0">
+          <span className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-blue-500/10 text-blue-600 dark:text-cyan-400 border border-blue-500/20 shrink-0">
             {item.period}
           </span>
         </div>
 
-        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-3 pl-2">
+        <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4 pl-2 font-normal">
           {item.desc}
         </p>
 
         {/* Expandable highlights block */}
         <div className="pl-2">
-          <div className="flex items-center gap-1.5 text-[#1D4ED8] text-xs font-bold uppercase tracking-wider mb-2">
-            <span>Core Highlights</span>
-            <motion.div animate={{ rotate: expanded ? 180 : 0 }} className="transition-transform">
+          <div className="flex items-center gap-1.5 text-blue-600 dark:text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
+            <span>Key Competencies & Highlights</span>
+            <motion.div animate={{ rotate: expanded ? 180 : 0 }} className="transition-transform duration-200">
               <ChevronDown size={14} />
             </motion.div>
           </div>
@@ -144,16 +145,16 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
-                <div className="grid sm:grid-cols-2 gap-2 pt-1 pb-1">
+                <div className="grid sm:grid-cols-2 gap-2 pt-2 pb-1">
                   {item.highlights.map((highlight, hIdx) => (
                     <motion.div
                       key={hIdx}
                       initial={{ opacity: 0, x: -8 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: hIdx * 0.05 }}
-                      className="flex items-start gap-2 text-xs sm:text-sm text-gray-700 bg-gray-50 p-2 sm:p-2.5 rounded-lg border border-gray-100"
+                      className="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-white/5 p-3 rounded-xl border border-slate-200/80 dark:border-white/10"
                     >
-                      <CheckCircle size={13} className="text-[#1D4ED8] shrink-0 mt-0.5" />
+                      <CheckCircle size={14} className="text-blue-600 dark:text-cyan-400 shrink-0 mt-0.5" />
                       <span>{highlight}</span>
                     </motion.div>
                   ))}
@@ -170,65 +171,28 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
 export function Experience() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const opacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0, 1, 1, 0.2]);
-  const y = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [40, 0, 0, -30]);
 
   return (
-    <section id="experience" ref={ref} className="py-20 md:py-28 relative overflow-hidden">
-      <motion.div style={{ opacity, y }} className="max-w-4xl mx-auto px-4 sm:px-6 md:px-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1D4ED8]/10 border border-[#1D4ED8]/20 text-[#1D4ED8] text-xs font-bold tracking-[0.22em] uppercase"
-          >
-            <Sparkles size={12} className="text-[#1D4ED8]" />
-            Career Path
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 15 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-gray-900 mt-3 sm:mt-4 leading-tight"
-          >
-            Experience & Education
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="text-gray-600 text-sm sm:text-base max-w-lg mx-auto mt-2"
-          >
-            Academic background in software engineering combined with hands-on client deliveries and intensive bootcamps.
-          </motion.p>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={inView ? { scaleX: 1 } : {}}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="w-16 h-1 bg-[#1D4ED8] rounded-full mx-auto mt-4 origin-left"
-          />
-        </motion.div>
+    <section id="experience" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+        {/* Section Header */}
+        <SectionHeader
+          number="05"
+          label="Experience"
+          title="Career Journey &"
+          italicTitle="Education"
+          subtitle="Academic foundations in software engineering at Haramaya University combined with hands-on production deliveries and intensive development bootcamps."
+        />
 
         {/* Timeline body */}
         <div className="relative">
-          {/* Vertical line centered through bullets (bullet width 36px/40px, center ~18px/20px) */}
-          <div className="absolute left-[17px] sm:left-[19px] top-4 bottom-4 w-0.5 bg-gray-200" />
+          {/* Vertical line through bullets */}
+          <div className="absolute left-[17px] sm:left-[21px] top-6 bottom-6 w-0.5 bg-slate-200 dark:bg-white/10" />
           <motion.div
             initial={{ scaleY: 0 }}
             animate={inView ? { scaleY: 1 } : {}}
             transition={{ duration: 1.2, delay: 0.3, ease: "easeInOut" }}
-            className="absolute left-[17px] sm:left-[19px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-[#1D4ED8] via-[#1D4ED8]/50 to-transparent origin-top"
+            className="absolute left-[17px] sm:left-[21px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-600 dark:from-cyan-400 via-blue-500/50 to-transparent origin-top"
           />
 
           <div className="space-y-6 sm:space-y-8">
@@ -242,7 +206,7 @@ export function Experience() {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

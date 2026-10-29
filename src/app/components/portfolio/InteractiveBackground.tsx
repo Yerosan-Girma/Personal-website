@@ -71,6 +71,9 @@ export function InteractiveBackground() {
       if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
 
+      const isDark = document.documentElement.classList.contains("dark");
+      const rgb = isDark ? "56, 189, 248" : "29, 78, 216";
+
       // Draw faint connections
       for (let i = 0; i < particles.length; i++) {
         const p1 = particles[i];
@@ -100,7 +103,7 @@ export function InteractiveBackground() {
         // Draw particle dot
         ctx.beginPath();
         ctx.arc(p1.x, p1.y, p1.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(29, 78, 216, ${p1.alpha})`;
+        ctx.fillStyle = `rgba(${rgb}, ${p1.alpha})`;
         ctx.fill();
 
         // Connect nearby particles
@@ -108,11 +111,11 @@ export function InteractiveBackground() {
           const p2 = particles[j];
           const distNodes = Math.hypot(p1.x - p2.x, p1.y - p2.y);
           if (distNodes < 110) {
-            const lineAlpha = (1 - distNodes / 110) * 0.12;
+            const lineAlpha = (1 - distNodes / 110) * (isDark ? 0.14 : 0.09);
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(29, 78, 216, ${lineAlpha})`;
+            ctx.strokeStyle = `rgba(${rgb}, ${lineAlpha})`;
             ctx.lineWidth = 0.75;
             ctx.stroke();
           }

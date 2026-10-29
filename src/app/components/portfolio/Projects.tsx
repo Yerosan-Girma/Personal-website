@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, useInView, useScroll, useTransform } from "motion/react";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence, useInView } from "motion/react";
 import {
   ExternalLink,
   Github,
@@ -8,9 +8,11 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  ArrowRight,
+  ArrowUpRight,
   Eye,
 } from "lucide-react";
+import { SectionHeader } from "./SectionHeader";
+
 import eLearnImage from "../image/e-learn.png";
 import kirayBetHero from "../image/kiray-bet-hero.png";
 import kirayBetListings from "../image/kiray-bet-listings.png";
@@ -33,6 +35,7 @@ interface Project {
   screenshots: string[];
   demo: string;
   github: string;
+  year?: string;
 }
 
 const projects: Project[] = [
@@ -41,6 +44,7 @@ const projects: Project[] = [
     category: "realestate",
     title: "Kiray Bet (ኪራይ ቤት)",
     subtitle: "Ethiopia's #1 Home Rental Marketplace",
+    year: "2024",
     description:
       "Ethiopia's premier home rental marketplace connecting tenants, property owners, and verified brokers across Addis Ababa and beyond. Features real-time property discovery, interactive map search, direct inquiries, role-based dashboards, and digital lease agreements.",
     tags: ["Full Stack", "Real Estate"],
@@ -67,9 +71,10 @@ const projects: Project[] = [
     category: "edtech",
     title: "E-Learning Platform",
     subtitle: "Comprehensive Online Education & Certification",
+    year: "2024",
     description:
       "A comprehensive education platform for online learning with courses, lessons, course resources, quizzes, and certificate generation. Students can access educational content, take assessments, and earn certificates upon course completion.",
-    tags: ["Full Stack", "E-learning"],
+    tags: ["Full Stack", "E-Learning"],
     tech: ["React", "Node.js", "Express.js", "PostgreSQL", "JavaScript", "HTML/CSS"],
     features: [
       "Course and lesson management system with progress tracking",
@@ -90,6 +95,7 @@ const projects: Project[] = [
     category: "ecommerce",
     title: "MarketHub — Multi-Vendor E-Commerce",
     subtitle: "Multi-Storefront Marketplace & Seller Dashboard",
+    year: "2023",
     description:
       "A full-featured multi-vendor marketplace platform enabling sellers to manage their own storefronts, products, and incoming orders. Features include vendor analytics dashboards, real-time catalog search, shopping cart, Stripe payment processing, and admin management.",
     tags: ["Full Stack", "E-Commerce"],
@@ -113,9 +119,10 @@ const projects: Project[] = [
     category: "fintech",
     title: "WabiSeminar — Real-Time Meeting & Chat",
     subtitle: "Live Webcast & Seminar Communication App",
+    year: "2024",
     description:
       "A real-time communication platform engineered for live seminar events and masterclasses. Enables instant room creation, live video & text messaging via WebSockets, attendee presence tracking, and feedback collection.",
-    tags: ["Full Stack", "Real-time"],
+    tags: ["Full Stack", "Real-Time"],
     tech: ["React", "Node.js", "WebSockets", "MongoDB", "Express.js", "JWT", "Tailwind CSS"],
     features: [
       "Instant meeting room creation and custom join links",
@@ -135,6 +142,7 @@ const projects: Project[] = [
     category: "fintech",
     title: "Digital Equb (ዲጂታል እቁብ)",
     subtitle: "Modern Ethiopian Fintech Savings Circle",
+    year: "2023",
     description:
       "A modern digital fintech platform transforming traditional Ethiopian rotational savings circles (Equb) into a transparent online system. Includes automated round tracking, transparent payout distributions, payment records, and member reminders.",
     tags: ["Full Stack", "FinTech"],
@@ -157,6 +165,7 @@ const projects: Project[] = [
     category: "all",
     title: "Haven Cafe & Bistro",
     subtitle: "Artisan Coffeehouse & Table Reservation Web App",
+    year: "2023",
     description:
       "An elegant modern cafe website featuring artisan coffee story showcases, interactive menu browsing by categories, online ordering, and seamless table reservation booking with high responsiveness across all devices.",
     tags: ["Full Stack", "Hospitality"],
@@ -192,9 +201,9 @@ function ScreenshotsCarousel({ images }: { images: string[] }) {
   const next = () => setIndex((i) => (i === images.length - 1 ? 0 : i + 1));
 
   return (
-    <div className="flex flex-col bg-gray-100 border-b border-gray-200">
+    <div className="flex flex-col bg-slate-900 border-b border-slate-200 dark:border-white/10">
       {/* Main Image Stage */}
-      <div className="relative h-60 sm:h-80 md:h-[400px] w-full overflow-hidden bg-gray-900 flex items-center justify-center">
+      <div className="relative h-64 sm:h-80 md:h-[420px] w-full overflow-hidden bg-slate-950 flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.img
             key={index}
@@ -215,7 +224,7 @@ function ScreenshotsCarousel({ images }: { images: string[] }) {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={prev}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur-md border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-white transition-all shadow-md cursor-pointer"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-slate-900 transition-all shadow-lg cursor-pointer"
               aria-label="Previous image"
             >
               <ChevronLeft size={20} />
@@ -224,7 +233,7 @@ function ScreenshotsCarousel({ images }: { images: string[] }) {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={next}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur-md border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-white transition-all shadow-md cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-slate-900 transition-all shadow-lg cursor-pointer"
               aria-label="Next image"
             >
               <ChevronRight size={20} />
@@ -235,15 +244,15 @@ function ScreenshotsCarousel({ images }: { images: string[] }) {
 
       {/* Thumbnail Selector Row if more than 1 image */}
       {images.length > 1 && (
-        <div className="flex gap-2 p-2.5 bg-gray-50 border-t border-gray-200 overflow-x-auto justify-center">
+        <div className="flex gap-2 p-3 bg-slate-950/80 border-t border-white/10 overflow-x-auto justify-center">
           {images.map((img, i) => (
             <motion.button
               key={i}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIndex(i)}
-              className={`relative h-12 w-20 rounded-md overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
-                index === i ? "border-[#1D4ED8]" : "border-gray-200 opacity-60 hover:opacity-100"
+              className={`relative h-12 w-20 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                index === i ? "border-blue-500 dark:border-cyan-400" : "border-white/20 opacity-60 hover:opacity-100"
               }`}
             >
               <img src={img} alt={`Thumb ${i + 1}`} className="w-full h-full object-cover object-top" />
@@ -256,7 +265,15 @@ function ScreenshotsCarousel({ images }: { images: string[] }) {
 }
 
 // Modal Detail View
-function Modal({ project, onClose }: { project: Project; onClose: () => void }) {
+function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -265,13 +282,13 @@ function Modal({ project, onClose }: { project: Project; onClose: () => void }) 
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
       onClick={onClose}
     >
-      <div className="absolute inset-0 bg-gray-950/70 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" />
       <motion.div
         initial={{ scale: 0.94, y: 25, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.94, y: 25, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 26 }}
-        className="relative max-w-4xl w-full bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2xl z-10 max-h-[90vh] flex flex-col"
+        transition={{ type: "spring", stiffness: 280, damping: 28 }}
+        className="relative max-w-4xl w-full bg-white dark:bg-[#0D121F] border border-slate-200 dark:border-white/15 rounded-3xl overflow-hidden shadow-2xl z-10 max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Screenshots Carousel */}
@@ -282,24 +299,33 @@ function Modal({ project, onClose }: { project: Project; onClose: () => void }) 
           whileHover={{ scale: 1.1, rotate: 90 }}
           whileTap={{ scale: 0.9 }}
           onClick={onClose}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/95 backdrop-blur-md border border-gray-200 flex items-center justify-center text-gray-700 hover:text-gray-900 transition-colors z-20 shadow-md cursor-pointer"
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:text-white transition-colors z-20 shadow-md cursor-pointer"
           aria-label="Close modal"
         >
           <X size={18} />
         </motion.button>
 
         {/* Modal body (scrollable) */}
-        <div className="p-5 sm:p-7 overflow-y-auto space-y-5">
+        <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-gray-900 text-xl sm:text-2xl font-bold tracking-tight">{project.title}</h3>
-              <p className="text-[#1D4ED8] text-xs sm:text-sm font-semibold mt-0.5">{project.subtitle}</p>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-mono text-xs uppercase tracking-widest text-slate-400">{project.year}</span>
+                <span className="text-slate-300 dark:text-slate-600">•</span>
+                <span className="font-mono text-xs text-blue-600 dark:text-cyan-400 font-semibold">{project.tags[0]}</span>
+              </div>
+              <h3 className="text-slate-900 dark:text-white text-2xl sm:text-3xl font-bold tracking-tight">
+                {project.title}
+              </h3>
+              <p className="text-blue-600 dark:text-cyan-400 text-sm font-semibold mt-1">
+                {project.subtitle}
+              </p>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {project.tags.map((t) => (
                 <span
                   key={t}
-                  className="px-2.5 py-1 rounded-full bg-[#1D4ED8]/10 border border-[#1D4ED8]/20 text-[#1D4ED8] text-xs font-semibold"
+                  className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-cyan-400 text-xs font-semibold"
                 >
                   {t}
                 </span>
@@ -307,21 +333,21 @@ function Modal({ project, onClose }: { project: Project; onClose: () => void }) 
             </div>
           </div>
 
-          <p className="text-gray-600 text-xs sm:text-sm sm:leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
             {project.description}
           </p>
 
           <div>
-            <p className="text-gray-900 text-xs font-bold uppercase tracking-wider mb-2.5">
-              Key Features & Implementation
+            <p className="text-slate-900 dark:text-white text-xs font-mono font-bold uppercase tracking-wider mb-3">
+              Key Features & Architectural Implementation
             </p>
-            <ul className="grid sm:grid-cols-2 gap-2">
+            <ul className="grid sm:grid-cols-2 gap-2.5">
               {project.features.map((f, idx) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-2 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200/80 p-2.5 rounded-lg"
+                  className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 p-3 rounded-xl"
                 >
-                  <CheckCircle2 size={15} className="shrink-0 mt-0.5 text-[#1D4ED8]" />
+                  <CheckCircle2 size={16} className="shrink-0 mt-0.5 text-blue-600 dark:text-cyan-400" />
                   <span>{f}</span>
                 </li>
               ))}
@@ -329,12 +355,14 @@ function Modal({ project, onClose }: { project: Project; onClose: () => void }) 
           </div>
 
           <div>
-            <p className="text-gray-900 text-xs font-bold uppercase tracking-wider mb-2.5">Technologies Used</p>
-            <div className="flex flex-wrap gap-1.5">
+            <p className="text-slate-900 dark:text-white text-xs font-mono font-bold uppercase tracking-wider mb-3">
+              Technologies & Frameworks
+            </p>
+            <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span
                   key={t}
-                  className="px-2.5 py-1 rounded-md bg-gray-100 border border-gray-200 text-gray-700 text-xs font-mono font-medium"
+                  className="px-3 py-1 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 text-xs font-mono font-semibold"
                 >
                   {t}
                 </span>
@@ -343,7 +371,7 @@ function Modal({ project, onClose }: { project: Project; onClose: () => void }) 
           </div>
 
           {/* Action Links */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-3 border-t border-gray-100">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100 dark:border-white/10">
             {project.demo !== "#" && (
               <motion.a
                 whileHover={{ scale: 1.02 }}
@@ -351,9 +379,10 @@ function Modal({ project, onClose }: { project: Project; onClose: () => void }) 
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-3 rounded-lg bg-[#1D4ED8] text-white text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2 hover:bg-[#1E40AF] transition-colors shadow-sm"
+                className="flex-1 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2 shadow-md shadow-blue-600/20 transition-all cursor-pointer"
               >
-                <ExternalLink size={15} /> Open Live Website
+                <ExternalLink size={15} />
+                <span>Open Live Website</span>
               </motion.a>
             )}
             {project.github !== "#" && (
@@ -363,9 +392,10 @@ function Modal({ project, onClose }: { project: Project; onClose: () => void }) 
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-3 rounded-lg bg-white border border-gray-300 text-gray-700 hover:text-gray-900 text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2 hover:border-gray-400 transition-colors shadow-sm"
+                className="flex-1 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
-                <Github size={15} /> View Source Code
+                <Github size={15} />
+                <span>View Source Code</span>
               </motion.a>
             )}
           </div>
@@ -375,7 +405,7 @@ function Modal({ project, onClose }: { project: Project; onClose: () => void }) 
   );
 }
 
-// Project Item Card
+// Project Item Card (Awwwards Style + Developer UI)
 function ProjectCard({
   project,
   onClick,
@@ -387,103 +417,119 @@ function ProjectCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, delay: index * 0.08, type: "spring", stiffness: 130 }}
-      whileHover={{ y: -6, boxShadow: "0 16px 35px -10px rgba(29, 78, 216, 0.14)" }}
-      whileTap={{ scale: 0.99 }}
-      className="group relative rounded-2xl bg-white border border-gray-200/90 overflow-hidden cursor-pointer transition-all duration-300 flex flex-col shadow-xs"
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -8 }}
+      className="group relative rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 overflow-hidden cursor-pointer transition-all duration-300 flex flex-col shadow-sm hover:shadow-2xl dark:hover:shadow-[0_20px_40px_rgba(56,189,248,0.12)] hover:border-blue-500/40 dark:hover:border-cyan-400/40"
       onClick={onClick}
     >
-      {/* Image with zoom on hover */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+      {/* Aspect Ratio Image Container */}
+      <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
         <motion.img
-          whileHover={{ scale: 1.06 }}
-          transition={{ duration: 0.4 }}
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-top opacity-95 group-hover:opacity-100 group-hover:scale-106 transition-all duration-700 ease-[0.25,1,0.5,1]"
           loading="lazy"
         />
 
-        {/* View Details Overlay */}
-        <div className="absolute inset-0 bg-gray-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <span className="px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-gray-900 text-xs font-semibold flex items-center gap-1.5 shadow-md">
-            <Eye size={13} /> View Details
-          </span>
-        </div>
+        {/* Subtle Gradient Vignette */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
 
-        {/* Top Badges */}
-        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 pointer-events-none">
+        {/* Top Floating Tags */}
+        <div className="absolute top-4 left-4 flex flex-wrap gap-1.5 z-10 pointer-events-none">
           {project.tags.map((t) => (
             <span
               key={t}
-              className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-gray-200/80 text-gray-800 text-[11px] font-semibold shadow-xs"
+              className="px-3 py-1 rounded-full bg-slate-950/70 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono font-medium shadow-sm"
             >
               {t}
             </span>
           ))}
         </div>
+
+        {/* Awwwards-Style Floating Arrow Badge (Appears on Hover) */}
+        <div className="absolute top-4 right-4 z-10">
+          <div className="w-11 h-11 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-white/30 flex items-center justify-center text-slate-900 dark:text-white shadow-lg scale-90 opacity-80 group-hover:scale-100 group-hover:opacity-100 group-hover:bg-blue-600 group-hover:text-white dark:group-hover:bg-cyan-400 dark:group-hover:text-slate-950 transition-all duration-300">
+            <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </div>
+        </div>
+
+        {/* Inspect Overlay Trigger */}
+        <div className="absolute inset-0 bg-slate-950/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+          <span className="px-4 py-2 rounded-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-slate-900 dark:text-white text-xs font-bold flex items-center gap-2 shadow-xl border border-white/20">
+            <Eye size={14} className="text-blue-600 dark:text-cyan-400" />
+            <span>View Architecture & Gallery</span>
+          </span>
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+      {/* Card Content */}
+      <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="text-gray-900 text-lg sm:text-xl font-bold mb-1 group-hover:text-[#1D4ED8] transition-colors leading-snug">
+          {/* Index & Category Row */}
+          <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+            <span>0{index + 1} // {project.category.toUpperCase()}</span>
+            <span>{project.year || "2024"}</span>
+          </div>
+
+          <h3 className="text-slate-900 dark:text-white text-xl sm:text-2xl font-bold mb-1.5 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors leading-snug">
             {project.title}
           </h3>
-          <p className="text-gray-500 text-xs sm:text-sm mb-2.5 font-medium">{project.subtitle}</p>
-          <p className="text-gray-600 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-3.5">
+          <p className="text-blue-600 dark:text-cyan-400 text-xs sm:text-sm mb-3 font-medium">
+            {project.subtitle}
+          </p>
+          <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-4">
             {project.description}
           </p>
 
           {/* Tech tags */}
-          <div className="flex flex-wrap gap-1.5 mb-4">
+          <div className="flex flex-wrap gap-1.5 mb-5">
             {project.tech.slice(0, 4).map((t) => (
               <span
                 key={t}
-                className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-600 text-[11px] font-medium"
+                className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/10 text-slate-600 dark:text-slate-300 text-[11px] font-mono font-medium"
               >
                 {t}
               </span>
             ))}
             {project.tech.length > 4 && (
-              <span className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-500 text-[11px]">
+              <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/10 text-slate-400 text-[11px] font-mono">
                 +{project.tech.length - 4}
               </span>
             )}
           </div>
         </div>
 
-        {/* Links */}
-        <div className="flex gap-2 pt-2 border-t border-gray-100">
+        {/* Dual Direct Action Links */}
+        <div className="flex gap-2.5 pt-4 border-t border-slate-100 dark:border-white/10">
           {project.demo !== "#" && (
             <motion.a
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="flex-1 py-2 rounded-lg bg-[#1D4ED8] text-white text-xs font-semibold text-center hover:bg-[#1E40AF] transition-colors shadow-xs flex items-center justify-center gap-1.5"
+              className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs font-semibold text-center transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              Live Demo
-              <ExternalLink size={12} />
+              <span>Live Demo</span>
+              <ExternalLink size={13} />
             </motion.a>
           )}
           {project.github !== "#" && (
             <motion.a
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="flex-1 py-2 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-xs font-semibold text-center hover:bg-gray-200 transition-colors shadow-xs flex items-center justify-center gap-1.5"
+              className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold text-center transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              GitHub
-              <Github size={12} />
+              <Github size={13} />
+              <span>Source</span>
             </motion.a>
           )}
         </div>
@@ -497,101 +543,67 @@ export function Projects() {
   const [activeFilter, setActiveFilter] = useState("all");
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const opacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0, 1, 1, 0.2]);
-  const y = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [40, 0, 0, -30]);
 
-  const filteredProjects = projects.filter(
-    (p) => activeFilter === "all" || p.category === activeFilter
-  );
+  const filteredProjects = projects.filter((p) => {
+    if (activeFilter === "all") return true;
+    return p.category === activeFilter;
+  });
 
   return (
-    <section id="projects" ref={ref} className="py-20 md:py-28 relative overflow-hidden">
-      <motion.div style={{ opacity, y }} className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10 md:mb-14"
-        >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1D4ED8]/10 border border-[#1D4ED8]/20 text-[#1D4ED8] text-xs font-bold tracking-[0.22em] uppercase"
-          >
-            <Sparkles size={12} className="text-[#1D4ED8]" />
-            Portfolio
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 15 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-gray-900 mt-3 sm:mt-4 leading-tight"
-          >
-            Featured Projects
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto mt-2"
-          >
-            Explore live deployed web platforms with real landing pages, role-based dashboards, and interactive features.
-          </motion.p>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={inView ? { scaleX: 1 } : {}}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="w-16 h-1 bg-[#1D4ED8] rounded-full mx-auto mt-4 origin-left"
-          />
-        </motion.div>
+    <section id="projects" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+      {/* Background radial highlight */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[1000px] max-h-[1000px] bg-blue-600/5 dark:bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none" />
 
-        {/* Filter Pills with animated sliding pill */}
-        <div className="flex items-center justify-center gap-1 p-1.5 rounded-2xl bg-white border border-gray-200/90 shadow-2xs max-w-fit mx-auto overflow-x-auto mb-8 sm:mb-10">
-          {projectFilters.map((f) => {
-            const isSelected = activeFilter === f.id;
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+        {/* Section Header */}
+        <SectionHeader
+          number="01"
+          label="Selected Work"
+          title="Curated"
+          italicTitle="Projects"
+          subtitle="Production-grade web platforms engineered with MERN architecture, real-time WebSockets, normalized databases, and modular design systems."
+        />
+
+        {/* Filter Pills */}
+        <div className="flex flex-wrap items-center gap-2 mb-10 sm:mb-14">
+          {projectFilters.map((tab) => {
+            const isSelected = activeFilter === tab.id;
             return (
               <button
-                key={f.id}
-                onClick={() => setActiveFilter(f.id)}
-                className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors shrink-0 cursor-pointer ${
-                  isSelected ? "text-white" : "text-gray-600 hover:text-gray-900"
+                key={tab.id}
+                onClick={() => setActiveFilter(tab.id)}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide transition-all cursor-pointer ${
+                  isSelected
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/25"
+                    : "bg-slate-100 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 }`}
               >
-                {isSelected && (
-                  <motion.div
-                    layoutId="projectActiveFilter"
-                    className="absolute inset-0 bg-[#1D4ED8] rounded-xl shadow-xs -z-0"
-                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">{f.label}</span>
+                {tab.label}
               </button>
             );
           })}
         </div>
 
-        {/* Projects grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
-          {filteredProjects.map((project, idx) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              onClick={() => setSelected(project)}
-              index={idx}
-            />
-          ))}
+        {/* Project Grid */}
+        <div className="grid md:grid-cols-2 gap-8 md:gap-10">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, idx) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                onClick={() => setSelected(project)}
+                index={idx}
+              />
+            ))}
+          </AnimatePresence>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Modal Detail Screen */}
+      {/* Full Project Modal */}
       <AnimatePresence>
-        {selected && <Modal project={selected} onClose={() => setSelected(null)} />}
+        {selected && (
+          <ProjectModal project={selected} onClose={() => setSelected(null)} />
+        )}
       </AnimatePresence>
     </section>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
+import { Sparkles, Globe } from "lucide-react";
 
 interface TechItem {
   name: string;
@@ -23,33 +24,33 @@ export function TechVisualization() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let width = (canvas.width = Math.min(window.innerWidth - 32, 580));
-    let height = (canvas.height = 420);
+    let width = (canvas.width = Math.min(window.innerWidth - 32, 540));
+    let height = (canvas.height = 400);
 
     const techNames = [
       { name: "React", color: "#61DAFB" },
-      { name: "Node.js", color: "#339933" },
-      { name: "Express.js", color: "#FFFFFF" },
-      { name: "MongoDB", color: "#47A248" },
+      { name: "Node.js", color: "#22C55E" },
+      { name: "Express.js", color: "#60A5FA" },
+      { name: "MongoDB", color: "#10AA50" },
       { name: "TypeScript", color: "#3178C6" },
       { name: "JavaScript", color: "#F7DF1E" },
       { name: "HTML5", color: "#E34F26" },
       { name: "CSS3", color: "#1572B6" },
       { name: "Tailwind CSS", color: "#06B6D4" },
-      { name: "WebSockets", color: "#1D4ED8" },
+      { name: "WebSockets", color: "#38BDF8" },
       { name: "Docker", color: "#2496ED" },
       { name: "Git", color: "#F05032" },
-      { name: "GitHub", color: "#FFFFFF" },
-      { name: "PostgreSQL", color: "#4169E1" },
-      { name: "MySQL", color: "#4479A1" },
-      { name: "REST APIs", color: "#009688" },
-      { name: "JWT Auth", color: "#FF007F" },
+      { name: "GitHub", color: "#818CF8" },
+      { name: "PostgreSQL", color: "#336791" },
+      { name: "MySQL", color: "#00758F" },
+      { name: "REST APIs", color: "#818CF8" },
+      { name: "JWT Auth", color: "#F43F5E" },
       { name: "Bootstrap", color: "#7952B3" },
       { name: "MERN Stack", color: "#10B981" },
     ];
 
     // Sphere radius
-    const radius = Math.min(width, height) * 0.42;
+    const radius = Math.min(width, height) * 0.4;
 
     // Create 3D distribution using Fibonacci Sphere algorithm
     const items: TechItem[] = techNames.map((tech, i) => {
@@ -69,7 +70,6 @@ export function TechVisualization() {
     let angleX = 0.003;
     let angleY = 0.003;
 
-    // Tracking mouse coordinates relative to canvas center
     let mouseX = 0;
     let mouseY = 0;
     let isMouseOver = false;
@@ -79,20 +79,16 @@ export function TechVisualization() {
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
 
-      // Distance from center determines rotation speed and axis
       mouseX = e.clientX - cx;
       mouseY = e.clientY - cy;
 
       isMouseOver = true;
-
-      // Adjust speed based on mouse distance
       angleY = mouseX * 0.00003;
       angleX = -mouseY * 0.00003;
     };
 
     const handleMouseLeave = () => {
       isMouseOver = false;
-      // Fade back to slow idle rotation
       angleX = 0.002;
       angleY = 0.002;
     };
@@ -100,8 +96,8 @@ export function TechVisualization() {
     const handleResize = () => {
       const parent = canvas.parentElement;
       if (!parent) return;
-      width = canvas.width = Math.min(parent.clientWidth, 580);
-      height = canvas.height = 420;
+      width = canvas.width = Math.min(parent.clientWidth, 540);
+      height = canvas.height = 400;
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -130,36 +126,31 @@ export function TechVisualization() {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Center coordinates
+      const isDark = document.documentElement.classList.contains("dark");
+
       const cx = width / 2;
       const cy = height / 2;
 
-      // Sort items by z depth to render back-to-front (painters algorithm)
       const sortedItems = [...items].sort((a, b) => b.z - a.z);
-
       let currentHovered: string | null = null;
 
       sortedItems.forEach((item) => {
-        // Rotate points
         rotateX(item, angleX);
         rotateY(item, angleY);
 
-        // Perspective scaling factor
         const depth = 2.5 * radius;
         const scale = depth / (depth - item.z);
         const screenX = cx + item.x * scale;
         const screenY = cy + item.y * scale;
 
-        // Visual properties based on depth (z)
-        const opacity = Math.max(0.12, (item.z + radius) / (2 * radius));
-        const fontSize = Math.max(10, Math.floor(13 * scale));
+        const opacity = Math.max(0.18, (item.z + radius) / (2 * radius));
+        const fontSize = Math.max(10, Math.floor(12 * scale));
 
         ctx.font = `600 ${fontSize}px sans-serif`;
 
-        // Check if mouse is hovering over this text node
         const textWidth = ctx.measureText(item.name).width;
-        const paddingX = 14;
-        const paddingY = 8;
+        const paddingX = 12;
+        const paddingY = 7;
         const nodeW = textWidth + paddingX * 2;
         const nodeH = fontSize + paddingY * 2;
 
@@ -177,44 +168,49 @@ export function TechVisualization() {
           currentHovered = item.name;
         }
 
-        // Draw background pill bubble
+        // Draw pill
         ctx.beginPath();
         const rx = screenX - nodeW / 2;
         const ry = screenY - nodeH / 2;
-        ctx.roundRect(rx, ry, nodeW, nodeH, 12);
-        
-        if (isHovered) {
-          ctx.fillStyle = "rgba(6, 182, 212, 0.16)";
-          ctx.strokeStyle = "rgba(6, 182, 212, 0.6)";
-          ctx.lineWidth = 1.5;
+        ctx.roundRect(rx, ry, nodeW, nodeH, 10);
+
+        if (isDark) {
+          if (isHovered) {
+            ctx.fillStyle = "rgba(56, 189, 248, 0.25)";
+            ctx.strokeStyle = "rgba(56, 189, 248, 0.8)";
+            ctx.lineWidth = 1.5;
+          } else {
+            ctx.fillStyle = `rgba(15, 23, 42, ${opacity * 0.75})`;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.12})`;
+            ctx.lineWidth = 1;
+          }
         } else {
-          ctx.fillStyle = `rgba(13, 27, 58, ${opacity * 0.4})`;
-          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.08})`;
-          ctx.lineWidth = 1;
+          if (isHovered) {
+            ctx.fillStyle = "rgba(29, 78, 216, 0.15)";
+            ctx.strokeStyle = "rgba(29, 78, 216, 0.8)";
+            ctx.lineWidth = 1.5;
+          } else {
+            ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.9})`;
+            ctx.strokeStyle = `rgba(203, 213, 225, ${opacity * 0.8})`;
+            ctx.lineWidth = 1;
+          }
         }
+
         ctx.fill();
         ctx.stroke();
 
-        // Draw Text inside pill
+        // Draw Text
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = isHovered
-          ? "#22d3ee" // bright cyan
-          : `rgba(255, 255, 255, ${opacity * 0.85})`;
-        
-        ctx.fillText(item.name, screenX, screenY);
-
-        // Highlight indicator dot
-        if (isHovered) {
-          ctx.beginPath();
-          ctx.arc(screenX - textWidth / 2 - 4, screenY, 3, 0, Math.PI * 2);
-          ctx.fillStyle = "#22d3ee";
-          ctx.fill();
+        if (isDark) {
+          ctx.fillStyle = isHovered ? "#38bdf8" : `rgba(248, 250, 252, ${opacity * 0.9})`;
+        } else {
+          ctx.fillStyle = isHovered ? "#1D4ED8" : `rgba(15, 23, 42, ${Math.max(0.4, opacity)})`;
         }
+        ctx.fillText(item.name, screenX, screenY);
       });
 
       setHoveredTech(currentHovered);
-
       animationFrameId = requestAnimationFrame(render);
     };
 
@@ -229,65 +225,46 @@ export function TechVisualization() {
   }, []);
 
   return (
-    <section id="tech-visualization" ref={containerRef} className="py-24 relative overflow-hidden border-t border-white/[0.04]">
-      {/* Background radial glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-cyan-500/5 rounded-full blur-[100px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left text detail */}
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.7 }}
-        >
-          <span className="text-cyan-400 text-sm tracking-widest uppercase">Expertise Mapping</span>
-          <h2 className="text-white mt-2 mb-6" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
+    <div ref={containerRef} className="rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 p-6 sm:p-8 md:p-10 shadow-sm relative overflow-hidden">
+      <div className="grid md:grid-cols-12 gap-8 items-center">
+        {/* Left detail */}
+        <div className="md:col-span-5 text-left">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-cyan-400 text-xs font-mono font-semibold mb-3">
+            <Globe size={13} />
+            3D Spatial Orbit
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">
             Interactive Tech Sphere
-          </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mb-8" />
-          
-          <p className="text-white/50 text-sm sm:text-base leading-relaxed mb-6">
-            Move your cursor over the sphere to interact with my technology stack. The sphere rotates in 3D response to cursor position, simulating orbital gravity.
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+            Move your cursor across the sphere to interact with my technology stack. The sphere computes 3D coordinates using a Fibonacci distribution and responds in real time to pointer movement.
           </p>
 
-          <p className="text-white/50 text-sm sm:text-base leading-relaxed mb-8">
-            These represent technologies I use to develop robust full-stack applications. Hover over a bubble to inspect it, highlighting its connections.
-          </p>
-
-          {/* Active hover info panel */}
-          <div className="h-16 flex items-center">
+          <div className="h-14 flex items-center">
             {hoveredTech ? (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="px-5 py-3 rounded-2xl bg-cyan-950/20 border border-cyan-500/20 text-cyan-300 text-sm font-mono flex items-center gap-3 backdrop-blur-sm"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="px-4 py-2 rounded-xl bg-blue-50 dark:bg-white/10 border border-blue-200 dark:border-white/15 text-blue-700 dark:text-cyan-300 text-xs font-mono flex items-center gap-2 shadow-xs"
               >
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                Selected: <span className="font-bold text-white">{hoveredTech}</span>
+                <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-cyan-400 animate-ping" />
+                Active Focus: <strong className="text-slate-900 dark:text-white">{hoveredTech}</strong>
               </motion.div>
             ) : (
-              <span className="text-white/30 text-xs font-mono tracking-wider italic">
-                ← Hover tags on sphere to lock focus
+              <span className="text-slate-400 text-xs font-mono italic">
+                Hover tags on sphere to lock focus
               </span>
             )}
           </div>
-        </motion.div>
+        </div>
 
         {/* Right 3D canvas */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.8 }}
-          className="flex justify-center items-center"
-        >
-          <div className="relative p-2 rounded-3xl bg-white/[0.02] border border-white/[0.06] shadow-2xl backdrop-blur-sm">
-            {/* Tech tag canvas */}
+        <div className="md:col-span-7 flex justify-center items-center">
+          <div className="relative p-2 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200/80 dark:border-white/10 shadow-inner">
             <canvas ref={canvasRef} className="block cursor-pointer select-none max-w-full" />
           </div>
-        </motion.div>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

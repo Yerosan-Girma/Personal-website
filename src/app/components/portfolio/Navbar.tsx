@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Download, Sparkles } from "lucide-react";
+import { Download, Sparkles, Menu, X, ArrowUpRight } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
   { label: "Home", id: "home" },
@@ -12,21 +13,16 @@ const navLinks = [
   { label: "Contact", id: "contact" },
 ];
 
-interface NavbarProps {
-  darkMode: boolean;
-  toggleDark: () => void;
-}
-
-export function Navbar({ darkMode, toggleDark }: NavbarProps) {
+export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState("home");
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 25);
     };
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -58,6 +54,18 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Prevent scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   const scrollTo = (id: string) => {
     setMenuOpen(false);
     const target = document.getElementById(id);
@@ -78,45 +86,53 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled || menuOpen
-            ? "bg-[#F8F9FB]/95 backdrop-blur-md border-b border-gray-200/90 shadow-xs"
-            : "bg-[#F8F9FB]/80 backdrop-blur-xs"
+            ? "bg-white/85 dark:bg-[#080A10]/85 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/10 shadow-sm dark:shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+            : "bg-transparent py-2"
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between h-18 sm:h-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 flex items-center justify-between h-18 sm:h-20">
           {/* Logo */}
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => scrollTo("home")}
-            className="flex items-center gap-2.5 group cursor-pointer"
+            className="flex items-center gap-3 group cursor-pointer focus:outline-none"
+            aria-label="Yerosan Girma Home"
           >
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#1D4ED8] flex items-center justify-center shadow-xs">
-              <span className="text-white text-xs sm:text-sm font-bold tracking-tight">YG</span>
+            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-cyan-500 p-0.5 shadow-md shadow-blue-600/20 group-hover:shadow-blue-500/40 transition-shadow">
+              <div className="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
+                <span className="text-white text-xs font-mono font-bold tracking-wider">YG</span>
+              </div>
             </div>
-            <span className="text-gray-900 font-bold tracking-tight text-base sm:text-lg">
-              Yerosan<span className="text-[#1D4ED8]">.</span>
-            </span>
+            <div className="text-left">
+              <span className="text-slate-900 dark:text-white font-bold tracking-tight text-base sm:text-lg block leading-none">
+                Yerosan<span className="text-blue-600 dark:text-cyan-400">.</span>
+              </span>
+              <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 tracking-wider uppercase hidden sm:block mt-1">
+                Software Engineer
+              </span>
+            </div>
           </motion.button>
 
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-1 bg-white/70 p-1.5 rounded-xl border border-gray-200/60 shadow-xs">
+          {/* Desktop Nav Links */}
+          <div className="hidden lg:flex items-center gap-1 bg-slate-100/70 dark:bg-white/[0.04] p-1.5 rounded-2xl border border-slate-200/60 dark:border-white/10 backdrop-blur-md">
             {navLinks.map((link) => {
               const isCurrent = active === link.id;
               return (
                 <button
                   key={link.id}
                   onClick={() => scrollTo(link.id)}
-                  className={`relative px-3.5 py-1.5 rounded-lg text-xs lg:text-sm font-medium transition-colors duration-200 cursor-pointer ${
+                  className={`relative px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-colors duration-200 cursor-pointer ${
                     isCurrent
-                      ? "text-[#1D4ED8] font-semibold"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100/60"
+                      ? "text-blue-600 dark:text-white font-bold"
+                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {isCurrent && (
                     <motion.span
-                      layoutId="active-nav-bg"
-                      className="absolute inset-0 bg-[#1D4ED8]/10 rounded-lg -z-10"
-                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                      layoutId="active-nav-pill"
+                      className="absolute inset-0 bg-white dark:bg-white/10 rounded-xl shadow-xs -z-10 border border-slate-200/50 dark:border-white/15"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
                   {link.label}
@@ -125,86 +141,94 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
             })}
           </div>
 
-          {/* Resume button */}
-          <div className="hidden md:flex items-center">
+          {/* Right Action Cluster: Theme Toggle + Resume */}
+          <div className="hidden sm:flex items-center gap-3">
+            <ThemeToggle />
+
             <motion.a
-              href="#"
+              href="mailto:yerosang463@gmail.com?subject=Resume%20Request%20-%20Yerosan%20Girma"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="flex items-center gap-2 px-4.5 py-2 rounded-lg bg-[#1D4ED8] text-white text-xs lg:text-sm font-semibold hover:bg-[#1E40AF] transition-colors shadow-xs"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs font-semibold tracking-wide shadow-md shadow-blue-600/20 hover:shadow-lg hover:shadow-blue-600/30 transition-all cursor-pointer"
             >
               <Download size={14} />
-              Resume
+              <span>Resume</span>
             </motion.a>
           </div>
 
-          {/* Mobile hamburger toggle */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-10 h-10 rounded-xl bg-white border border-gray-200 flex flex-col gap-[5px] items-center justify-center text-gray-700 relative focus:outline-none z-50 shadow-xs cursor-pointer"
-            aria-label="Toggle menu"
-          >
-            <span
-              className={`w-5 h-[1.5px] bg-gray-700 rounded-full transition-all duration-300 ${
-                menuOpen ? "rotate-45 translate-y-[6.5px]" : ""
-              }`}
-            />
-            <span
-              className={`w-5 h-[1.5px] bg-gray-700 rounded-full transition-all duration-300 ${
-                menuOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`w-5 h-[1.5px] bg-gray-700 rounded-full transition-all duration-300 ${
-                menuOpen ? "-rotate-45 translate-y-[-6.5px]" : ""
-              }`}
-            />
-          </button>
+          {/* Mobile Actions: Theme Toggle + Hamburger Toggle */}
+          <div className="flex lg:hidden items-center gap-2.5">
+            <ThemeToggle />
+
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/15 flex items-center justify-center text-slate-800 dark:text-white focus:outline-none transition-colors cursor-pointer"
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile dropdown panel */}
+        {/* Mobile Fullscreen / Drawer Menu (Awwwards Style) */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: "100vh" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden bg-[#F8F9FB] border-b border-gray-200 overflow-hidden relative z-40"
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:hidden fixed inset-x-0 top-18 sm:top-20 bg-white/95 dark:bg-[#080A10]/95 backdrop-blur-2xl border-t border-slate-200/80 dark:border-white/10 flex flex-col justify-between px-6 pt-8 pb-32 z-40 overflow-y-auto"
             >
-              <div className="px-5 py-4 flex flex-col gap-1.5">
+              {/* Editorial navigation items */}
+              <div className="flex flex-col gap-2">
+                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500 mb-2">
+                  Navigation
+                </span>
                 {navLinks.map((link, i) => (
                   <motion.button
                     key={link.id}
-                    initial={{ opacity: 0, x: -15 }}
+                    initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.03 }}
+                    transition={{ delay: 0.05 + i * 0.04 }}
                     onClick={() => scrollTo(link.id)}
-                    className={`text-left px-4 py-3 rounded-xl text-sm font-semibold transition-colors cursor-pointer ${
+                    className={`text-left py-3 px-4 rounded-2xl flex items-center justify-between text-2xl font-bold tracking-tight transition-all cursor-pointer ${
                       active === link.id
-                        ? "bg-[#1D4ED8]/10 text-[#1D4ED8]"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                        ? "text-blue-600 dark:text-cyan-400 bg-blue-50/70 dark:bg-white/5"
+                        : "text-slate-800 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400"
                     }`}
                   >
-                    {link.label}
+                    <span>{link.label}</span>
+                    <span className="text-xs font-mono text-slate-400">0{i + 1}</span>
                   </motion.button>
                 ))}
+              </div>
+
+              {/* Bottom Drawer Actions */}
+              <div className="pt-6 border-t border-slate-200 dark:border-white/10 flex flex-col gap-4">
+                <div className="flex items-center justify-between py-2">
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Appearance</span>
+                  <ThemeToggle showLabel />
+                </div>
+
                 <motion.a
-                  href="#"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.25 }}
-                  className="mt-2 py-3 rounded-xl bg-[#1D4ED8] text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-xs"
+                  href="mailto:yerosang463@gmail.com?subject=Resume%20Request%20-%20Yerosan%20Girma"
+                  className="w-full py-3.5 rounded-xl bg-blue-600 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30"
                 >
-                  <Download size={14} /> Download Resume
+                  <Download size={16} />
+                  <span>Download Resume</span>
                 </motion.a>
+
+                <p className="text-center text-xs font-mono text-slate-400 dark:text-slate-500 mt-2">
+                  Addis Ababa, Ethiopia • Full Stack Engineer
+                </p>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
 
-      {/* Backdrop overlay for mobile menu */}
+      {/* Background Overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -212,7 +236,7 @@ export function Navbar({ darkMode, toggleDark }: NavbarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setMenuOpen(false)}
-            className="fixed inset-0 bg-black/20 backdrop-blur-xs z-30 md:hidden"
+            className="fixed inset-0 bg-black/40 backdrop-blur-xs z-30 lg:hidden"
           />
         )}
       </AnimatePresence>

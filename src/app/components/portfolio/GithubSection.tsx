@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
-import { GitFork, Star, Eye, Calendar, Award, Flame, BookOpen, Users } from "lucide-react";
+import { GitFork, Star, Calendar, Award, Flame, BookOpen, Users } from "lucide-react";
+import { SectionHeader } from "./SectionHeader";
 
 // Hook to animate numbers counting up
 function useCountUp(target: number, duration = 1200, trigger = false) {
@@ -28,7 +29,7 @@ function useCountUp(target: number, duration = 1200, trigger = false) {
 
 export function GithubSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(containerRef, { once: true, margin: "-100px" });
+  const inView = useInView(containerRef, { once: true, margin: "-80px" });
   const [hoveredCell, setHoveredCell] = useState<{ count: number; date: string } | null>(null);
 
   // Counter values
@@ -37,17 +38,15 @@ export function GithubSection() {
   const repos = useCountUp(28, 1200, inView);
   const followers = useCountUp(54, 1000, inView);
 
-  // Simulated contribution calendar data (24 weeks x 7 days)
+  // Simulated contribution calendar data (36 weeks x 7 days)
   const [calendarGrid, setCalendarGrid] = useState<number[][]>([]);
-  
+
   useEffect(() => {
-    // Generate static values to avoid hydrate mismatches
-    const cols = 38; // 38 weeks
+    const cols = 36;
     const grid: number[][] = [];
     for (let c = 0; c < cols; c++) {
       const col: number[] = [];
       for (let r = 0; r < 7; r++) {
-        // Randomly distribute contribution levels (0-4)
         const rand = Math.random();
         const level = rand > 0.85 ? 4 : rand > 0.65 ? 3 : rand > 0.4 ? 2 : rand > 0.18 ? 1 : 0;
         col.push(level);
@@ -59,11 +58,16 @@ export function GithubSection() {
 
   const getCellColor = (level: number) => {
     switch (level) {
-      case 4: return "bg-emerald-400 shadow-md shadow-emerald-500/20 border-emerald-300/30";
-      case 3: return "bg-emerald-600 border-emerald-500/30";
-      case 2: return "bg-emerald-800/80 border-emerald-700/30";
-      case 1: return "bg-emerald-950 border-emerald-900/30";
-      default: return "bg-white/[0.02] border-white/[0.04]";
+      case 4:
+        return "bg-emerald-500 dark:bg-emerald-400 border-emerald-400/40 shadow-xs";
+      case 3:
+        return "bg-emerald-600 dark:bg-emerald-500/80 border-emerald-500/30";
+      case 2:
+        return "bg-emerald-700/70 dark:bg-emerald-700/60 border-emerald-600/30";
+      case 1:
+        return "bg-emerald-900/30 dark:bg-emerald-950 border-emerald-800/20";
+      default:
+        return "bg-slate-100 dark:bg-white/[0.04] border-slate-200/60 dark:border-white/[0.04]";
     }
   };
 
@@ -98,32 +102,23 @@ export function GithubSection() {
       name: "Wabiskills-Seminar",
       desc: "Real-time socket communication application engineered for live webcasts, feedback management, and user presence panels.",
       lang: "JavaScript",
-      langColor: "bg-yellow-400",
+      langColor: "bg-amber-400",
       stars: 8,
       forks: 2,
     },
   ];
 
   return (
-    <section id="github-section" ref={containerRef} className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-emerald-400 text-sm tracking-widest uppercase">Open Source Sync</span>
-          <h2 className="text-white mt-2" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
-            GitHub Activity
-          </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full mx-auto mt-4" />
-        </motion.div>
+    <section id="github-section" ref={containerRef} className="py-24 md:py-32 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+        {/* Section Header */}
+        <SectionHeader
+          number="06"
+          label="Open Source"
+          title="GitHub Activity &"
+          italicTitle="Contributions"
+          subtitle="Continuous integration, active code pushes, and open-source contributions across modern web ecosystems."
+        />
 
         {/* Dashboard Grid */}
         <div className="grid lg:grid-cols-3 gap-6 mb-8">
@@ -132,60 +127,58 @@ export function GithubSection() {
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7 }}
-            className="lg:col-span-1 p-6 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between gap-6 backdrop-blur-sm relative overflow-hidden"
+            className="lg:col-span-1 p-6 sm:p-7 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 flex flex-col justify-between gap-6 shadow-sm backdrop-blur-md relative overflow-hidden"
           >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-emerald-500/10 to-transparent rounded-bl-full pointer-events-none" />
-
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                 <Users size={18} />
               </div>
-              <span className="text-white text-sm font-bold">Developer Stats</span>
+              <span className="text-slate-900 dark:text-white text-sm font-bold">Developer Statistics</span>
             </div>
 
             {/* Counter items */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <div className="flex items-center gap-1.5 text-white/60 text-[10px] uppercase tracking-wider mb-1">
-                  <Calendar size={11} className="text-emerald-400" />
-                  Commits (YTD)
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/70 dark:border-white/5">
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-[10px] uppercase font-mono tracking-wider mb-1">
+                  <Calendar size={11} className="text-emerald-500" />
+                  Commits
                 </div>
-                <div className="text-white text-2xl font-bold font-mono">{contributions}</div>
+                <div className="text-slate-900 dark:text-white text-2xl font-bold font-mono">{contributions}</div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <div className="flex items-center gap-1.5 text-white/60 text-[10px] uppercase tracking-wider mb-1">
-                  <Flame size={11} className="text-orange-400 animate-pulse" />
-                  Best Streak
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/70 dark:border-white/5">
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-[10px] uppercase font-mono tracking-wider mb-1">
+                  <Flame size={11} className="text-orange-500 animate-pulse" />
+                  Streak
                 </div>
-                <div className="text-white text-2xl font-bold font-mono">{streak}d</div>
+                <div className="text-slate-900 dark:text-white text-2xl font-bold font-mono">{streak}d</div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <div className="flex items-center gap-1.5 text-white/60 text-[10px] uppercase tracking-wider mb-1">
-                  <BookOpen size={11} className="text-blue-400" />
-                  Repositories
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/70 dark:border-white/5">
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-[10px] uppercase font-mono tracking-wider mb-1">
+                  <BookOpen size={11} className="text-blue-500" />
+                  Repos
                 </div>
-                <div className="text-white text-2xl font-bold font-mono">{repos}</div>
+                <div className="text-slate-900 dark:text-white text-2xl font-bold font-mono">{repos}</div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <div className="flex items-center gap-1.5 text-white/60 text-[10px] uppercase tracking-wider mb-1">
-                  <Award size={11} className="text-yellow-400" />
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/70 dark:border-white/5">
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-[10px] uppercase font-mono tracking-wider mb-1">
+                  <Award size={11} className="text-amber-500" />
                   Followers
                 </div>
-                <div className="text-white text-2xl font-bold font-mono">{followers}</div>
+                <div className="text-slate-900 dark:text-white text-2xl font-bold font-mono">{followers}</div>
               </div>
             </div>
 
-            {/* Small quote link */}
+            {/* GitHub Profile link */}
             <a
               href="https://github.com/Yerosan-Girma"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold text-center hover:bg-emerald-500/18 transition-all"
+              className="w-full py-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/15 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold text-center transition-all cursor-pointer font-mono"
             >
-              View GitHub Profile
+              github.com/Yerosan-Girma ↗
             </a>
           </motion.div>
 
@@ -194,21 +187,21 @@ export function GithubSection() {
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7 }}
-            className="lg:col-span-2 p-6 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between gap-6 backdrop-blur-sm"
+            className="lg:col-span-2 p-6 sm:p-7 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 flex flex-col justify-between gap-6 shadow-sm backdrop-blur-md"
           >
             <div className="flex items-center justify-between">
-              <span className="text-white text-sm font-bold flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                Commit Grid (Past 9 Months)
+              <span className="text-slate-900 dark:text-white text-sm font-bold flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Contribution Timeline (Past 9 Months)
               </span>
-              <span className="text-white/30 text-[10px] font-mono">Real-time mock dataset</span>
+              <span className="text-slate-400 dark:text-slate-500 text-[10px] font-mono">Continuous delivery</span>
             </div>
 
             {/* Calendar Cells container */}
-            <div className="overflow-x-auto pb-2 scrollbar-none flex flex-col gap-2">
-              <div className="flex gap-[3.5px] min-w-max">
+            <div className="overflow-x-auto pb-2 flex flex-col gap-2">
+              <div className="flex gap-1 min-w-max">
                 {calendarGrid.map((col, ci) => (
-                  <div key={ci} className="flex flex-col gap-[3.5px]">
+                  <div key={ci} className="flex flex-col gap-1">
                     {col.map((level, ri) => {
                       const count = getCellContributions(level);
                       const daysAgo = (calendarGrid.length - ci) * 7 + (6 - ri);
@@ -220,7 +213,7 @@ export function GithubSection() {
                           key={ri}
                           onMouseEnter={() => setHoveredCell({ count, date: dateStr })}
                           onMouseLeave={() => setHoveredCell(null)}
-                          className={`w-[11px] h-[11px] rounded-[2px] border transition-colors cursor-crosshair ${getCellColor(level)}`}
+                          className={`w-3 h-3 rounded-[3px] border transition-colors cursor-crosshair ${getCellColor(level)}`}
                         />
                       );
                     })}
@@ -230,24 +223,24 @@ export function GithubSection() {
             </div>
 
             {/* Grid interactive display status */}
-            <div className="h-10 flex items-center justify-between">
-              <div className="flex items-center gap-1.5 text-xs text-white/40">
+            <div className="h-10 flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-white/5">
+              <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
                 <span>Less</span>
-                <div className="w-2.5 h-2.5 rounded-[1.5px] bg-white/[0.02] border border-white/[0.04]" />
-                <div className="w-2.5 h-2.5 rounded-[1.5px] bg-emerald-950 border border-emerald-900/30" />
-                <div className="w-2.5 h-2.5 rounded-[1.5px] bg-emerald-800/80 border border-emerald-700/30" />
-                <div className="w-2.5 h-2.5 rounded-[1.5px] bg-emerald-600 border border-emerald-500/30" />
-                <div className="w-2.5 h-2.5 rounded-[1.5px] bg-emerald-400 border border-emerald-300/30" />
+                <div className="w-2.5 h-2.5 rounded-[2px] bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/5" />
+                <div className="w-2.5 h-2.5 rounded-[2px] bg-emerald-900/40 border border-emerald-800/30" />
+                <div className="w-2.5 h-2.5 rounded-[2px] bg-emerald-700/70 border border-emerald-600/30" />
+                <div className="w-2.5 h-2.5 rounded-[2px] bg-emerald-600 border border-emerald-500/30" />
+                <div className="w-2.5 h-2.5 rounded-[2px] bg-emerald-400 border border-emerald-300/30" />
                 <span>More</span>
               </div>
-              
+
               <div className="h-6 flex items-center">
                 {hoveredCell ? (
-                  <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/20 px-3 py-1 rounded-full border border-emerald-500/20">
+                  <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full border border-emerald-500/20">
                     <strong>{hoveredCell.count} commits</strong> on {hoveredCell.date}
                   </span>
                 ) : (
-                  <span className="text-[10px] text-white/30 font-mono tracking-wider italic">
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono italic">
                     Hover cell blocks to view metadata
                   </span>
                 )}
@@ -261,48 +254,48 @@ export function GithubSection() {
           {pinnedProjects.map((pinned, idx) => (
             <motion.div
               key={pinned.name}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
+              transition={{ duration: 0.5, delay: idx * 0.12 }}
               whileHover={{ y: -4 }}
-              className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.07] hover:border-white/12 transition-all flex flex-col justify-between gap-4 backdrop-blur-sm group"
+              className="p-6 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 transition-all flex flex-col justify-between gap-4 shadow-sm group"
             >
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-white font-bold group-hover:text-emerald-400 transition-colors text-sm font-mono">
+                <div className="flex items-center justify-between mb-2.5">
+                  <span className="text-slate-900 dark:text-white font-bold group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors text-sm font-mono">
                     {pinned.name}
                   </span>
-                  <span className="text-white/30 text-[10px] font-mono bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full">
+                  <span className="text-slate-400 dark:text-slate-500 text-[10px] font-mono bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 px-2.5 py-0.5 rounded-full">
                     Public
                   </span>
                 </div>
-                <p className="text-white/65 text-xs leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">
                   {pinned.desc}
                 </p>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-white/60 border-t border-white/5 pt-3">
+              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-white/5 pt-3">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-1.5">
                     <span className={`w-2 h-2 rounded-full ${pinned.langColor}`} />
-                    <span>{pinned.lang}</span>
+                    <span className="font-mono text-[11px]">{pinned.lang}</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <Star size={12} className="text-yellow-400" />
-                    <span>{pinned.stars}</span>
+                  <div className="flex items-center gap-1">
+                    <Star size={12} className="text-amber-500" />
+                    <span className="font-mono text-[11px]">{pinned.stars}</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <GitFork size={12} className="text-blue-400" />
-                    <span>{pinned.forks}</span>
+                  <div className="flex items-center gap-1">
+                    <GitFork size={12} className="text-blue-500" />
+                    <span className="font-mono text-[11px]">{pinned.forks}</span>
                   </div>
                 </div>
                 <a
                   href={`https://github.com/Yerosan-Girma/${pinned.name}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/50 hover:text-emerald-400 flex items-center gap-1 transition-colors group-hover:translate-x-1"
+                  className="text-blue-600 dark:text-cyan-400 hover:underline flex items-center gap-1 font-mono text-[11px]"
                 >
-                  Code <span className="inline-block transition-transform duration-200">→</span>
+                  Code →
                 </a>
               </div>
             </motion.div>

@@ -3,24 +3,24 @@
   
   /* Light Theme Color System */
   --background: #F8F9FB;
-  --foreground: #111827;
+  --foreground: #0F172A;
   --card: #FFFFFF;
-  --card-foreground: #111827;
+  --card-foreground: #0F172A;
   --popover: #FFFFFF;
-  --popover-foreground: #111827;
+  --popover-foreground: #0F172A;
   --primary: #1D4ED8;
   --primary-foreground: #FFFFFF;
   --primary-hover: #1E40AF;
-  --secondary: #F3F4F6;
-  --secondary-foreground: #111827;
-  --muted: #F3F4F6;
-  --muted-foreground: #4B5563;
-  --accent: #F3F4F6;
-  --accent-foreground: #111827;
-  --destructive: #DC2626;
+  --secondary: #F1F5F9;
+  --secondary-foreground: #0F172A;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --accent: #EFF6FF;
+  --accent-foreground: #1D4ED8;
+  --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
-  --border: #E5E7EB;
-  --input: #E5E7EB;
+  --border: #E2E8F0;
+  --input: #E2E8F0;
   --input-background: #FFFFFF;
   --ring: #1D4ED8;
   
@@ -31,14 +31,39 @@
   --font-weight-bold: 700;
   
   /* Spacing */
-  --radius: 0.5rem;
-  --radius-lg: 0.75rem;
+  --radius: 0.75rem;
+  --radius-lg: 1rem;
   
   /* Layout */
-  --max-width: 1200px;
+  --max-width: 1240px;
   --padding-desktop: 48px;
   --padding-tablet: 32px;
   --padding-mobile: 20px;
+}
+
+.dark {
+  /* Dark Theme Color System - Obsidian, Slate & Cyan/Blue Accents */
+  --background: #080A10;
+  --foreground: #F8FAFC;
+  --card: #0F1523;
+  --card-foreground: #F8FAFC;
+  --popover: #0F1523;
+  --popover-foreground: #F8FAFC;
+  --primary: #38BDF8;
+  --primary-foreground: #080A10;
+  --primary-hover: #0284C7;
+  --secondary: #1E293B;
+  --secondary-foreground: #F8FAFC;
+  --muted: #141C2E;
+  --muted-foreground: #94A3B8;
+  --accent: #172554;
+  --accent-foreground: #60A5FA;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #1E293B;
+  --input: #1E293B;
+  --input-background: #0B1120;
+  --ring: #38BDF8;
 }
 
 @theme inline {
@@ -62,10 +87,10 @@
   --color-input: var(--input);
   --color-input-background: var(--input-background);
   --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
   --radius-md: var(--radius);
   --radius-lg: var(--radius-lg);
-  --radius-xl: calc(var(--radius-lg) + 4px);
+  --radius-xl: calc(var(--radius-lg) + 6px);
 }
 
 @layer base {
@@ -74,67 +99,14 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
   }
 
   html {
     font-size: var(--font-size);
   }
 
-  h1 {
-    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-    font-weight: 600;
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-  }
-
-  h2 {
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.015em;
-  }
-
-  h3 {
-    font-size: clamp(1.5rem, 3vw, 1.75rem);
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-
-  h4 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  p {
-    font-size: 1.0625rem;
-    line-height: 1.65;
-    font-weight: 400;
-  }
-
-  label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-
-  button {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  input,
-  textarea {
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-  }
-
-  small {
-    font-size: 0.8125rem;
-    line-height: 1.4;
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight text-foreground;
   }
 }

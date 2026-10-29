@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
-import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Zap, ArrowUpRight, Sparkles, Loader2 } from "lucide-react";
+import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Copy, Check, Loader2, Sparkles, MessageSquare } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import confetti from "canvas-confetti";
+import { SectionHeader } from "./SectionHeader";
 
 interface FormData {
   name: string;
@@ -21,7 +22,7 @@ interface FormErrors {
 const contactLinks = [
   { icon: Mail, label: "Email", href: "mailto:yerosang463@gmail.com", desc: "yerosang463@gmail.com" },
   { icon: Github, label: "GitHub", href: "https://github.com/Yerosan-Girma", desc: "github.com/Yerosan-Girma" },
-  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", desc: "in/yerosan-girma" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", desc: "linkedin.com/in/yerosan-girma" },
   { icon: MapPin, label: "Location", href: "https://maps.google.com/?q=Addis+Ababa,+Ethiopia", desc: "Addis Ababa, Ethiopia" },
 ];
 
@@ -39,6 +40,7 @@ export function Contact() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [focused, setFocused] = useState({ name: false, email: false, subject: false, message: false });
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleFocus = (field: keyof typeof focused) => setFocused((prev) => ({ ...prev, [field]: true }));
   const handleBlur = (field: keyof typeof focused) => setFocused((prev) => ({ ...prev, [field]: false }));
@@ -54,6 +56,12 @@ export function Contact() {
     return Object.keys(errs).length === 0;
   };
 
+  const handleCopyEmail = () => {
+    navigator.clipboard?.writeText("yerosang463@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2400);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
@@ -61,14 +69,14 @@ export function Contact() {
 
     try {
       if (!emailJsConfig.serviceId || !emailJsConfig.templateId || !emailJsConfig.publicKey) {
-        // Fallback simulate or throw
+        // Fallback simulation for local/dev preview
         await new Promise((r) => setTimeout(r, 1200));
         setStatus("success");
         confetti({
           particleCount: 50,
           spread: 70,
           origin: { y: 0.7 },
-          colors: ["#1D4ED8", "#3B82F6", "#10B981", "#6366F1"],
+          colors: ["#1D4ED8", "#38BDF8", "#10B981", "#6366F1"],
         });
         setForm({ name: "", email: "", subject: "", message: "" });
         setTimeout(() => setStatus("idle"), 5000);
@@ -90,7 +98,7 @@ export function Contact() {
         particleCount: 50,
         spread: 70,
         origin: { y: 0.7 },
-        colors: ["#1D4ED8", "#3B82F6", "#10B981", "#6366F1"],
+        colors: ["#1D4ED8", "#38BDF8", "#10B981", "#6366F1"],
       });
       setForm({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setStatus("idle"), 5000);
@@ -102,95 +110,113 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 relative overflow-hidden bg-[#111827]">
-      {/* Subtle decorative background glow */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-0">
-        <div className="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-blue-600/10 blur-3xl" />
-        <div className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-indigo-600/10 blur-3xl" />
-      </div>
+    <section id="contact" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/3 -right-24 w-96 h-96 bg-blue-600/10 dark:bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 -left-24 w-96 h-96 bg-indigo-600/10 dark:bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 relative z-10" ref={ref}>
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold tracking-[0.22em] uppercase">
-            <Sparkles size={12} className="text-blue-400" />
-            Communication
-          </span>
-          <h2 className="text-white mt-3 sm:mt-4 leading-tight text-3xl sm:text-4xl font-bold">
-            Let's Build Something Great
-          </h2>
-          <div className="w-16 h-1 bg-[#1D4ED8] rounded-full mx-auto mt-4" />
-          <p className="text-gray-300 mt-3 sm:mt-4 max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
-            Have a project in mind, need a full-stack engineer, or want to discuss technical architectures? Send me a message below.
-          </p>
-        </motion.div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+        {/* Section Header */}
+        <SectionHeader
+          number="07"
+          label="Let's Connect"
+          title="Let's Work"
+          italicTitle="Together"
+          subtitle="Have an engineering opportunity, software project, or technical consultation in mind? Let's discuss requirements and build something remarkable."
+        />
 
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
-          {/* Left panel: Info */}
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+          {/* Left Column: Direct channels & info cards (Span 5) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-5 space-y-4"
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-5 space-y-6"
           >
-            {/* Availability Widget */}
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="p-5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-4 backdrop-blur-sm"
-            >
-              <div className="w-11 h-11 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
-                <Zap size={20} className="animate-pulse" />
-              </div>
-              <div>
-                <div className="text-white text-sm sm:text-base font-semibold">Available for New Projects</div>
-                <div className="text-gray-400 text-xs sm:text-sm mt-0.5">Full-time roles, contracts & freelance deliverables</div>
-              </div>
-              <span className="ml-auto w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
-            </motion.div>
-
-            {/* Contact links */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {contactLinks.map((link, idx) => (
+            {/* Contact channels list */}
+            <div className="space-y-3.5">
+              {contactLinks.map((item, idx) => (
                 <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                  key={item.label}
+                  href={item.href}
+                  target={item.label === "Email" ? "_self" : "_blank"}
                   rel="noopener noreferrer"
-                  aria-label={link.label}
                   initial={{ opacity: 0, y: 15 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.15 + idx * 0.08 }}
-                  whileHover={{ y: -3, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group relative flex flex-col items-start p-4 sm:p-5 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/[0.08] transition-all overflow-hidden"
+                  transition={{ delay: idx * 0.08 }}
+                  whileHover={{ x: 4, scale: 1.01 }}
+                  className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 shadow-xs hover:shadow-md transition-all group cursor-pointer"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                    <link.icon size={20} className="text-blue-400" />
+                  <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-white/5 border border-slate-200/70 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+                    <item.icon size={20} />
                   </div>
-                  <span className="text-white text-sm font-semibold tracking-wide">{link.label}</span>
-                  <span className="text-gray-400 text-xs truncate max-w-full mt-0.5">{link.desc}</span>
-                  <ArrowUpRight size={14} className="absolute top-3.5 right-3.5 text-white/40 group-hover:text-white transition-colors" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-slate-400 dark:text-slate-500 text-[11px] font-mono uppercase tracking-wider">
+                      {item.label}
+                    </div>
+                    <div className="text-slate-800 dark:text-white font-medium text-sm truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
+                      {item.desc}
+                    </div>
+                  </div>
                 </motion.a>
               ))}
             </div>
+
+            {/* Quick Action: Copy Email Shortcut */}
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 uppercase">
+                  Direct Inbox
+                </p>
+                <p className="text-sm font-semibold text-slate-800 dark:text-white mt-0.5">
+                  yerosang463@gmail.com
+                </p>
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleCopyEmail}
+                className="px-3.5 py-2 rounded-xl bg-white dark:bg-white/10 border border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer"
+              >
+                {copiedEmail ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                <span>{copiedEmail ? "Copied!" : "Copy"}</span>
+              </motion.button>
+            </div>
+
+            {/* Developer Fun Fact */}
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/60 dark:from-slate-900/60 dark:via-[#0D121F] dark:to-blue-950/30 border border-blue-200/80 dark:border-blue-900/40 shadow-xs">
+              <div className="flex items-center gap-2 text-blue-600 dark:text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
+                <Sparkles size={14} />
+                <span>Engineering Philosophy</span>
+              </div>
+              <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
+                When I'm not writing full-stack code, you'll find me analyzing software design patterns, optimizing query indices, exploring distributed architecture papers, or shipping open-source components.
+              </p>
+            </div>
           </motion.div>
 
-          {/* Right panel: Form */}
+          {/* Right Column: High-Performance Contact Form (Span 7) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="lg:col-span-7"
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-7 p-6 sm:p-8 md:p-10 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 shadow-xl backdrop-blur-xl relative"
           >
-            <form
-              onSubmit={handleSubmit}
-              className="p-5 sm:p-7 md:p-8 rounded-2xl bg-white/5 border border-white/10 space-y-4 sm:space-y-5 backdrop-blur-sm shadow-xl"
-            >
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-white/10">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center">
+                <MessageSquare size={20} />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  Send a Message
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Direct delivery to my personal development mailbox
+                </p>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid sm:grid-cols-2 gap-4">
                 {/* Name field */}
                 <div className="relative">
@@ -201,22 +227,24 @@ export function Contact() {
                     onFocus={() => handleFocus("name")}
                     onBlur={() => handleBlur("name")}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                      errors.name ? "border-red-500/60 focus:border-red-500" : "border-white/15 focus:border-blue-500"
-                    } text-white text-sm sm:text-base outline-none focus:bg-white/10 transition-all pt-5 pb-1.5`}
+                    className={`w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
+                      errors.name
+                        ? "border-rose-500/70 focus:border-rose-500"
+                        : "border-slate-200/90 dark:border-white/10 focus:border-blue-500 dark:focus:border-cyan-400"
+                    } text-slate-900 dark:text-white text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all pt-5 pb-2`}
                   />
                   <label
                     htmlFor="form-name"
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                       focused.name || form.name
-                        ? "top-1.5 text-[10px] sm:text-xs text-blue-400 font-semibold"
-                        : "top-1/2 -translate-y-1/2 text-xs text-gray-400"
+                        ? "top-1.5 text-[10px] text-blue-600 dark:text-cyan-400 font-semibold"
+                        : "top-1/2 -translate-y-1/2 text-xs text-slate-400"
                     }`}
                   >
-                    Full Name
+                    Your Name
                   </label>
                   {errors.name && (
-                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
+                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
                       <AlertCircle size={11} /> {errors.name}
                     </motion.p>
                   )}
@@ -231,22 +259,24 @@ export function Contact() {
                     onFocus={() => handleFocus("email")}
                     onBlur={() => handleBlur("email")}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                      errors.email ? "border-red-500/60 focus:border-red-500" : "border-white/15 focus:border-blue-500"
-                    } text-white text-sm sm:text-base outline-none focus:bg-white/10 transition-all pt-5 pb-1.5`}
+                    className={`w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
+                      errors.email
+                        ? "border-rose-500/70 focus:border-rose-500"
+                        : "border-slate-200/90 dark:border-white/10 focus:border-blue-500 dark:focus:border-cyan-400"
+                    } text-slate-900 dark:text-white text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all pt-5 pb-2`}
                   />
                   <label
                     htmlFor="form-email"
                     className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                       focused.email || form.email
-                        ? "top-1.5 text-[10px] sm:text-xs text-blue-400 font-semibold"
-                        : "top-1/2 -translate-y-1/2 text-xs text-gray-400"
+                        ? "top-1.5 text-[10px] text-blue-600 dark:text-cyan-400 font-semibold"
+                        : "top-1/2 -translate-y-1/2 text-xs text-slate-400"
                     }`}
                   >
                     Email Address
                   </label>
                   {errors.email && (
-                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
+                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
                       <AlertCircle size={11} /> {errors.email}
                     </motion.p>
                   )}
@@ -262,22 +292,24 @@ export function Contact() {
                   onFocus={() => handleFocus("subject")}
                   onBlur={() => handleBlur("subject")}
                   onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                  className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                    errors.subject ? "border-red-500/60 focus:border-red-500" : "border-white/15 focus:border-blue-500"
-                  } text-white text-sm sm:text-base outline-none focus:bg-white/10 transition-all pt-5 pb-1.5`}
+                  className={`w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
+                    errors.subject
+                      ? "border-rose-500/70 focus:border-rose-500"
+                      : "border-slate-200/90 dark:border-white/10 focus:border-blue-500 dark:focus:border-cyan-400"
+                  } text-slate-900 dark:text-white text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all pt-5 pb-2`}
                 />
                 <label
                   htmlFor="form-subject"
                   className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                     focused.subject || form.subject
-                      ? "top-1.5 text-[10px] sm:text-xs text-blue-400 font-semibold"
-                      : "top-1/2 -translate-y-1/2 text-xs text-gray-400"
+                      ? "top-1.5 text-[10px] text-blue-600 dark:text-cyan-400 font-semibold"
+                      : "top-1/2 -translate-y-1/2 text-xs text-slate-400"
                   }`}
                 >
-                  Project Subject
+                  Project Subject / Inquiry
                 </label>
                 {errors.subject && (
-                  <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
+                  <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
                     <AlertCircle size={11} /> {errors.subject}
                   </motion.p>
                 )}
@@ -292,22 +324,24 @@ export function Contact() {
                   onFocus={() => handleFocus("message")}
                   onBlur={() => handleBlur("message")}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                    errors.message ? "border-red-500/60 focus:border-red-500" : "border-white/15 focus:border-blue-500"
-                  } text-white text-sm sm:text-base outline-none focus:bg-white/10 transition-all pt-6 pb-2 resize-none`}
+                  className={`w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
+                    errors.message
+                      ? "border-rose-500/70 focus:border-rose-500"
+                      : "border-slate-200/90 dark:border-white/10 focus:border-blue-500 dark:focus:border-cyan-400"
+                  } text-slate-900 dark:text-white text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all pt-6 pb-2 resize-none`}
                 />
                 <label
                   htmlFor="form-message"
                   className={`absolute left-4 transition-all pointer-events-none uppercase font-mono tracking-wider ${
                     focused.message || form.message
-                      ? "top-2 text-[10px] sm:text-xs text-blue-400 font-semibold"
-                      : "top-4 text-xs text-gray-400"
+                      ? "top-2 text-[10px] text-blue-600 dark:text-cyan-400 font-semibold"
+                      : "top-4 text-xs text-slate-400"
                   }`}
                 >
-                  Your Message
+                  Project Details / Message
                 </label>
                 {errors.message && (
-                  <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-red-400 text-xs mt-1 ml-1 flex items-center gap-1">
+                  <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
                     <AlertCircle size={11} /> {errors.message}
                   </motion.p>
                 )}
@@ -319,32 +353,32 @@ export function Contact() {
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full py-3.5 rounded-lg bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-sm sm:text-base font-semibold transition-colors flex items-center justify-center gap-2 shadow-md disabled:opacity-70 cursor-pointer"
+                className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 hover:shadow-xl hover:shadow-blue-600/35 disabled:opacity-70 cursor-pointer"
               >
                 {status === "loading" ? (
                   <>
                     <Loader2 size={18} className="animate-spin" />
-                    Sending Message...
+                    <span>Sending Message...</span>
                   </>
                 ) : (
                   <>
                     <Send size={16} />
-                    Send Message
+                    <span>Send Message</span>
                   </>
                 )}
               </motion.button>
 
-              {/* Success / Error Notification */}
+              {/* Notifications */}
               <AnimatePresence>
                 {status === "success" && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="p-3.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs sm:text-sm flex items-center gap-2"
+                    className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm flex items-center gap-2.5"
                   >
-                    <CheckCircle size={16} className="shrink-0" />
-                    Thank you! Your message has been sent successfully. I'll get back to you shortly.
+                    <CheckCircle size={18} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+                    <span>Thank you! Your message has been sent successfully. I'll get back to you shortly.</span>
                   </motion.div>
                 )}
                 {status === "error" && (
@@ -352,10 +386,10 @@ export function Contact() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs sm:text-sm flex items-center gap-2"
+                    className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs sm:text-sm flex items-center gap-2.5"
                   >
-                    <AlertCircle size={16} className="shrink-0" />
-                    Oops! Something went wrong while delivering the email. Please try contacting directly at yerosang463@gmail.com.
+                    <AlertCircle size={18} className="shrink-0 text-rose-600 dark:text-rose-400" />
+                    <span>Something went wrong while delivering the email. Please reach out directly at yerosang463@gmail.com.</span>
                   </motion.div>
                 )}
               </AnimatePresence>

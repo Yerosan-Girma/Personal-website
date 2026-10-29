@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Github, Linkedin, Mail, Heart, ArrowUp } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUp } from "lucide-react";
 
 export function Footer() {
   const scrollTo = (id: string) => {
@@ -26,30 +26,36 @@ export function Footer() {
   };
 
   return (
-    <footer className="border-t border-gray-200 bg-white py-12 sm:py-16 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10 items-start">
+    <footer className="border-t border-slate-200/90 dark:border-white/10 bg-white/60 dark:bg-[#07090E] py-14 sm:py-20 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12 items-start">
           {/* Brand Panel */}
           <div className="md:col-span-5 text-left">
-            <div className="flex items-center gap-2.5 mb-3 group cursor-pointer" onClick={scrollToTop}>
-              <div className="relative w-9 h-9 rounded-xl bg-[#1D4ED8] flex items-center justify-center shadow-xs">
-                <span className="text-white text-xs font-bold">YG</span>
+            <div className="flex items-center gap-3 mb-4 group cursor-pointer" onClick={scrollToTop}>
+              <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-cyan-500 p-0.5 shadow-xs">
+                <div className="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
+                  <span className="text-white text-xs font-mono font-bold tracking-wider">YG</span>
+                </div>
               </div>
-              <span className="text-gray-900 font-bold tracking-tight text-lg">
-                Yerosan Girma<span className="text-[#1D4ED8]">.</span>
+              <span className="text-slate-900 dark:text-white font-bold tracking-tight text-xl">
+                Yerosan Girma<span className="text-blue-600 dark:text-cyan-400">.</span>
               </span>
             </div>
-            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Full Stack Software Engineer building scalable, user-centric web applications. Harnessing clean code structures, robust databases, and modern frontend stacks.
+            <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
+              Full Stack Software Engineer building scalable, user-centric web applications. Harnessing clean modular code, normalized databases, and modern reactive user interfaces.
             </p>
+            <div className="mt-4 flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Addis Ababa, Ethiopia • Available Globally</span>
+            </div>
           </div>
 
           {/* Quick links Panel */}
           <div className="md:col-span-4 text-left">
-            <h4 className="text-gray-900 text-xs font-bold tracking-wider uppercase mb-3 sm:mb-4">
-              Navigation
+            <h4 className="text-slate-900 dark:text-white text-xs font-mono font-bold tracking-wider uppercase mb-4">
+              // Navigation
             </h4>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
               {[
                 { label: "Home", id: "home" },
                 { label: "About", id: "about" },
@@ -62,7 +68,7 @@ export function Footer() {
                 <button
                   key={link.id}
                   onClick={() => scrollTo(link.id)}
-                  className="text-left text-gray-600 hover:text-[#1D4ED8] text-xs sm:text-sm transition-colors font-medium cursor-pointer"
+                  className="text-left text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-cyan-400 text-xs sm:text-sm transition-colors font-medium cursor-pointer"
                 >
                   {link.label}
                 </button>
@@ -72,10 +78,10 @@ export function Footer() {
 
           {/* Connect Panel */}
           <div className="md:col-span-3 text-left flex flex-col items-start">
-            <h4 className="text-gray-900 text-xs font-bold tracking-wider uppercase mb-3 sm:mb-4">
-              Connect
+            <h4 className="text-slate-900 dark:text-white text-xs font-mono font-bold tracking-wider uppercase mb-4">
+              // Connect
             </h4>
-            <div className="flex gap-2.5 mb-5">
+            <div className="flex gap-2.5 mb-6">
               {[
                 { icon: Github, href: "https://github.com/Yerosan-Girma", label: "GitHub" },
                 { icon: Linkedin, href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", label: "LinkedIn" },
@@ -89,32 +95,32 @@ export function Footer() {
                   title={soc.label}
                   whileHover={{ y: -3, scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:border-gray-300 transition-colors cursor-pointer"
+                  className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 hover:border-blue-400 dark:hover:border-cyan-400/40 transition-all cursor-pointer"
+                  aria-label={soc.label}
                 >
-                  <soc.icon size={16} />
+                  <soc.icon size={17} />
                 </motion.a>
               ))}
             </div>
 
             {/* Back to top button */}
             <motion.button
-              whileHover={{ scale: 1.03, y: -1 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.96 }}
               onClick={scrollToTop}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 hover:text-[#1D4ED8] hover:border-gray-300 transition-colors text-xs font-semibold cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all cursor-pointer"
             >
-              <ArrowUp size={13} /> Back to Top
+              <ArrowUp size={14} />
+              <span>Back to Top</span>
             </motion.button>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <p className="text-gray-500 text-xs">
-            © {new Date().getFullYear()} Yerosan Girma. All rights reserved.
-          </p>
-          <p className="text-gray-500 text-xs flex items-center gap-1.5 font-medium">
-            Engineered with <Heart size={11} className="text-red-500 fill-red-500" /> using React, Motion & Tailwind CSS
+        {/* Bottom copyright line */}
+        <div className="pt-8 border-t border-slate-200/80 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-500 font-mono">
+          <p>© {new Date().getFullYear()} Yerosan Girma. All rights reserved.</p>
+          <p className="text-[11px]">
+            Designed & Engineered with React, TypeScript & Tailwind CSS
           </p>
         </div>
       </div>

@@ -7,33 +7,34 @@ import Lenis from "lenis";
 import { Navbar } from "../components/portfolio/Navbar";
 import { Hero } from "../components/portfolio/Hero";
 import { About } from "../components/portfolio/About";
+import { Services } from "../components/portfolio/Services";
 import { Skills } from "../components/portfolio/Skills";
 import { Projects } from "../components/portfolio/Projects";
 import { Experience } from "../components/portfolio/Experience";
+import { GithubSection } from "../components/portfolio/GithubSection";
 import { Contact } from "../components/portfolio/Contact";
 import { Footer } from "../components/portfolio/Footer";
-
-// New components
-import { Services } from "../components/portfolio/Services";
+import { CustomCursor } from "../components/portfolio/CustomCursor";
 import { InteractiveBackground } from "../components/portfolio/InteractiveBackground";
+import { useTheme } from "../context/ThemeContext";
 
-// ── Enhanced Animated Section Divider ──
+// ── Animated Section Divider ──
 function SectionDivider() {
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 my-2 sm:my-4">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 my-4 sm:my-8 pointer-events-none">
       <motion.div
         initial={{ scaleX: 0, opacity: 0 }}
         whileInView={{ scaleX: 1, opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="h-px bg-gradient-to-r from-transparent via-blue-200/60 to-transparent origin-center"
+        transition={{ duration: 0.9, ease: "easeOut" }}
+        className="h-px bg-gradient-to-r from-transparent via-blue-500/20 dark:via-cyan-400/20 to-transparent origin-center"
       />
     </div>
   );
 }
 
 export function PortfolioPage() {
-  const [loading, setLoading] = useState(false);
+  const { isDark } = useTheme();
   const [showTop, setShowTop] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -44,7 +45,7 @@ export function PortfolioPage() {
     restDelta: 0.001,
   });
 
-  // Track mouse for interactive ambient spotlight
+  // Track mouse for ambient spotlight
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
@@ -55,8 +56,6 @@ export function PortfolioPage() {
 
   // Initialize Lenis smooth scroll
   useEffect(() => {
-    if (loading) return;
-
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -66,7 +65,6 @@ export function PortfolioPage() {
       wheelMultiplier: 1.02,
     });
 
-    // Make the Lenis instance globally accessible
     (window as any).lenis = lenis;
 
     let rafId: number;
@@ -98,7 +96,7 @@ export function PortfolioPage() {
       (window as any).lenis = null;
       window.removeEventListener("scroll", onScroll);
     };
-  }, [loading]);
+  }, []);
 
   const handleScrollToTop = () => {
     const lenis = (window as any).lenis;
@@ -110,21 +108,26 @@ export function PortfolioPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FB] text-gray-900 overflow-x-hidden selection:bg-blue-500/20 selection:text-blue-700 relative">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#080A10] text-slate-900 dark:text-white overflow-x-hidden selection:bg-blue-500/20 dark:selection:bg-cyan-400/25 relative transition-colors duration-300">
+      {/* Custom Follow Cursor */}
+      <CustomCursor />
+
       {/* Top Animated Scroll Progress Bar */}
       <motion.div
         style={{ scaleX }}
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1D4ED8] via-indigo-500 to-cyan-400 origin-left z-50 pointer-events-none"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 origin-left z-50 pointer-events-none"
       />
 
-      {/* Interactive Constellation Particle Mesh */}
+      {/* Interactive Background Particle Mesh */}
       <InteractiveBackground />
 
       {/* Global Interactive Mouse Spotlight Glow */}
       <div
         className="fixed inset-0 pointer-events-none z-0 transition-opacity duration-300 hidden md:block"
         style={{
-          background: `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, rgba(29, 78, 216, 0.04), transparent 80%)`,
+          background: `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, ${
+            isDark ? "rgba(56, 189, 248, 0.05)" : "rgba(29, 78, 216, 0.04)"
+          }, transparent 80%)`,
         }}
       />
 
@@ -141,7 +144,7 @@ export function PortfolioPage() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-blue-100/40 blur-3xl"
+          className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-blue-500/5 dark:bg-blue-600/10 blur-3xl"
         />
         <motion.div
           animate={{
@@ -154,52 +157,43 @@ export function PortfolioPage() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-2/3 -right-32 w-[420px] h-[420px] rounded-full bg-indigo-100/35 blur-3xl"
+          className="absolute top-2/3 -right-32 w-[420px] h-[420px] rounded-full bg-indigo-500/5 dark:bg-cyan-500/10 blur-3xl"
         />
       </div>
 
-      {/* Subtle Engineering Geometric Grid Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
+      {/* Page Content Flow */}
+      <div className="relative z-10">
+        {/* Navigation Header */}
+        <Navbar />
 
-      {/* Page layout wrapper */}
-      <AnimatePresence>
-        {!loading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="relative z-10"
-          >
-            {/* Navigation Header */}
-            <Navbar darkMode={false} toggleDark={() => {}} />
+        {/* Sections Flow */}
+        <Hero />
 
-            {/* Sections Flow */}
-            <Hero />
+        <SectionDivider />
+        <About />
 
-            <SectionDivider />
-            <About />
+        <SectionDivider />
+        <Services />
 
-            <SectionDivider />
-            <Services />
+        <SectionDivider />
+        <Skills />
 
-            <SectionDivider />
-            <Skills />
+        <SectionDivider />
+        <Projects />
 
-            <SectionDivider />
-            <Projects />
+        <SectionDivider />
+        <Experience />
 
-            <SectionDivider />
-            <Experience />
+        <SectionDivider />
+        <GithubSection />
 
-            <SectionDivider />
-            <Contact />
+        <SectionDivider />
+        <Contact />
 
-            <Footer />
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <Footer />
+      </div>
 
-      {/* Floating scroll to top */}
+      {/* Floating Scroll to Top Button */}
       <AnimatePresence>
         {showTop && (
           <motion.button
@@ -209,7 +203,7 @@ export function PortfolioPage() {
             whileHover={{ scale: 1.08, y: -3 }}
             whileTap={{ scale: 0.94 }}
             onClick={handleScrollToTop}
-            className="fixed bottom-6 right-6 w-12 h-12 rounded-xl bg-[#1D4ED8] text-white flex items-center justify-center shadow-lg shadow-blue-600/30 hover:bg-[#1E40AF] transition-colors z-50 cursor-pointer"
+            className="fixed bottom-6 right-6 w-12 h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white flex items-center justify-center shadow-xl shadow-blue-600/30 transition-all z-50 cursor-pointer"
             aria-label="Back to top"
           >
             <ArrowUp size={18} strokeWidth={2.5} />
@@ -219,4 +213,5 @@ export function PortfolioPage() {
     </div>
   );
 }
+
 export default PortfolioPage;
