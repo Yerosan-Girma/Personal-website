@@ -42,7 +42,7 @@ export function SectionHeader({
           <span className="font-serif italic text-base sm:text-lg font-medium text-blue-600 dark:text-cyan-400">
             {number}
           </span>
-          <span className="text-[11px] sm:text-xs font-mono font-semibold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
+          <span className="text-[11px] sm:text-xs font-mono font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-slate-500 dark:text-slate-400">
             / {label}
           </span>
         </div>
@@ -50,10 +50,10 @@ export function SectionHeader({
       </div>
 
       {/* Main Monumental Heading with Italic Serif Accent */}
-      <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.08] max-w-4xl">
+      <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] max-w-4xl">
         {title}{" "}
         {italicTitle && (
-          <span className="italic font-serif font-light text-blue-600 dark:text-cyan-400">
+          <span className="italic font-serif font-normal text-blue-600 dark:text-cyan-400">
             {italicTitle}
           </span>
         )}
@@ -61,7 +61,7 @@ export function SectionHeader({
 
       {/* Subtitle / Description */}
       {subtitle && (
-        <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg font-normal text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
+        <p className="mt-4 sm:mt-5 text-base sm:text-base md:text-lg font-normal text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
           {subtitle}
         </p>
       )}

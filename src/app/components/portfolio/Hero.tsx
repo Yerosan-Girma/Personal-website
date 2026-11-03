@@ -114,7 +114,7 @@ export function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-[88vh] lg:min-h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-24 lg:pt-24 pb-10 sm:pb-12 lg:pb-16 bg-[#050814] transition-colors duration-300"
+      className="relative min-h-[95vh] sm:min-h-[88vh] lg:min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-12 lg:pb-16 bg-[#050814] transition-colors duration-300"
     >
       {/* ── 1. FULL-PAGE DEVELOPER BACKGROUND IMAGE (HIGH-TECH CODE & SYSTEM ARCHITECTURE) ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 select-none">
@@ -161,9 +161,9 @@ export function Hero() {
             initial={{ opacity: 0, x: -15 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-slate-400 text-xs font-mono uppercase tracking-[0.25em] mb-3 flex items-center gap-2"
+            className="text-slate-400 text-sm sm:text-xs font-mono uppercase tracking-[0.2em] sm:tracking-[0.25em] mb-4 sm:mb-3 flex items-center gap-2"
           >
-            <Sparkles size={14} className="text-cyan-400" />
+            <Sparkles size={16} className="text-cyan-400 sm:size-14" />
             <span>Addis Ababa, Ethiopia // Software Engineering</span>
           </motion.div>
 
@@ -172,20 +172,20 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.04] mb-5 drop-shadow-sm"
+            className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.08] sm:leading-[1.04] mb-6 sm:mb-5 drop-shadow-sm"
           >
             Yerosan Girma
-            <span className="block mt-2 text-2xl sm:text-4xl md:text-5xl font-medium tracking-tight text-slate-200">
-              Architecting{" "}
+            <span className="block mt-3 sm:mt-2 text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-slate-200">
+              Building{" "}
               <span className="italic font-serif font-light text-cyan-400">
                 Scalable Web
               </span>{" "}
-              Platforms
+              Apps
             </span>
           </motion.h1>
 
           {/* Dynamic Role Badge */}
-          <div className="mb-6 h-10 flex items-center">
+          <div className="mb-7 sm:mb-6 h-12 sm:h-10 flex items-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={roleIndex}
@@ -193,10 +193,10 @@ export function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 border border-cyan-400/25 shadow-xs backdrop-blur-md"
+                className="inline-flex items-center gap-2 px-4 py-2 sm:px-3.5 sm:py-1.5 rounded-xl bg-white/5 border border-cyan-400/25 shadow-xs backdrop-blur-md"
               >
-                <Code2 size={16} className="text-cyan-400 shrink-0" />
-                <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent font-mono">
+                <Code2 size={18} className="text-cyan-400 shrink-0 sm:size-16" />
+                <span className="text-base sm:text-sm sm:text-base font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent font-mono">
                   {ROLES[roleIndex]}
                 </span>
                 <span className="w-1.5 h-4 bg-cyan-400 rounded-full animate-pulse ml-0.5" />
@@ -209,10 +209,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-slate-300 text-base sm:text-lg leading-relaxed mb-7 max-w-xl font-light"
+            className="text-slate-300 text-lg sm:text-base sm:text-lg leading-relaxed mb-8 sm:mb-7 max-w-xl font-light"
           >
-            Engineering robust, high-performance web products with clean modular architectures.
-            Connecting responsive React frontends with scalable Node/Express backends and optimized PostgreSQL/MongoDB databases.
+            Building robust web products with clean code. Connecting React frontends with Node/Express backends and optimized databases.
           </motion.p>
 
           {/* Quick Stack Ribbon */}
@@ -220,17 +219,17 @@ export function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.35 }}
-            className="flex flex-wrap items-center gap-2 mb-8"
+            className="flex flex-wrap items-center gap-2 sm:gap-2 mb-8 sm:mb-8"
           >
-            <span className="text-slate-400 font-mono text-xs uppercase mr-1">
+            <span className="text-slate-400 font-mono text-xs sm:text-xs uppercase mr-1">
               Core Stack:
             </span>
             {quickStack.map((tech) => (
               <span
                 key={tech.name}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-white/10 text-slate-200 text-xs font-semibold shadow-xs backdrop-blur-xs"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3 sm:py-1 rounded-lg bg-slate-900/80 border border-white/10 text-slate-200 text-xs sm:text-xs font-semibold shadow-xs backdrop-blur-xs"
               >
-                <tech.icon size={13} style={{ color: tech.color }} />
+                <tech.icon size={14} style={{ color: tech.color }} />
                 <span>{tech.name}</span>
               </span>
             ))}
@@ -247,7 +246,7 @@ export function Hero() {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => scrollTo("projects")}
-              className="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2 cursor-pointer group"
+              className="px-6 py-3.5 sm:px-6 sm:py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm sm:text-sm shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2 cursor-pointer group"
             >
               <span>Explore Projects</span>
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -257,29 +256,9 @@ export function Hero() {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => scrollTo("services")}
-              className="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/15 font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm"
+              className="px-6 py-3.5 sm:px-6 sm:py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/15 font-semibold text-sm sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm"
             >
               <span>Capabilities</span>
-            </motion.button>
-
-            {/* Quick Copy Email Button */}
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={handleCopyEmail}
-              className="px-4 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 text-slate-200 text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer backdrop-blur-xs shadow-xs"
-            >
-              {copied ? (
-                <>
-                  <Check size={15} className="text-emerald-400" />
-                  <span className="text-emerald-400 font-bold">Email Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy size={15} className="text-slate-400" />
-                  <span>Copy Email</span>
-                </>
-              )}
             </motion.button>
 
             {/* Social Links */}
@@ -296,7 +275,7 @@ export function Hero() {
                   rel="noopener noreferrer"
                   whileHover={{ y: -3, scale: 1.08 }}
                   whileTap={{ scale: 0.94 }}
-                  className="w-11 h-11 rounded-xl bg-slate-900/80 border border-white/10 flex items-center justify-center text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 shadow-xs transition-all cursor-pointer backdrop-blur-xs"
+                  className="w-11 h-11 sm:w-11 sm:h-11 rounded-xl bg-slate-900/80 border border-white/10 flex items-center justify-center text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 shadow-xs transition-all cursor-pointer backdrop-blur-xs"
                   aria-label={soc.label}
                 >
                   <soc.icon size={18} />
