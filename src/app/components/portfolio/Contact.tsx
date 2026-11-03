@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
-import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Copy, Check, Loader2, Sparkles, MessageSquare } from "lucide-react";
+import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, MapPin, Copy, Check, Loader2, Sparkles, MessageSquare, ArrowUpRight } from "lucide-react";
 import confetti from "canvas-confetti";
 import { SectionHeader } from "./SectionHeader";
 
@@ -18,11 +18,43 @@ interface FormErrors {
   message?: string;
 }
 
-const contactLinks = [
-  { icon: Mail, label: "Email", href: "mailto:yerosang463@gmail.com", desc: "yerosang463@gmail.com" },
-  { icon: Github, label: "GitHub", href: "https://github.com/Yerosan-Girma", desc: "github.com/Yerosan-Girma" },
-  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", desc: "linkedin.com/in/yerosan-girma" },
-  { icon: MapPin, label: "Location", href: "https://maps.google.com/?q=Addis+Ababa,+Ethiopia", desc: "Addis Ababa, Ethiopia" },
+interface ContactChannel {
+  name: string;
+  subtitle: string;
+  href: string;
+  icon: typeof Mail;
+  isExternal?: boolean;
+}
+
+const contactChannels: ContactChannel[] = [
+  {
+    name: "Email",
+    subtitle: "Click to send me an email",
+    href: "mailto:yerosang463@gmail.com",
+    icon: Mail,
+    isExternal: false,
+  },
+  {
+    name: "GitHub",
+    subtitle: "Click to view my projects & repositories",
+    href: "https://github.com/Yerosan-Girma",
+    icon: Github,
+    isExternal: true,
+  },
+  {
+    name: "LinkedIn",
+    subtitle: "Click to connect on professional network",
+    href: "https://www.linkedin.com/in/yerosan-girma-30005b37a",
+    icon: Linkedin,
+    isExternal: true,
+  },
+  {
+    name: "Location",
+    subtitle: "Click to view Addis Ababa on Google Maps",
+    href: "https://maps.google.com/?q=Addis+Ababa,+Ethiopia",
+    icon: MapPin,
+    isExternal: true,
+  },
 ];
 
 const WEB3FORMS_ACCESS_KEY =
@@ -53,9 +85,24 @@ export function Contact() {
     return Object.keys(errs).length === 0;
   };
 
-  const handleCopyEmail = () => {
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
     navigator.clipboard?.writeText("yerosang463@gmail.com");
     setCopiedEmail(true);
+
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = (rect.left + rect.width / 2) / window.innerWidth;
+    const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+    confetti({
+      particleCount: 35,
+      spread: 50,
+      origin: { x, y },
+      colors: ["#1D4ED8", "#38BDF8", "#10B981", "#6366F1"],
+      ticks: 140,
+      disableForReducedMotion: true,
+    });
+
     setTimeout(() => setCopiedEmail(false), 2400);
   };
 
@@ -134,55 +181,68 @@ export function Contact() {
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-5 space-y-4 sm:space-y-5"
+            className="lg:col-span-5 space-y-3 sm:space-y-4"
           >
-            {/* Contact channels list */}
+            {/* Contact channels list by name */}
             <div className="space-y-3">
-              {contactLinks.map((item, idx) => (
+              {contactChannels.map((item, idx) => (
                 <motion.a
-                  key={item.label}
+                  key={item.name}
                   href={item.href}
-                  target={item.label === "Email" ? "_self" : "_blank"}
-                  rel="noopener noreferrer"
+                  target={item.isExternal ? "_blank" : "_self"}
+                  rel={item.isExternal ? "noopener noreferrer" : undefined}
                   initial={{ opacity: 0, y: 12 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: idx * 0.07 }}
                   whileHover={{ x: 4, scale: 1.01 }}
-                  className="flex items-center gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 shadow-xs hover:shadow-md transition-all group cursor-pointer"
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 shadow-xs hover:shadow-md transition-all group cursor-pointer"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-white/5 border border-slate-200/70 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform shrink-0">
-                    <item.icon size={18} />
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-white/5 border border-slate-200/70 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white dark:group-hover:bg-cyan-500 dark:group-hover:text-slate-950 transition-all shrink-0">
+                      <item.icon size={18} />
+                    </div>
+                    <div className="min-w-0 text-left">
+                      <div className="text-slate-900 dark:text-white font-bold text-sm sm:text-base group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
+                        {item.name}
+                      </div>
+                      <div className="text-slate-500 dark:text-slate-400 text-xs font-normal truncate">
+                        {item.subtitle}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-slate-400 dark:text-slate-500 text-[10px] sm:text-[11px] font-mono uppercase tracking-wider">
-                      {item.label}
-                    </div>
-                    <div className="text-slate-800 dark:text-white font-medium text-xs sm:text-sm truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
-                      {item.desc}
-                    </div>
+
+                  <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-blue-600 dark:group-hover:text-cyan-400 group-hover:bg-blue-50 dark:group-hover:bg-white/10 transition-colors shrink-0 ml-2">
+                    <ArrowUpRight size={15} />
                   </div>
                 </motion.a>
               ))}
             </div>
 
-            {/* Quick Action: Copy Email Shortcut */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10 flex items-center justify-between gap-3">
-              <div>
-                <p className="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400 uppercase">
-                  Direct Inbox
-                </p>
-                <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-white mt-0.5">
-                  yerosang463@gmail.com
-                </p>
+            {/* Quick Action: Copy Email Address (Without displaying raw email text) */}
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-slate-50/90 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                  <Mail size={15} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold text-slate-900 dark:text-white">
+                    Need the email address copied?
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Click to copy directly to clipboard
+                  </p>
+                </div>
               </div>
+
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={handleCopyEmail}
-                className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-white dark:bg-white/10 border border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer"
+                className="px-3.5 py-2 rounded-xl bg-white dark:bg-white/10 hover:bg-slate-100 dark:hover:bg-white/15 border border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 {copiedEmail ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
-                <span>{copiedEmail ? "Copied!" : "Copy"}</span>
+                <span>{copiedEmail ? "Copied!" : "Copy Email"}</span>
               </motion.button>
             </div>
 

@@ -178,7 +178,7 @@ export function GithubSection() {
               rel="noopener noreferrer"
               className="w-full py-2.5 sm:py-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/15 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold text-center transition-all cursor-pointer font-mono flex items-center justify-center gap-1.5"
             >
-              <span>github.com/Yerosan-Girma</span>
+              <span>View GitHub Profile</span>
               <ExternalLink size={12} />
             </a>
           </motion.div>
