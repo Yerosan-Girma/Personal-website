@@ -2,7 +2,7 @@
   --font-size: 16px;
   
   /* Light Theme Color System */
-  --background: #F8F9FB;
+  --background: #F8FAFC;
   --foreground: #0F172A;
   --card: #FFFFFF;
   --card-foreground: #0F172A;
@@ -38,23 +38,23 @@
   --max-width: 1240px;
   --padding-desktop: 48px;
   --padding-tablet: 32px;
-  --padding-mobile: 20px;
+  --padding-mobile: 16px;
 }
 
 .dark {
   /* Dark Theme Color System - Obsidian, Slate & Cyan/Blue Accents */
-  --background: #080A10;
+  --background: #060814;
   --foreground: #F8FAFC;
-  --card: #0F1523;
+  --card: #0B1120;
   --card-foreground: #F8FAFC;
-  --popover: #0F1523;
+  --popover: #0B1120;
   --popover-foreground: #F8FAFC;
   --primary: #38BDF8;
-  --primary-foreground: #080A10;
+  --primary-foreground: #060814;
   --primary-hover: #0284C7;
   --secondary: #1E293B;
   --secondary-foreground: #F8FAFC;
-  --muted: #141C2E;
+  --muted: #10172A;
   --muted-foreground: #94A3B8;
   --accent: #172554;
   --accent-foreground: #60A5FA;
@@ -109,4 +109,23 @@
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight text-foreground;
   }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.6);
 }

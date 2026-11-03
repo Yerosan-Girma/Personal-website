@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { motion, AnimatePresence, useInView, useScroll, useTransform } from "motion/react";
-import { GraduationCap, Briefcase, Award, CheckCircle, ChevronDown, Sparkles } from "lucide-react";
+import { motion, AnimatePresence, useInView } from "motion/react";
+import { GraduationCap, Briefcase, Award, CheckCircle, ChevronDown } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 
 interface TimelineItem {
@@ -77,61 +77,61 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -30 }}
+      initial={{ opacity: 0, x: -20 }}
       animate={trigger ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.15 + index * 0.12, type: "spring", stiffness: 100 }}
-      className="relative pl-13 sm:pl-16 md:pl-20"
+      transition={{ duration: 0.5, delay: 0.15 + index * 0.1, type: "spring", stiffness: 100 }}
+      className="relative pl-10 sm:pl-14 md:pl-20"
     >
       {/* Timeline bullet node */}
       <motion.div
         initial={{ scale: 0, rotate: -180 }}
         animate={trigger ? { scale: 1, rotate: 0 } : {}}
-        transition={{ delay: 0.3 + index * 0.12, type: "spring", stiffness: 200 }}
-        whileHover={{ scale: 1.15, rotate: 10 }}
-        className="absolute left-0 top-3.5 sm:top-5 w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 flex items-center justify-center shadow-lg shadow-blue-500/30 dark:shadow-cyan-400/20 ring-4 ring-white dark:ring-[#080A10] z-10"
+        transition={{ delay: 0.25 + index * 0.1, type: "spring", stiffness: 200 }}
+        whileHover={{ scale: 1.1, rotate: 10 }}
+        className="absolute left-0 top-3 sm:top-4 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 flex items-center justify-center shadow-md shadow-blue-500/25 ring-4 ring-[#F8FAFC] dark:ring-[#060814] z-10"
       >
-        <item.icon size={18} strokeWidth={2.2} />
+        <item.icon size={16} strokeWidth={2.2} />
       </motion.div>
 
       {/* Horizontal connector line on desktop */}
       <motion.div
         initial={{ scaleX: 0 }}
         animate={trigger ? { scaleX: 1 } : {}}
-        transition={{ delay: 0.4 + index * 0.12, duration: 0.3 }}
-        className="absolute left-5 sm:left-6 top-8 w-6 h-px hidden md:block bg-blue-500/30 dark:bg-cyan-400/30 origin-left"
+        transition={{ delay: 0.35 + index * 0.1, duration: 0.3 }}
+        className="absolute left-5 sm:left-6 top-8 w-5 sm:w-8 h-px hidden md:block bg-blue-500/30 dark:bg-cyan-400/30 origin-left"
       />
 
       {/* Timeline item card */}
       <motion.div
         onClick={() => setExpanded(!expanded)}
-        whileHover={{ y: -3 }}
+        whileHover={{ y: -2 }}
         whileTap={{ scale: 0.99 }}
-        className="relative p-5 sm:p-7 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(56,189,248,0.08)] transition-all overflow-hidden group cursor-pointer shadow-xs"
+        className="relative p-4 sm:p-6 md:p-7 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 hover:shadow-lg dark:hover:shadow-[0_10px_30px_rgba(56,189,248,0.08)] transition-all overflow-hidden group cursor-pointer shadow-xs"
       >
         {/* Left border accent line */}
-        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600 dark:bg-cyan-400 rounded-l-3xl" />
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 dark:bg-cyan-400 rounded-l-3xl" />
 
-        <div className="flex flex-wrap items-start justify-between gap-3 mb-2.5 pl-2">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1.5 sm:gap-3 mb-2 pl-1 sm:pl-2">
           <div>
-            <h3 className="text-slate-900 dark:text-white text-lg sm:text-xl font-bold group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors leading-snug">
+            <h3 className="text-slate-900 dark:text-white text-base sm:text-lg md:text-xl font-bold group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors leading-snug">
               {item.title}
             </h3>
             <span className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">{item.org}</span>
           </div>
-          <span className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-blue-500/10 text-blue-600 dark:text-cyan-400 border border-blue-500/20 shrink-0">
+          <span className="w-fit px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-blue-500/10 text-blue-600 dark:text-cyan-400 border border-blue-500/20 shrink-0">
             {item.period}
           </span>
         </div>
 
-        <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4 pl-2 font-normal">
+        <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-3.5 pl-1 sm:pl-2 font-normal">
           {item.desc}
         </p>
 
         {/* Expandable highlights block */}
-        <div className="pl-2">
-          <div className="flex items-center gap-1.5 text-blue-600 dark:text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
+        <div className="pl-1 sm:pl-2">
+          <div className="flex items-center gap-1 text-blue-600 dark:text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
             <span>Key Competencies & Highlights</span>
-            <motion.div animate={{ rotate: expanded ? 180 : 0 }} className="transition-transform duration-200">
+            <motion.div animate={{ rotate: expanded ? 180 : 0 }} className="transition-transform duration-200 ml-1">
               <ChevronDown size={14} />
             </motion.div>
           </div>
@@ -142,17 +142,17 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
-                <div className="grid sm:grid-cols-2 gap-2 pt-2 pb-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 pb-1">
                   {item.highlights.map((highlight, hIdx) => (
                     <motion.div
                       key={hIdx}
-                      initial={{ opacity: 0, x: -8 }}
+                      initial={{ opacity: 0, x: -6 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: hIdx * 0.05 }}
-                      className="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-white/5 p-3 rounded-xl border border-slate-200/80 dark:border-white/10"
+                      transition={{ delay: hIdx * 0.04 }}
+                      className="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-white/5 p-2.5 rounded-xl border border-slate-200/80 dark:border-white/10"
                     >
                       <CheckCircle size={14} className="text-blue-600 dark:text-cyan-400 shrink-0 mt-0.5" />
                       <span>{highlight}</span>
@@ -173,29 +173,29 @@ export function Experience() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="experience" ref={ref} className="py-14 sm:py-18 lg:py-20 relative overflow-hidden">
+    <section id="experience" ref={ref} className="py-12 sm:py-16 lg:py-20 relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="05"
-          label="Experience"
-          title="Career Journey &"
+          label="Career Journey & Education"
+          title="Career &"
           italicTitle="Education"
-          subtitle="Academic foundations in software engineering at Haramaya University combined with hands-on production deliveries and intensive development bootcamps."
+          subtitle="Software engineering academic foundation at Haramaya University combined with full-stack client deliveries and intensive technical bootcamps."
         />
 
         {/* Timeline body */}
         <div className="relative">
           {/* Vertical line through bullets */}
-          <div className="absolute left-[17px] sm:left-[21px] top-6 bottom-6 w-0.5 bg-slate-200 dark:bg-white/10" />
+          <div className="absolute left-[15px] sm:left-[19px] top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-white/10" />
           <motion.div
             initial={{ scaleY: 0 }}
             animate={inView ? { scaleY: 1 } : {}}
             transition={{ duration: 1.2, delay: 0.3, ease: "easeInOut" }}
-            className="absolute left-[17px] sm:left-[21px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-600 dark:from-cyan-400 via-blue-500/50 to-transparent origin-top"
+            className="absolute left-[15px] sm:left-[19px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-blue-600 dark:from-cyan-400 via-blue-500/50 to-transparent origin-top"
           />
 
-          <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-5 sm:space-y-7">
             {timeline.map((item, idx) => (
               <TimelineCard
                 key={idx}

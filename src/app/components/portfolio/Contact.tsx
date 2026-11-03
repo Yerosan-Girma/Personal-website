@@ -25,13 +25,12 @@ const contactLinks = [
   { icon: MapPin, label: "Location", href: "https://maps.google.com/?q=Addis+Ababa,+Ethiopia", desc: "Addis Ababa, Ethiopia" },
 ];
 
-// Free Web3Forms access key (no expiration, directly sends to yerosang463@gmail.com)
 const WEB3FORMS_ACCESS_KEY =
   import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "5114320f-8202-46c0-a706-f21bc385f91a";
 
 export function Contact() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   const [form, setForm] = useState<FormData>({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
@@ -114,7 +113,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" ref={ref} className="py-14 sm:py-18 lg:py-20 relative overflow-hidden">
+    <section id="contact" ref={ref} className="py-12 sm:py-16 lg:py-20 relative overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 -right-24 w-96 h-96 bg-blue-600/10 dark:bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 -left-24 w-96 h-96 bg-indigo-600/10 dark:bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
@@ -129,36 +128,36 @@ export function Contact() {
           subtitle="Have an engineering opportunity, software project, or technical consultation in mind? Let's discuss requirements and build something remarkable."
         />
 
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Direct channels & info cards (Span 5) */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
-            className="lg:col-span-5 space-y-6"
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-5 space-y-4 sm:space-y-5"
           >
             {/* Contact channels list */}
-            <div className="space-y-3.5">
+            <div className="space-y-3">
               {contactLinks.map((item, idx) => (
                 <motion.a
                   key={item.label}
                   href={item.href}
                   target={item.label === "Email" ? "_self" : "_blank"}
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: idx * 0.08 }}
+                  transition={{ delay: idx * 0.07 }}
                   whileHover={{ x: 4, scale: 1.01 }}
-                  className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 shadow-xs hover:shadow-md transition-all group cursor-pointer"
+                  className="flex items-center gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 shadow-xs hover:shadow-md transition-all group cursor-pointer"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-white/5 border border-slate-200/70 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
-                    <item.icon size={20} />
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-white/5 border border-slate-200/70 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform shrink-0">
+                    <item.icon size={18} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-slate-400 dark:text-slate-500 text-[11px] font-mono uppercase tracking-wider">
+                    <div className="text-slate-400 dark:text-slate-500 text-[10px] sm:text-[11px] font-mono uppercase tracking-wider">
                       {item.label}
                     </div>
-                    <div className="text-slate-800 dark:text-white font-medium text-sm truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
+                    <div className="text-slate-800 dark:text-white font-medium text-xs sm:text-sm truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
                       {item.desc}
                     </div>
                   </div>
@@ -167,12 +166,12 @@ export function Contact() {
             </div>
 
             {/* Quick Action: Copy Email Shortcut */}
-            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10 flex items-center justify-between gap-3">
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10 flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 uppercase">
+                <p className="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400 uppercase">
                   Direct Inbox
                 </p>
-                <p className="text-sm font-semibold text-slate-800 dark:text-white mt-0.5">
+                <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-white mt-0.5">
                   yerosang463@gmail.com
                 </p>
               </div>
@@ -180,47 +179,47 @@ export function Contact() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleCopyEmail}
-                className="px-3.5 py-2 rounded-xl bg-white dark:bg-white/10 border border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-white dark:bg-white/10 border border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer"
               >
-                {copiedEmail ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                {copiedEmail ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
                 <span>{copiedEmail ? "Copied!" : "Copy"}</span>
               </motion.button>
             </div>
 
-            {/* Developer Fun Fact */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/60 dark:from-slate-900/60 dark:via-[#0D121F] dark:to-blue-950/30 border border-blue-200/80 dark:border-blue-900/40 shadow-xs">
+            {/* Developer Philosophy Card */}
+            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/60 dark:from-slate-900/60 dark:via-[#0D121F] dark:to-blue-950/30 border border-blue-200/80 dark:border-blue-900/40 shadow-xs">
               <div className="flex items-center gap-2 text-blue-600 dark:text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
                 <Sparkles size={14} />
                 <span>Engineering Philosophy</span>
               </div>
-              <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
-                When I'm not writing full-stack code, you'll find me analyzing software design patterns, optimizing query indices, exploring distributed architecture papers, or shipping open-source components.
+              <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed font-normal">
+                Committed to writing scalable code, optimizing query latency, and crafting accessible user interfaces that make real-world digital interactions effortless.
               </p>
             </div>
           </motion.div>
 
-          {/* Right Column: High-Performance Contact Form (Span 7) */}
+          {/* Right Column: Contact Form (Span 7) */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
-            className="lg:col-span-7 p-6 sm:p-8 md:p-10 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 shadow-xl backdrop-blur-xl relative"
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-7 p-5 sm:p-7 md:p-8 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 shadow-lg backdrop-blur-xl relative"
           >
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center">
-                <MessageSquare size={20} />
+            <div className="flex items-center gap-3 mb-5 pb-3.5 border-b border-slate-100 dark:border-white/10">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center">
+                <MessageSquare size={18} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                   Send a Message
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Direct delivery to my personal development mailbox
+                  Delivered directly to my development inbox
                 </p>
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 {/* Name field */}
                 <div className="relative">
@@ -231,11 +230,11 @@ export function Contact() {
                     onFocus={() => handleFocus("name")}
                     onBlur={() => handleBlur("name")}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className={`w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
+                    className={`w-full px-4 pt-5 pb-2 rounded-xl bg-slate-50 dark:bg-white/5 border ${
                       errors.name
                         ? "border-rose-500/70 focus:border-rose-500"
                         : "border-slate-200/90 dark:border-white/10 focus:border-blue-500 dark:focus:border-cyan-400"
-                    } text-slate-900 dark:text-white text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all pt-5 pb-2`}
+                    } text-slate-900 dark:text-white text-base sm:text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all`}
                   />
                   <label
                     htmlFor="form-name"
@@ -248,9 +247,9 @@ export function Contact() {
                     Your Name
                   </label>
                   {errors.name && (
-                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
+                    <p className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
                       <AlertCircle size={11} /> {errors.name}
-                    </motion.p>
+                    </p>
                   )}
                 </div>
 
@@ -263,11 +262,11 @@ export function Contact() {
                     onFocus={() => handleFocus("email")}
                     onBlur={() => handleBlur("email")}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className={`w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
+                    className={`w-full px-4 pt-5 pb-2 rounded-xl bg-slate-50 dark:bg-white/5 border ${
                       errors.email
                         ? "border-rose-500/70 focus:border-rose-500"
                         : "border-slate-200/90 dark:border-white/10 focus:border-blue-500 dark:focus:border-cyan-400"
-                    } text-slate-900 dark:text-white text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all pt-5 pb-2`}
+                    } text-slate-900 dark:text-white text-base sm:text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all`}
                   />
                   <label
                     htmlFor="form-email"
@@ -280,9 +279,9 @@ export function Contact() {
                     Email Address
                   </label>
                   {errors.email && (
-                    <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
+                    <p className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
                       <AlertCircle size={11} /> {errors.email}
-                    </motion.p>
+                    </p>
                   )}
                 </div>
               </div>
@@ -296,11 +295,11 @@ export function Contact() {
                   onFocus={() => handleFocus("subject")}
                   onBlur={() => handleBlur("subject")}
                   onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                  className={`w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
+                  className={`w-full px-4 pt-5 pb-2 rounded-xl bg-slate-50 dark:bg-white/5 border ${
                     errors.subject
                       ? "border-rose-500/70 focus:border-rose-500"
                       : "border-slate-200/90 dark:border-white/10 focus:border-blue-500 dark:focus:border-cyan-400"
-                  } text-slate-900 dark:text-white text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all pt-5 pb-2`}
+                  } text-slate-900 dark:text-white text-base sm:text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all`}
                 />
                 <label
                   htmlFor="form-subject"
@@ -313,9 +312,9 @@ export function Contact() {
                   Project Subject / Inquiry
                 </label>
                 {errors.subject && (
-                  <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
+                  <p className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
                     <AlertCircle size={11} /> {errors.subject}
-                  </motion.p>
+                  </p>
                 )}
               </div>
 
@@ -328,11 +327,11 @@ export function Contact() {
                   onFocus={() => handleFocus("message")}
                   onBlur={() => handleBlur("message")}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className={`w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
+                  className={`w-full px-4 pt-6 pb-2 rounded-xl bg-slate-50 dark:bg-white/5 border ${
                     errors.message
                       ? "border-rose-500/70 focus:border-rose-500"
                       : "border-slate-200/90 dark:border-white/10 focus:border-blue-500 dark:focus:border-cyan-400"
-                  } text-slate-900 dark:text-white text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all pt-6 pb-2 resize-none`}
+                  } text-slate-900 dark:text-white text-base sm:text-sm outline-none focus:bg-white dark:focus:bg-white/10 transition-all resize-none`}
                 />
                 <label
                   htmlFor="form-message"
@@ -345,55 +344,55 @@ export function Contact() {
                   Project Details / Message
                 </label>
                 {errors.message && (
-                  <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
+                  <p className="text-rose-500 text-xs mt-1 ml-1 flex items-center gap-1 font-medium">
                     <AlertCircle size={11} /> {errors.message}
-                  </motion.p>
+                  </p>
                 )}
               </div>
 
               {/* Submit Button */}
               <motion.button
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 hover:shadow-xl hover:shadow-blue-600/35 disabled:opacity-70 cursor-pointer"
+                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-md shadow-blue-600/25 disabled:opacity-70 cursor-pointer"
               >
                 {status === "loading" ? (
                   <>
-                    <Loader2 size={18} className="animate-spin" />
+                    <Loader2 size={16} className="animate-spin" />
                     <span>Sending Message...</span>
                   </>
                 ) : (
                   <>
-                    <Send size={16} />
+                    <Send size={15} />
                     <span>Send Message</span>
                   </>
                 )}
               </motion.button>
 
-              {/* Notifications */}
+              {/* Status Notifications */}
               <AnimatePresence>
                 {status === "success" && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm flex items-center gap-2.5"
+                    className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm flex items-center gap-2"
                   >
-                    <CheckCircle size={18} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
-                    <span>Thank you! Your message has been sent successfully. I'll get back to you shortly.</span>
+                    <CheckCircle size={16} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+                    <span>Thank you! Your message has been sent successfully. I will get back to you shortly.</span>
                   </motion.div>
                 )}
                 {status === "error" && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs sm:text-sm space-y-3"
+                    className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs sm:text-sm space-y-2.5"
                   >
-                    <div className="flex items-start gap-2.5">
-                      <AlertCircle size={18} className="shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
+                    <div className="flex items-start gap-2">
+                      <AlertCircle size={16} className="shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
                       <div className="flex-1">
                         <p className="font-semibold">Unable to deliver message through automated API:</p>
                         <p className="mt-0.5 text-xs text-rose-500/90 dark:text-rose-300/90 font-mono">
@@ -404,14 +403,14 @@ export function Contact() {
 
                     <div className="pt-2 border-t border-rose-500/20 flex flex-wrap items-center justify-between gap-2">
                       <span className="text-[11px] text-slate-600 dark:text-slate-300">
-                        Don't lose your message — send with 1 click:
+                        Send directly via your email client:
                       </span>
                       <button
                         type="button"
                         onClick={handleDirectEmail}
-                        className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+                        className="px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition-colors flex items-center gap-1 shadow-xs cursor-pointer"
                       >
-                        <Mail size={13} />
+                        <Mail size={12} />
                         <span>Send via Email App</span>
                       </button>
                     </div>

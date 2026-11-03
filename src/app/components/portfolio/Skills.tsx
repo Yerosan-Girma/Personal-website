@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "motion/react";
 import {
   Webhook,
-  Sparkles,
   Layout,
   Server,
   Database,
@@ -94,27 +93,27 @@ function SkillTile({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15, scale: 0.95 }}
-      animate={trigger ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 15, scale: 0.95 }}
-      transition={{ duration: 0.35, delay: index * 0.03 }}
-      whileHover={{ y: -6, scale: 1.08 }}
-      whileTap={{ scale: 0.94 }}
+      initial={{ opacity: 0, y: 12, scale: 0.95 }}
+      animate={trigger ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 12, scale: 0.95 }}
+      transition={{ duration: 0.3, delay: index * 0.025 }}
+      whileHover={{ y: -4, scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       title={skill.name}
       style={{
         boxShadow: hovered
-          ? `0 14px 28px -6px ${skill.color}35, 0 0 16px ${skill.color}20`
+          ? `0 12px 24px -6px ${skill.color}30, 0 0 12px ${skill.color}15`
           : isHighlighted
-          ? `0 0 16px ${skill.color}50`
+          ? `0 0 12px ${skill.color}45`
           : undefined,
-        borderColor: hovered || isHighlighted ? `${skill.color}90` : undefined,
+        borderColor: hovered || isHighlighted ? `${skill.color}80` : undefined,
       }}
-      className={`group relative flex flex-col items-center justify-center gap-2.5 w-24 sm:w-28 h-24 sm:h-28 rounded-2xl bg-white dark:bg-white/[0.04] border border-slate-200/90 dark:border-white/10 transition-all duration-300 p-2 cursor-pointer shadow-xs ${
+      className={`group relative flex flex-col items-center justify-center gap-2 w-full aspect-square rounded-2xl bg-white dark:bg-white/[0.04] border border-slate-200/90 dark:border-white/10 transition-all duration-300 p-2 sm:p-2.5 cursor-pointer shadow-xs ${
         isHighlighted ? "scale-105 ring-2 ring-blue-500/40 dark:ring-cyan-400/40" : ""
       }`}
     >
-      {/* Dynamic Background Glow on Hover */}
+      {/* Background Glow */}
       <div
         className="absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none"
         style={{
@@ -123,7 +122,7 @@ function SkillTile({
         }}
       />
 
-      <div className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center relative z-10">
+      <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center relative z-10">
         {skill.logo ? (
           <img
             src={skill.logo}
@@ -133,11 +132,11 @@ function SkillTile({
             style={skill.invert ? { filter: "contrast(140%)" } : undefined}
           />
         ) : (
-          <Webhook className="w-8 h-8 text-blue-600 dark:text-cyan-400" strokeWidth={1.8} />
+          <Webhook className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600 dark:text-cyan-400" strokeWidth={1.8} />
         )}
       </div>
 
-      <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors text-center truncate max-w-full px-1 relative z-10 font-mono">
+      <span className="text-[11px] sm:text-xs font-semibold text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors text-center truncate max-w-full px-1 relative z-10 font-mono">
         {skill.name}
       </span>
     </motion.div>
@@ -164,24 +163,24 @@ export function Skills() {
   });
 
   return (
-    <section id="skills" ref={ref} className="py-14 sm:py-18 lg:py-20 relative overflow-hidden">
+    <section id="skills" ref={ref} className="py-12 sm:py-16 lg:py-20 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
-          number="04"
+          number="03"
           label="Tech Stack"
           title="Skills &"
           italicTitle="Technologies"
-          subtitle="A comprehensive survey of languages, frameworks, runtime environments, and databases deployed across production systems."
+          subtitle="A curated survey of modern frontend, backend, database, and DevOps tools deployed across production systems."
         />
 
         {/* View Mode Switcher + Filter Controls */}
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8 sm:mb-10">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
           {/* View Mode Pill Switcher */}
           <div className="flex items-center gap-1 p-1 rounded-2xl bg-slate-100/90 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 w-fit">
             <button
               onClick={() => setViewMode("grid")}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 viewMode === "grid"
                   ? "bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-xs"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -192,7 +191,7 @@ export function Skills() {
             </button>
             <button
               onClick={() => setViewMode("sphere")}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 viewMode === "sphere"
                   ? "bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-xs"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -205,14 +204,14 @@ export function Skills() {
 
           {/* Search Box (Grid Mode) */}
           {viewMode === "grid" && (
-            <div className="relative flex items-center min-w-[260px]">
-              <Search size={16} className="absolute left-3.5 text-slate-400 pointer-events-none" />
+            <div className="relative flex items-center w-full sm:w-auto sm:min-w-[260px]">
+              <Search size={15} className="absolute left-3.5 text-slate-400 pointer-events-none" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search tech (e.g. React, PostgreSQL)..."
-                className="w-full pl-10 pr-4 py-2 rounded-xl bg-white dark:bg-white/5 border border-slate-200/90 dark:border-white/10 shadow-2xs text-xs sm:text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 dark:focus:border-cyan-400 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-cyan-400/20 transition-all font-mono"
+                className="w-full pl-9 pr-8 py-2 rounded-xl bg-white dark:bg-white/5 border border-slate-200/90 dark:border-white/10 shadow-2xs text-xs sm:text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 dark:focus:border-cyan-400 focus:ring-2 focus:ring-blue-500/20 transition-all font-mono"
               />
               {search && (
                 <button
@@ -237,15 +236,15 @@ export function Skills() {
               transition={{ duration: 0.3 }}
               className="space-y-6 sm:space-y-8"
             >
-              {/* Category Pills */}
-              <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 overflow-x-auto w-fit">
+              {/* Category Filter Pills */}
+              <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 overflow-x-auto max-w-full pb-1 sm:pb-1">
                 {[{ id: "all", label: "All Skills" }, ...CATEGORIES].map((cat) => {
                   const isSelected = selectedCat === cat.id;
                   return (
                     <button
                       key={cat.id}
                       onClick={() => setSelectedCat(cat.id)}
-                      className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                         isSelected
                           ? "bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-xs"
                           : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -264,13 +263,13 @@ export function Skills() {
                     key={category.id}
                     initial={{ opacity: 0, y: 15 }}
                     animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-                    transition={{ duration: 0.5 }}
-                    className="rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/80 dark:border-white/10 p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden"
+                    transition={{ duration: 0.45 }}
+                    className="rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/80 dark:border-white/10 p-5 sm:p-7 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden"
                   >
                     {/* Category Title */}
-                    <div className="flex items-center gap-3 mb-6 pb-3 border-b border-slate-100 dark:border-white/10">
-                      <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center">
-                        <Icon size={18} strokeWidth={2} />
+                    <div className="flex items-center gap-3 mb-5 pb-3 border-b border-slate-100 dark:border-white/10">
+                      <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center">
+                        <Icon size={17} strokeWidth={2} />
                       </div>
                       <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                         {category.title}
@@ -280,8 +279,8 @@ export function Skills() {
                       </span>
                     </div>
 
-                    {/* Tech Logos */}
-                    <div className="flex flex-wrap gap-3 sm:gap-4">
+                    {/* Responsive Tech Grid: 3 cols on mobile, 4 on sm, 6 on md, 7 on lg */}
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-2.5 sm:gap-3.5">
                       {category.skills.map((skill, idx) => {
                         const isHighlighted = query.length > 0 && skill.name.toLowerCase().includes(query);
                         return (

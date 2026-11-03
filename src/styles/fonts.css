@@ -4,6 +4,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 h1,
@@ -14,6 +16,12 @@ h5,
 h6 {
   font-family: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   letter-spacing: -0.025em;
+  text-wrap: balance;
+  line-height: 1.15;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 .font-serif {
@@ -24,4 +32,18 @@ h6 {
 code,
 pre {
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Fluid responsive typography utilities */
+.prose-editorial {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: inherit;
+}
+
+@media (max-width: 640px) {
+  .prose-editorial {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
 }

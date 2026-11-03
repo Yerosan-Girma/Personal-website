@@ -11,6 +11,7 @@ import { Services } from "../components/portfolio/Services";
 import { Skills } from "../components/portfolio/Skills";
 import { Projects } from "../components/portfolio/Projects";
 import { Experience } from "../components/portfolio/Experience";
+import { GithubSection } from "../components/portfolio/GithubSection";
 import { Contact } from "../components/portfolio/Contact";
 import { Footer } from "../components/portfolio/Footer";
 import { CustomCursor } from "../components/portfolio/CustomCursor";
@@ -44,7 +45,7 @@ export function PortfolioPage() {
     restDelta: 0.001,
   });
 
-  // Track mouse for ambient spotlight
+  // Track mouse for ambient spotlight on desktop
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
@@ -78,7 +79,7 @@ export function PortfolioPage() {
       setTimeout(() => {
         const target = document.querySelector(window.location.hash);
         if (target) {
-          lenis.scrollTo(target as HTMLElement, { offset: -80 });
+          lenis.scrollTo(target as HTMLElement, { offset: -70 });
         }
       }, 250);
     }
@@ -107,8 +108,8 @@ export function PortfolioPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#060814] text-slate-900 dark:text-white overflow-x-hidden selection:bg-blue-500/20 dark:selection:bg-cyan-400/25 relative transition-colors duration-300">
-      {/* Continuous Subtle Tech Grid across all pages to eliminate empty black voids */}
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#060814] text-slate-900 dark:text-white max-w-full overflow-x-hidden selection:bg-blue-500/20 dark:selection:bg-cyan-400/25 relative transition-colors duration-300">
+      {/* Subtle Tech Grid */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[linear-gradient(to_right,rgba(37,99,235,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(37,99,235,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] opacity-70" />
 
       {/* Custom Follow Cursor */}
@@ -137,38 +138,38 @@ export function PortfolioPage() {
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <motion.div
           animate={{
-            x: [0, 40, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.1, 1],
+            x: [0, 30, 0],
+            y: [0, -20, 0],
+            scale: [1, 1.08, 1],
           }}
           transition={{
             duration: 18,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-3xl"
+          className="absolute top-1/4 -left-32 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-3xl"
         />
         <motion.div
           animate={{
-            x: [0, -50, 0],
-            y: [0, 40, 0],
-            scale: [1, 1.15, 1],
+            x: [0, -40, 0],
+            y: [0, 30, 0],
+            scale: [1, 1.1, 1],
           }}
           transition={{
             duration: 22,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-2/3 -right-32 w-[420px] h-[420px] rounded-full bg-indigo-500/10 dark:bg-cyan-500/15 blur-3xl"
+          className="absolute top-2/3 -right-32 w-80 sm:w-[420px] h-80 sm:h-[420px] rounded-full bg-indigo-500/10 dark:bg-cyan-500/15 blur-3xl"
         />
       </div>
 
       {/* Page Content Flow */}
-      <div className="relative z-10">
+      <div className="relative z-10 max-w-full overflow-x-hidden">
         {/* Navigation Header */}
         <Navbar />
 
-        {/* Sections Flow */}
+        {/* Hero Section */}
         <Hero />
 
         <SectionDivider />
@@ -187,6 +188,9 @@ export function PortfolioPage() {
         <Experience />
 
         <SectionDivider />
+        <GithubSection />
+
+        <SectionDivider />
         <Contact />
 
         <Footer />
@@ -199,10 +203,10 @@ export function PortfolioPage() {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            whileHover={{ scale: 1.08, y: -3 }}
+            whileHover={{ scale: 1.08, y: -2 }}
             whileTap={{ scale: 0.94 }}
             onClick={handleScrollToTop}
-            className="fixed bottom-6 right-6 w-12 h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white flex items-center justify-center shadow-xl shadow-blue-600/30 transition-all z-50 cursor-pointer"
+            className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-600/30 transition-all z-40 cursor-pointer"
             aria-label="Back to top"
           >
             <ArrowUp size={18} strokeWidth={2.5} />
