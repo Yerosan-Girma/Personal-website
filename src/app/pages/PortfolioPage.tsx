@@ -3,32 +3,25 @@ import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import { ArrowUp } from "lucide-react";
 import Lenis from "lenis";
 
-// Core components
+// Core portfolio components
 import { Navbar } from "../components/portfolio/Navbar";
 import { Hero } from "../components/portfolio/Hero";
 import { About } from "../components/portfolio/About";
-import { Services } from "../components/portfolio/Services";
 import { Skills } from "../components/portfolio/Skills";
 import { Projects } from "../components/portfolio/Projects";
+import { Services } from "../components/portfolio/Services";
 import { Experience } from "../components/portfolio/Experience";
 import { GithubSection } from "../components/portfolio/GithubSection";
 import { Contact } from "../components/portfolio/Contact";
 import { Footer } from "../components/portfolio/Footer";
-import { CustomCursor } from "../components/portfolio/CustomCursor";
 import { InteractiveBackground } from "../components/portfolio/InteractiveBackground";
+import { ResumeModal } from "../components/portfolio/ResumeModal";
 import { useTheme } from "../context/ThemeContext";
 
-// ── Animated Section Divider ──
-function SectionDivider() {
+function SubtleSectionDivider() {
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 my-1 sm:my-2 pointer-events-none">
-      <motion.div
-        initial={{ scaleX: 0, opacity: 0 }}
-        whileInView={{ scaleX: 1, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="h-px bg-gradient-to-r from-transparent via-blue-500/25 dark:via-cyan-400/25 to-transparent origin-center"
-      />
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 pointer-events-none">
+      <div className="h-px bg-slate-200/80 dark:bg-white/[0.06]" />
     </div>
   );
 }
@@ -36,6 +29,7 @@ function SectionDivider() {
 export function PortfolioPage() {
   const { isDark } = useTheme();
   const [showTop, setShowTop] = useState(false);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const { scrollYProgress } = useScroll();
@@ -57,12 +51,12 @@ export function PortfolioPage() {
   // Initialize Lenis smooth scroll
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1.02,
+      wheelMultiplier: 1.0,
     });
 
     (window as any).lenis = lenis;
@@ -85,7 +79,7 @@ export function PortfolioPage() {
     }
 
     const onScroll = () => {
-      setShowTop(window.scrollY > 500);
+      setShowTop(window.scrollY > 400);
     };
 
     window.addEventListener("scroll", onScroll);
@@ -108,105 +102,76 @@ export function PortfolioPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#060814] text-slate-900 dark:text-white max-w-full overflow-x-hidden selection:bg-blue-500/20 dark:selection:bg-cyan-400/25 relative transition-colors duration-300">
-      {/* Subtle Tech Grid */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[linear-gradient(to_right,rgba(37,99,235,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(37,99,235,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] opacity-70" />
-
-      {/* Custom Follow Cursor */}
-      <CustomCursor />
-
-      {/* Top Animated Scroll Progress Bar */}
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#090D16] text-slate-900 dark:text-white max-w-full overflow-x-hidden selection:bg-blue-500/20 dark:selection:bg-cyan-400/25 relative transition-colors duration-300">
+      {/* Top Animated Scroll Progress Indicator */}
       <motion.div
         style={{ scaleX }}
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 origin-left z-50 pointer-events-none"
+        className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-500 origin-left z-50 pointer-events-none"
       />
 
       {/* Interactive Background Particle Mesh */}
       <InteractiveBackground />
 
-      {/* Global Interactive Mouse Spotlight Glow */}
+      {/* Subtle Ambient Spotlight Glow on Desktop */}
       <div
         className="fixed inset-0 pointer-events-none z-0 transition-opacity duration-300 hidden md:block"
         style={{
-          background: `radial-gradient(700px circle at ${mousePos.x}px ${mousePos.y}px, ${
-            isDark ? "rgba(56, 189, 248, 0.06)" : "rgba(29, 78, 216, 0.04)"
-          }, transparent 75%)`,
+          background: `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, ${
+            isDark ? "rgba(56, 189, 248, 0.04)" : "rgba(37, 99, 235, 0.03)"
+          }, transparent 80%)`,
         }}
       />
 
-      {/* Atmospheric Ambient Floating Orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <motion.div
-          animate={{
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-            scale: [1, 1.08, 1],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/4 -left-32 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-3xl"
-        />
-        <motion.div
-          animate={{
-            x: [0, -40, 0],
-            y: [0, 30, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 22,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-2/3 -right-32 w-80 sm:w-[420px] h-80 sm:h-[420px] rounded-full bg-indigo-500/10 dark:bg-cyan-500/15 blur-3xl"
-        />
-      </div>
-
-      {/* Page Content Flow */}
+      {/* Main Content Flow */}
       <div className="relative z-10 max-w-full overflow-x-hidden">
         {/* Navigation Header */}
-        <Navbar />
+        <Navbar onOpenResume={() => setIsResumeOpen(true)} />
 
-        {/* Hero Section */}
-        <Hero />
+        {/* Main Content Sections */}
+        <main>
+          {/* Hero Section */}
+          <Hero onOpenResume={() => setIsResumeOpen(true)} />
 
-        <SectionDivider />
-        <About />
+          <SubtleSectionDivider />
+          <About />
 
-        <SectionDivider />
-        <Services />
+          <SubtleSectionDivider />
+          <Skills />
 
-        <SectionDivider />
-        <Skills />
+          <SubtleSectionDivider />
+          <Projects />
 
-        <SectionDivider />
-        <Projects />
+          <SubtleSectionDivider />
+          <Services />
 
-        <SectionDivider />
-        <Experience />
+          <SubtleSectionDivider />
+          <Experience onOpenResume={() => setIsResumeOpen(true)} />
 
-        <SectionDivider />
-        <GithubSection />
+          <SubtleSectionDivider />
+          <GithubSection />
 
-        <SectionDivider />
-        <Contact />
+          <SubtleSectionDivider />
+          <Contact />
+        </main>
 
+        {/* Footer */}
         <Footer />
       </div>
+
+      {/* Resume Modal */}
+      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
 
       {/* Floating Scroll to Top Button */}
       <AnimatePresence>
         {showTop && (
           <motion.button
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={{ opacity: 0, scale: 0.8, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            whileHover={{ scale: 1.08, y: -2 }}
-            whileTap={{ scale: 0.94 }}
+            exit={{ opacity: 0, scale: 0.8, y: 16 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleScrollToTop}
-            className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-600/30 transition-all z-40 cursor-pointer"
+            className="fixed bottom-6 right-6 w-11 h-11 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg shadow-blue-600/30 transition-all z-40 cursor-pointer"
             aria-label="Back to top"
           >
             <ArrowUp size={18} strokeWidth={2.5} />

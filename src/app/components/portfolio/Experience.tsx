@@ -1,140 +1,186 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
-import { GraduationCap, Briefcase, Award, CheckCircle, ChevronDown } from "lucide-react";
+import {
+  GraduationCap,
+  Briefcase,
+  Award,
+  CheckCircle,
+  ChevronDown,
+  FileText,
+  Building2,
+  Calendar,
+} from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 
 interface TimelineItem {
-  type: string;
-  icon: React.ElementType;
+  category: "education" | "experience" | "bootcamp" | "certification";
+  categoryBadge: string;
+  icon: typeof GraduationCap;
   period: string;
   title: string;
   org: string;
+  location: string;
   desc: string;
   highlights: string[];
+  techStack: string[];
 }
 
 const timeline: TimelineItem[] = [
   {
-    type: "education",
+    category: "education",
+    categoryBadge: "Formal Degree Program",
     icon: GraduationCap,
     period: "2021 – Present",
     title: "B.Sc. in Software Engineering",
     org: "Haramaya University",
-    desc: "Pursuing an engineering degree focused on software design principles, algorithms, data structures, and database systems while shipping real-world MERN platforms.",
+    location: "Dire Dawa / Harar, Ethiopia",
+    desc: "Rigorous academic curriculum covering computer science fundamentals, data structures and algorithm analysis, software engineering methodologies, database design, and distributed systems architecture.",
     highlights: [
-      "Data Structures & Algorithm Optimization",
-      "Software Architecture & Design Patterns",
-      "Database Systems (Relational & Document)",
-      "Distributed Computing & Computer Networks",
+      "Data Structures & Algorithm Optimization (Big-O analysis, trees, graphs, sorting)",
+      "Object-Oriented Design & Software Architecture Patterns (MVC, Singleton, Factory)",
+      "Relational & Document Database Management Systems (3NF, ACID, Indexing)",
+      "Computer Networks, Operating Systems & Distributed Computing",
     ],
+    techStack: ["Software Architecture", "Data Structures", "Algorithms", "Database Systems"],
   },
   {
-    type: "experience",
+    category: "experience",
+    categoryBadge: "Independent Client Delivery",
     icon: Briefcase,
     period: "2023 – Present",
-    title: "Freelance Full Stack Developer",
+    title: "Freelance Full-Stack Developer",
     org: "Self-Employed",
-    desc: "Architecting custom, production-ready web platforms for clients. Specializing in the MERN stack with emphasis on modular architectures, security, and responsive UI.",
+    location: "Addis Ababa, Ethiopia (Remote)",
+    desc: "Architecting and delivering custom, production-ready web platforms for clients. Specializing in the MERN stack with emphasis on modular component design, JWT security, and responsive UI.",
     highlights: [
-      "End-to-end web platform architecture & client delivery",
-      "RESTful API design, rate-limiting & JWT security",
-      "Real-time communication & client-server data synchronization",
-      "Performance tuning, caching & responsive design systems",
+      "End-to-end web platform architecture from database schema to responsive frontend",
+      "RESTful API design with JWT authentication, role-based access control, and rate limiting",
+      "Real-time bidirectional communication channels utilizing WebSockets",
+      "Responsive UI implementation and cross-device testing across modern viewports",
     ],
+    techStack: ["React", "TypeScript", "Node.js", "Express.js", "MongoDB", "PostgreSQL", "Tailwind CSS"],
   },
   {
-    type: "certification",
+    category: "bootcamp",
+    categoryBadge: "Technical Bootcamp",
     icon: Award,
     period: "2024",
     title: "Full Stack Development Bootcamp",
     org: "WabSkills",
-    desc: "Intensive training program covering modern web development technologies including React, Node.js, Express.js, MongoDB, and production deployment practices.",
+    location: "Intensive Program",
+    desc: "Hands-on, immersive bootcamp covering modern web technologies, production deployment workflows, agile collaboration, and building full-stack applications with the MERN stack.",
     highlights: [
-      "React & Node.js production workflows",
-      "MongoDB & REST routing architecture",
-      "Agile project-based team delivery",
-      "Cloud deployment & code optimization",
+      "Production-ready React workflows with modern state management",
+      "Express.js middleware pipelines, controllers, and error-handling architecture",
+      "MongoDB document modeling, schema validation, and indexing",
+      "Cloud deployment on Vercel and Render with continuous delivery",
     ],
+    techStack: ["React", "Node.js", "Express", "MongoDB", "Cloud Deployment"],
   },
   {
-    type: "certification",
+    category: "certification",
+    categoryBadge: "Technical Training & Certification",
     icon: Award,
     period: "2023",
     title: "The Complete Web Developer Bootcamp",
     org: "Udemy",
-    desc: "Comprehensive full-stack development curriculum mastering modern JavaScript, React component architectures, Express pipelines, and database modeling.",
+    location: "Online Certification",
+    desc: "Comprehensive engineering curriculum mastering modern JavaScript ES6+, asynchronous programming, component lifecycles, and backend service integration.",
     highlights: [
-      "Modern JavaScript ES6+ & TypeScript foundations",
-      "React component lifecycles & state management",
-      "Node.js server pipelines & MongoDB schemas",
-      "Asynchronous request management & security",
+      "Modern JavaScript ES6+ foundations, asynchronous promises & event loops",
+      "Component-based architecture, unidirectional data flow, and props/state",
+      "RESTful service creation with Node.js and Express",
+      "Client-server request lifecycle management and basic security practices",
     ],
+    techStack: ["JavaScript", "HTML5", "CSS3", "Node.js", "Express.js", "REST"],
   },
 ];
 
-function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: number; trigger: boolean }) {
-  const [expanded, setExpanded] = useState(index === 0);
+interface ExperienceProps {
+  onOpenResume?: () => void;
+}
+
+function TimelineCard({
+  item,
+  index,
+  trigger,
+}: {
+  item: TimelineItem;
+  index: number;
+  trigger: boolean;
+}) {
+  const [expanded, setExpanded] = useState(index < 2);
+  const Icon = item.icon;
+
+  const getBadgeStyle = (cat: TimelineItem["category"]) => {
+    switch (cat) {
+      case "education":
+        return "bg-blue-500/10 text-blue-600 dark:text-cyan-400 border-blue-500/20";
+      case "experience":
+        return "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20";
+      case "bootcamp":
+        return "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20";
+      case "certification":
+        return "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20";
+    }
+  };
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, x: -16 }}
       animate={trigger ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.15 + index * 0.1, type: "spring", stiffness: 100 }}
-      className="relative pl-10 sm:pl-14 md:pl-20"
+      transition={{ duration: 0.45, delay: 0.15 + index * 0.1 }}
+      className="relative pl-8 sm:pl-12 text-left"
     >
-      {/* Timeline bullet node */}
-      <motion.div
-        initial={{ scale: 0, rotate: -180 }}
-        animate={trigger ? { scale: 1, rotate: 0 } : {}}
-        transition={{ delay: 0.25 + index * 0.1, type: "spring", stiffness: 200 }}
-        whileHover={{ scale: 1.1, rotate: 10 }}
-        className="absolute left-0 top-3 sm:top-4 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 flex items-center justify-center shadow-md shadow-blue-500/25 ring-4 ring-[#F8FAFC] dark:ring-[#060814] z-10"
-      >
-        <item.icon size={16} strokeWidth={2.2} />
-      </motion.div>
+      {/* Node bullet */}
+      <div className="absolute left-0 top-3 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-sm ring-4 ring-[#F8FAFC] dark:ring-[#090D16] z-10">
+        <Icon size={13} strokeWidth={2.2} />
+      </div>
 
-      {/* Horizontal connector line on desktop */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={trigger ? { scaleX: 1 } : {}}
-        transition={{ delay: 0.35 + index * 0.1, duration: 0.3 }}
-        className="absolute left-5 sm:left-6 top-8 w-5 sm:w-8 h-px hidden md:block bg-blue-500/30 dark:bg-cyan-400/30 origin-left"
-      />
-
-      {/* Timeline item card */}
-      <motion.div
-        onClick={() => setExpanded(!expanded)}
-        whileHover={{ y: -2 }}
-        whileTap={{ scale: 0.99 }}
-        className="relative p-4 sm:p-6 md:p-7 rounded-3xl bg-white/95 dark:bg-[#0D121F]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 hover:shadow-lg dark:hover:shadow-[0_10px_30px_rgba(56,189,248,0.08)] transition-all overflow-hidden group cursor-pointer shadow-xs"
-      >
-        {/* Left border accent line */}
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 dark:bg-cyan-400 rounded-l-3xl" />
-
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1.5 sm:gap-3 mb-2 pl-1 sm:pl-2">
-          <div>
-            <h3 className="text-slate-900 dark:text-white text-base sm:text-lg md:text-xl font-bold group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors leading-snug">
-              {item.title}
-            </h3>
-            <span className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">{item.org}</span>
-          </div>
-          <span className="w-fit px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-blue-500/10 text-blue-600 dark:text-cyan-400 border border-blue-500/20 shrink-0">
-            {item.period}
+      {/* Card Content */}
+      <div className="p-5 sm:p-7 rounded-3xl bg-white/95 dark:bg-[#0F1626]/90 border border-slate-200/90 dark:border-white/10 shadow-xs hover:shadow-md transition-all">
+        {/* Category & Date Row */}
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <span
+            className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono font-semibold border ${getBadgeStyle(
+              item.category
+            )}`}
+          >
+            {item.categoryBadge}
+          </span>
+          <span className="flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400">
+            <Calendar size={12} />
+            <span>{item.period}</span>
           </span>
         </div>
 
-        <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-3.5 pl-1 sm:pl-2 font-normal">
+        {/* Title & Organization */}
+        <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-tight">
+          {item.title}
+        </h3>
+        <p className="text-xs sm:text-sm text-blue-600 dark:text-cyan-400 font-semibold mt-0.5 flex items-center gap-1.5">
+          <Building2 size={13} />
+          <span>{item.org}</span>
+          <span className="text-slate-400">•</span>
+          <span className="text-slate-500 dark:text-slate-400 font-normal">{item.location}</span>
+        </p>
+
+        {/* Description */}
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mt-2.5 font-normal">
           {item.desc}
         </p>
 
-        {/* Expandable highlights block */}
-        <div className="pl-1 sm:pl-2">
-          <div className="flex items-center gap-1 text-blue-600 dark:text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
-            <span>Key Competencies & Highlights</span>
-            <motion.div animate={{ rotate: expanded ? 180 : 0 }} className="transition-transform duration-200 ml-1">
+        {/* Expandable Highlights */}
+        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-white/10">
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors cursor-pointer"
+          >
+            <span>Verified Highlights & Focus Areas</span>
+            <motion.div animate={{ rotate: expanded ? 180 : 0 }} className="transition-transform duration-200">
               <ChevronDown size={14} />
             </motion.div>
-          </div>
+          </button>
 
           <AnimatePresence initial={false}>
             {expanded && (
@@ -142,70 +188,91 @@ function TimelineCard({ item, index, trigger }: { item: TimelineItem; index: num
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
+                transition={{ duration: 0.25 }}
                 className="overflow-hidden"
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 pb-1">
+                <ul className="grid sm:grid-cols-2 gap-2 pt-3 pb-1">
                   {item.highlights.map((highlight, hIdx) => (
-                    <motion.div
+                    <li
                       key={hIdx}
-                      initial={{ opacity: 0, x: -6 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: hIdx * 0.04 }}
-                      className="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-white/5 p-2.5 rounded-xl border border-slate-200/80 dark:border-white/10"
+                      className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-white/[0.02] p-2.5 rounded-xl border border-slate-200/60 dark:border-white/5"
                     >
-                      <CheckCircle size={14} className="text-blue-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+                      <CheckCircle size={13} className="text-blue-600 dark:text-cyan-400 shrink-0 mt-0.5" />
                       <span>{highlight}</span>
-                    </motion.div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
-      </motion.div>
+
+        {/* Tech tags */}
+        <div className="flex flex-wrap gap-1.5 mt-3.5">
+          {item.techStack.map((tech) => (
+            <span
+              key={tech}
+              className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 font-mono"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
     </motion.div>
   );
 }
 
-export function Experience() {
+export function Experience({ onOpenResume }: ExperienceProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="experience" ref={ref} className="py-12 sm:py-16 lg:py-20 relative overflow-hidden">
+    <section id="experience" ref={ref} className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="05"
-          label="Career Journey & Education"
-          title="Career &"
-          italicTitle="Education"
-          subtitle="Software engineering academic foundation at Haramaya University combined with full-stack client deliveries and intensive technical bootcamps."
+          label="Education & Background"
+          title="Education, Experience &"
+          italicTitle="Certifications"
+          subtitle="Formal software engineering education at Haramaya University combined with freelance client deliveries and intensive technical bootcamps."
         />
 
-        {/* Timeline body */}
+        {/* Timeline Container */}
         <div className="relative">
           {/* Vertical line through bullets */}
-          <div className="absolute left-[15px] sm:left-[19px] top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-white/10" />
-          <motion.div
-            initial={{ scaleY: 0 }}
-            animate={inView ? { scaleY: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.3, ease: "easeInOut" }}
-            className="absolute left-[15px] sm:left-[19px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-blue-600 dark:from-cyan-400 via-blue-500/50 to-transparent origin-top"
-          />
+          <div className="absolute left-[11px] sm:left-[15px] top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-white/10" />
 
-          <div className="space-y-5 sm:space-y-7">
+          <div className="space-y-6 sm:space-y-8">
             {timeline.map((item, idx) => (
-              <TimelineCard
-                key={idx}
-                item={item}
-                index={idx}
-                trigger={inView}
-              />
+              <TimelineCard key={idx} item={item} index={idx} trigger={inView} />
             ))}
           </div>
         </div>
+
+        {/* Bottom Resume Action Card */}
+        {onOpenResume && (
+          <div className="mt-10 p-5 sm:p-6 rounded-3xl bg-slate-50 dark:bg-[#0F1626]/80 border border-slate-200/90 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+            <div>
+              <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <FileText size={16} className="text-blue-600 dark:text-cyan-400" />
+                <span>Need a printable or verifiable Curriculum Vitae?</span>
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                View the verified, complete resume in browser or save as PDF.
+              </p>
+            </div>
+
+            <button
+              onClick={onOpenResume}
+              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer"
+            >
+              <FileText size={13} />
+              <span>View & Print CV</span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

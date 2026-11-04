@@ -1,19 +1,19 @@
 :root {
   --font-size: 16px;
   
-  /* Light Theme Color System */
+  /* Light Theme Color System - Crisp, Clean, Minimalist */
   --background: #F8FAFC;
   --foreground: #0F172A;
   --card: #FFFFFF;
   --card-foreground: #0F172A;
   --popover: #FFFFFF;
   --popover-foreground: #0F172A;
-  --primary: #1D4ED8;
+  --primary: #2563EB;
   --primary-foreground: #FFFFFF;
-  --primary-hover: #1E40AF;
+  --primary-hover: #1D4ED8;
   --secondary: #F1F5F9;
   --secondary-foreground: #0F172A;
-  --muted: #F1F5F9;
+  --muted: #F8FAFC;
   --muted-foreground: #64748B;
   --accent: #EFF6FF;
   --accent-foreground: #1D4ED8;
@@ -22,7 +22,7 @@
   --border: #E2E8F0;
   --input: #E2E8F0;
   --input-background: #FFFFFF;
-  --ring: #1D4ED8;
+  --ring: #2563EB;
   
   /* Typography */
   --font-weight-medium: 500;
@@ -33,28 +33,22 @@
   /* Spacing */
   --radius: 0.75rem;
   --radius-lg: 1rem;
-  
-  /* Layout */
-  --max-width: 1240px;
-  --padding-desktop: 48px;
-  --padding-tablet: 32px;
-  --padding-mobile: 16px;
 }
 
 .dark {
-  /* Dark Theme Color System - Obsidian, Slate & Cyan/Blue Accents */
-  --background: #060814;
+  /* Dark Theme Color System - Deep Obsidian & Electric Blue/Cyan Accents */
+  --background: #090D16;
   --foreground: #F8FAFC;
-  --card: #0B1120;
+  --card: #0F1626;
   --card-foreground: #F8FAFC;
-  --popover: #0B1120;
+  --popover: #0F1626;
   --popover-foreground: #F8FAFC;
   --primary: #38BDF8;
-  --primary-foreground: #060814;
+  --primary-foreground: #090D16;
   --primary-hover: #0284C7;
   --secondary: #1E293B;
   --secondary-foreground: #F8FAFC;
-  --muted: #10172A;
+  --muted: #131C2E;
   --muted-foreground: #94A3B8;
   --accent: #172554;
   --accent-foreground: #60A5FA;
@@ -62,7 +56,7 @@
   --destructive-foreground: #FFFFFF;
   --border: #1E293B;
   --input: #1E293B;
-  --input-background: #0B1120;
+  --input-background: #0F1626;
   --ring: #38BDF8;
 }
 
@@ -113,19 +107,30 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.35);
+  background: rgba(148, 163, 184, 0.3);
   border-radius: 9999px;
 }
 .dark ::-webkit-scrollbar-thumb {
   background: rgba(148, 163, 184, 0.2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.6);
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Print styling for resume */
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
 }
