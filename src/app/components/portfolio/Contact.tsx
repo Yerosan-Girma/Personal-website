@@ -221,7 +221,7 @@ export function Contact() {
                     initial={{ opacity: 0, y: 12 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: idx * 0.06 }}
-                    className="flex items-center justify-between p-4 rounded-2xl bg-white/95 dark:bg-[#0F1626]/90 border border-slate-200/90 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-cyan-400/40 shadow-xs hover:shadow-md transition-all group cursor-pointer"
+                    className="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-cyan-400/50 shadow-xs hover:shadow-md transition-all group cursor-pointer"
                   >
                     <div className="flex items-center gap-3.5 min-w-0">
                       <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-white/5 border border-slate-200/70 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform shrink-0">
@@ -286,7 +286,7 @@ export function Contact() {
           </div>
 
           {/* Right Column: Contact Form */}
-          <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-[#0F1626]/90 border border-slate-200/90 dark:border-white/10 shadow-lg text-left">
+          <div className="lg:col-span-7 p-6 sm:p-8 md:p-9 rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 shadow-lg text-left">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-white/10">
               <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center">
                 <MessageSquare size={18} />

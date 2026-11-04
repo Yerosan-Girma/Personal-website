@@ -8,6 +8,9 @@ import {
   ChevronLeft,
   ChevronRight,
   ArrowUpRight,
+  Globe,
+  Layers,
+  Sparkles,
 } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 
@@ -24,6 +27,8 @@ interface Project {
   id: number;
   category: "realestate" | "edtech" | "ecommerce" | "fintech" | "hospitality";
   categoryLabel: string;
+  domainUrl: string;
+  impactPill: string;
   title: string;
   subtitle: string;
   year: string;
@@ -43,7 +48,9 @@ const projects: Project[] = [
   {
     id: 1,
     category: "realestate",
-    categoryLabel: "Real Estate",
+    categoryLabel: "Real Estate Marketplace",
+    domainUrl: "kiray-bet-wine.vercel.app",
+    impactPill: "Verified Listings • Map Search • Realtime Chat",
     title: "Kiray Bet (ኪራይ ቤት)",
     subtitle: "Ethiopian Home Rental Marketplace",
     year: "2024",
@@ -52,7 +59,7 @@ const projects: Project[] = [
     solution:
       "Built a unified digital rental marketplace featuring verified property discovery, map exploration across Addis Ababa, direct messaging, role-based dashboards, and instant lease generation.",
     description:
-      "Ethiopia's premier home rental marketplace connecting tenants, property owners, and verified brokers across Addis Ababa and beyond. Features real-time property discovery, interactive map search, direct inquiries, role-based dashboards, and digital lease agreements.",
+      "Ethiopia's premier home rental marketplace connecting tenants, property owners, and verified brokers across Addis Ababa with real-time property discovery, interactive map search, direct inquiries, role-based dashboards, and digital lease agreements.",
     tech: ["React", "TypeScript", "Node.js", "Express.js", "MongoDB", "WebSockets", "Tailwind CSS"],
     features: [
       "Verified home & apartment listings with high-resolution photo galleries",
@@ -72,7 +79,9 @@ const projects: Project[] = [
   {
     id: 2,
     category: "edtech",
-    categoryLabel: "E-Learning",
+    categoryLabel: "Online Education LMS",
+    domainUrl: "e-learning-three-phi.vercel.app",
+    impactPill: "Structured LMS • Automated Quizzes • PDF Certificates",
     title: "E-Learning Platform",
     subtitle: "Online Course Delivery & Certification",
     year: "2024",
@@ -100,7 +109,9 @@ const projects: Project[] = [
   {
     id: 3,
     category: "ecommerce",
-    categoryLabel: "E-Commerce",
+    categoryLabel: "Multi-Storefront Commerce",
+    domainUrl: "e-commerce-navy-mu-90.vercel.app",
+    impactPill: "Multi-Vendor • Stripe Checkout • Inventory Dashboard",
     title: "MarketHub — E-Commerce",
     subtitle: "Multi-Storefront Marketplace Platform",
     year: "2023",
@@ -128,7 +139,9 @@ const projects: Project[] = [
   {
     id: 4,
     category: "fintech",
-    categoryLabel: "Real-Time / Sockets",
+    categoryLabel: "Real-Time / WebSockets",
+    domainUrl: "github.com/Yerosan-Girma/WabiSkills-Seminar-Live",
+    impactPill: "WebSockets • Video Signaling • Live Moderated Chat",
     title: "WabiSeminar Live",
     subtitle: "Live Webcast & Real-Time Meeting App",
     year: "2024",
@@ -138,86 +151,118 @@ const projects: Project[] = [
       "Engineered an in-browser real-time seminar platform with instant room creation, WebSocket signaling for video/audio streams, participant attendance lists, and live moderated chat.",
     description:
       "A real-time communication platform engineered for live seminar events and masterclasses. Enables instant room creation, live video & text messaging via WebSockets, attendee presence tracking, and feedback collection.",
-    tech: ["React", "Node.js", "WebSockets", "MongoDB", "Express.js", "JWT", "Tailwind CSS"],
+    tech: ["React", "WebSockets", "Node.js", "Express.js", "JavaScript", "CSS3"],
     features: [
-      "Instant seminar room generation with custom sharable access links",
-      "Low-latency real-time chat and signaling powered by WebSockets",
-      "Live user presence tracking, attendee badges, and active typing indicators",
-      "Host moderation controls, participant permissions, and session logs",
+      "Instant seminar room generation with unique meeting tokens",
+      "Real-time text chat stream with WebSocket bidirectional sync",
+      "Attendee presence tracking and live participant count indicator",
+      "Interactive audience feedback polling and question queue",
+      "Lightweight responsive client interface requiring zero plugins",
     ],
     architectureNotes:
-      "Leveraged WebSockets over Node.js for bidirectional broadcasting of chat events and signaling packets with negligible latency and automatic reconnection strategies.",
+      "Leveraged event-driven WebSocket architecture on Node.js to broadcast room events, participant join/leaves, and chat payloads with minimal latency overhead.",
     image: chatImage,
     screenshots: [chatImage],
-    demo: "https://wabiskills-seminar-1.onrender.com",
-    github: "https://github.com/Yerosan-Girma/Wabiskills-Seminar",
+    demo: "https://github.com/Yerosan-Girma/WabiSkills-Seminar-Live",
+    github: "https://github.com/Yerosan-Girma/WabiSkills-Seminar-Live",
   },
   {
     id: 5,
     category: "fintech",
-    categoryLabel: "FinTech",
+    categoryLabel: "Digital Fintech / ROSCA",
+    domainUrl: "github.com/Yerosan-Girma/Digital-Equb",
+    impactPill: "Rotational Savings • Transparent Ledger • Payout Tracking",
     title: "Digital Equb (ዲጂታል እቁብ)",
-    subtitle: "Ethiopian Rotational Savings System",
-    year: "2023",
+    subtitle: "Traditional Rotational Savings Platform",
+    year: "2024",
     problem:
-      "Traditional Ethiopian Equb savings circles involve manual ledger bookkeeping, cash handling friction, and a lack of verifiable payout audit trails among members.",
+      "Traditional Ethiopian Equb (ROSCA) circles are managed with paper ledgers, causing tracking disputes, lack of audit trails, and manual collection bottlenecks.",
     solution:
-      "Digitized the rotating savings circle workflow into a secure web application that tracks member rounds, automates contribution schedules, records transactions, and sends reminders.",
+      "Architected a transparent web-based Equb management system that digitizes member contributions, calculates payout rounds automatically, and tracks payment verification.",
     description:
-      "A modern digital fintech platform transforming traditional Ethiopian rotational savings circles (Equb) into a transparent online system. Includes automated round tracking, transparent payout distributions, payment records, and member reminders.",
-    tech: ["React", "Node.js", "MongoDB", "Express.js", "JWT", "Tailwind CSS"],
+      "A modern fintech application transforming the centuries-old Ethiopian rotational savings tradition (Equb) into a secure, transparent online platform. Features automated round tracking, member verification, contribution ledgers, and payout scheduling.",
+    tech: ["JavaScript", "HTML5", "CSS3", "Node.js", "Express.js", "MongoDB"],
     features: [
-      "Custom Equb group creation with configurable pool amounts and intervals",
-      "Transparent round schedule tracking with verifiable payout distribution history",
-      "Automated member contribution logs and payment status tracking",
-      "Personalized member financial dashboard with historical contributions",
+      "Digital Equb group creation with customized contribution amounts and schedules",
+      "Automated round rotation and payout recipient assignment",
+      "Transparent contribution ledger accessible by all verified members",
+      "Member identity profiles and payment confirmation workflows",
+      "Audit trail preventing duplicate claims and ledger discrepancies",
     ],
     architectureNotes:
-      "Engineered strict MongoDB transaction logic to ensure payouts and round increments execute atomically, preventing duplicate allocation or ledger inconsistencies.",
+      "Engineered relational ledger schemas to guarantee transactional integrity during round transitions and payment confirmations.",
     image: equbImage,
     screenshots: [equbImage],
-    demo: "https://digitaequb.onrender.com",
-    github: "https://github.com/Yerosan-Girma/Digital-equb",
+    demo: "https://github.com/Yerosan-Girma/Digital-Equb",
+    github: "https://github.com/Yerosan-Girma/Digital-Equb",
   },
   {
     id: 6,
     category: "hospitality",
-    categoryLabel: "Hospitality",
+    categoryLabel: "Hospitality & Dining",
+    domainUrl: "github.com/Yerosan-Girma/Haven-Cafe-Bistro",
+    impactPill: "Dynamic Menu • Reservation Engine • Mobile-First UX",
     title: "Haven Cafe & Bistro",
-    subtitle: "Artisan Coffeehouse & Reservation App",
-    year: "2023",
+    subtitle: "Modern Restaurant & Reservation Portal",
+    year: "2024",
     problem:
-      "Boutique cafes need an appetizing, responsive web presence where patrons can explore artisan menus, filter dietary preferences, and book reservations seamlessly on mobile.",
+      "Boutique restaurants and cafes often struggle with outdated static menus, lack of online table booking, and poor mobile ordering ergonomics.",
     solution:
-      "Built an elegant, responsive web platform featuring interactive categorized menu navigation, item details, online cart curation, and table booking reservation workflows.",
+      "Built a stylish, mobile-first web presence featuring an interactive categorization menu, table reservation booking form, location integration, and customer reviews.",
     description:
-      "An elegant modern cafe website featuring artisan coffee story showcases, interactive menu browsing by categories, online ordering, and seamless table reservation booking with high responsiveness across all devices.",
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
+      "A restaurant web platform designed with warm modern aesthetics, dynamic categorized food & beverage menus, online table reservation engine, and customer inquiries.",
+    tech: ["React", "JavaScript", "Tailwind CSS", "HTML5", "Responsive UI"],
     features: [
-      "Interactive categorized menu with culinary photography and price tiers",
-      "Online order cart management and custom preference selections",
-      "Table reservation booking system with date and time slot pickers",
-      "Mobile-first responsive interface optimized for on-the-go browsing",
+      "Categorized food & beverage menu with pricing and dietary indicators",
+      "Table reservation request engine with date and time picker",
+      "Interactive location map, operating hours, and contact channels",
+      "Responsive typography and fluid mobile navigation",
     ],
     architectureNotes:
-      "Constructed with responsive UI principles, optimizing image assets and component re-renders to achieve fast first contentful paint across mobile cellular networks.",
+      "Engineered with utility-first responsive tokens and lightweight React components ensuring fast load times on mobile cellular connections.",
     image: cafeImage,
     screenshots: [cafeImage],
-    demo: "https://haven-cafe-five.vercel.app",
-    github: "https://github.com/Yerosan-Girma/Cafe",
+    demo: "https://github.com/Yerosan-Girma/Haven-Cafe-Bistro",
+    github: "https://github.com/Yerosan-Girma/Haven-Cafe-Bistro",
   },
 ];
 
 const projectFilters = [
-  { id: "all", label: "All Projects" },
-  { id: "realestate", label: "Real Estate" },
-  { id: "edtech", label: "E-Learning" },
-  { id: "ecommerce", label: "E-Commerce" },
-  { id: "fintech", label: "FinTech & Sockets" },
-  { id: "hospitality", label: "Hospitality" },
+  { label: "All Projects", id: "all" },
+  { label: "Real Estate", id: "realestate" },
+  { label: "EdTech", id: "edtech" },
+  { label: "E-Commerce", id: "ecommerce" },
+  { label: "Fintech & Sockets", id: "fintech" },
+  { label: "Hospitality", id: "hospitality" },
 ];
 
-function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+function getTechBadgeStyle(tech: string) {
+  const t = tech.toLowerCase();
+  if (t.includes("react")) {
+    return "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/25";
+  }
+  if (t.includes("typescript")) {
+    return "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/25";
+  }
+  if (t.includes("node") || t.includes("express")) {
+    return "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/25";
+  }
+  if (t.includes("mongo") || t.includes("postgres")) {
+    return "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/25";
+  }
+  if (t.includes("socket") || t.includes("stripe")) {
+    return "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/25";
+  }
+  return "bg-slate-100 dark:bg-white/[0.06] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10";
+}
+
+function ProjectModal({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
@@ -239,24 +284,24 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
       onClick={onClose}
     >
-      <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md" />
+      <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-md" />
 
       <motion.div
         initial={{ opacity: 0, scale: 0.94, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.94, y: 20 }}
         transition={{ type: "spring", stiffness: 300, damping: 28 }}
-        className="relative max-w-4xl w-full bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl z-10 max-h-[92vh] flex flex-col"
+        className="relative max-w-4xl w-full bg-white dark:bg-[#0D1424] border border-slate-200 dark:border-white/15 rounded-3xl overflow-hidden shadow-2xl z-10 max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Image Showcase */}
+        {/* Top Image Showcase with Browser Frame Mockup */}
         <div className="relative h-64 sm:h-80 md:h-96 w-full bg-slate-950 overflow-hidden shrink-0">
           <img
             src={images[activeImageIndex]}
             alt={project.title}
             className="w-full h-full object-cover object-top"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent pointer-events-none" />
 
           {/* Close button */}
           <button
@@ -276,7 +321,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                     key={i}
                     onClick={() => setActiveImageIndex(i)}
                     className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
-                      activeImageIndex === i ? "w-6 bg-blue-500" : "bg-white/40"
+                      activeImageIndex === i ? "w-6 bg-cyan-400" : "bg-white/40"
                     }`}
                   />
                 ))}
@@ -326,20 +371,20 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
           {/* Problem & Solution Breakdown */}
           <div className="grid sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/5">
-              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 block mb-1">
+            <div className="p-4 sm:p-5 rounded-2xl bg-rose-500/[0.04] dark:bg-rose-500/[0.06] border border-rose-500/20">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 block mb-1.5">
                 The Problem Addressed
               </span>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
                 {project.problem}
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/5">
-              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">
+            <div className="p-4 sm:p-5 rounded-2xl bg-emerald-500/[0.04] dark:bg-emerald-500/[0.06] border border-emerald-500/20">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1.5">
                 The Engineering Solution
               </span>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
                 {project.solution}
               </p>
             </div>
@@ -354,10 +399,10 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
               {project.features.map((feature, idx) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 p-2.5 rounded-xl bg-slate-50/80 dark:bg-white/[0.02] border border-slate-200/60 dark:border-white/5"
+                  className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 p-3 rounded-xl bg-slate-50/80 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/5"
                 >
-                  <CheckCircle2 size={15} className="text-blue-600 dark:text-cyan-400 shrink-0 mt-0.5" />
-                  <span>{feature}</span>
+                  <CheckCircle2 size={16} className="text-blue-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+                  <span className="leading-snug">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -368,21 +413,23 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
               // Architecture & Implementation Notes
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed p-3.5 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/5">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed p-4 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/5 font-normal">
               {project.architectureNotes}
             </p>
           </div>
 
           {/* Technologies Chips */}
           <div>
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2.5">
               // Technologies Used
             </h3>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span
                   key={t}
-                  className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 font-medium"
+                  className={`px-3 py-1 rounded-lg text-xs font-mono font-semibold border ${getTechBadgeStyle(
+                    t
+                  )}`}
                 >
                   {t}
                 </span>
@@ -390,16 +437,16 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </div>
           </div>
 
-          {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-200 dark:border-white/10">
+          {/* Footer Action Links */}
+          <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200 dark:border-white/10">
             {project.demo && (
               <a
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm text-center flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md shadow-blue-600/30"
               >
-                <span>Launch Live Demonstration</span>
+                <span>Live Demonstration</span>
                 <ExternalLink size={14} />
               </a>
             )}
@@ -408,12 +455,18 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white font-semibold text-xs sm:text-sm text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
-                <Github size={14} />
-                <span>View GitHub Repository</span>
+                <Github size={15} />
+                <span>GitHub Repository</span>
               </a>
             )}
+            <button
+              onClick={onClose}
+              className="min-h-[44px] px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 text-xs font-semibold cursor-pointer"
+            >
+              Close
+            </button>
           </div>
         </div>
       </motion.div>
@@ -432,8 +485,8 @@ export function Projects() {
   });
 
   return (
-    <section id="projects" ref={ref} className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+    <section id="projects" ref={ref} className="py-16 sm:py-20 lg:py-28 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="03"
@@ -443,18 +496,18 @@ export function Projects() {
           subtitle="Real-world full-stack web applications engineered with MERN architecture, responsive UI design, normalized databases, and verified deployments."
         />
 
-        {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 sm:gap-2 mb-10 overflow-x-auto max-w-full pb-1">
+        {/* Filter Tabs */}
+        <div className="flex items-center gap-1.5 sm:gap-2 mb-10 overflow-x-auto max-w-full pb-2">
           {projectFilters.map((tab) => {
             const isSelected = activeFilter === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveFilter(tab.id)}
-                className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all cursor-pointer ${
                   isSelected
-                    ? "bg-blue-600 text-white shadow-xs"
-                    : "bg-slate-100 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/25 font-bold"
+                    : "bg-white dark:bg-white/[0.04] border border-slate-200/90 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 }`}
               >
                 {tab.label}
@@ -463,8 +516,8 @@ export function Projects() {
           })}
         </div>
 
-        {/* Consistent Unified Projects Grid for ALL projects */}
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+        {/* High-Impact Project Cards Grid */}
+        <div className="grid md:grid-cols-2 gap-7 sm:gap-8 lg:gap-10">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => (
               <motion.div
@@ -473,61 +526,89 @@ export function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.45, delay: idx * 0.08 }}
-                className="rounded-3xl bg-white/95 dark:bg-[#0F1626]/90 border border-slate-200/90 dark:border-white/10 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
+                className="rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/15 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group text-left"
               >
-                {/* Card Image */}
+                {/* Visual Browser Mockup Header */}
+                <div className="bg-slate-100/90 dark:bg-slate-900/90 px-4 py-2.5 border-b border-slate-200/80 dark:border-white/10 flex items-center justify-between">
+                  {/* macOS Dots */}
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-rose-400/80 inline-block" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80 inline-block" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80 inline-block" />
+                  </div>
+
+                  {/* Browser Address Bar Pill */}
+                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white dark:bg-white/5 border border-slate-200/60 dark:border-white/5 text-[11px] font-mono text-slate-500 dark:text-slate-400 max-w-[200px] sm:max-w-xs truncate">
+                    <Globe size={11} className="text-blue-500 dark:text-cyan-400 shrink-0" />
+                    <span className="truncate">{project.domainUrl}</span>
+                  </div>
+
+                  {/* Year Tag */}
+                  <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500">
+                    {project.year}
+                  </span>
+                </div>
+
+                {/* Card Image Showcase */}
                 <div
-                  className="relative aspect-[16/10] overflow-hidden bg-slate-900 cursor-pointer"
+                  className="relative aspect-[16/10] overflow-hidden bg-slate-950 cursor-pointer"
                   onClick={() => setSelectedProject(project)}
                 >
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover object-top opacity-95 group-hover:opacity-100 group-hover:scale-103 transition-all duration-500"
+                    className="w-full h-full object-cover object-top opacity-95 group-hover:opacity-100 group-hover:scale-103 transition-transform duration-700"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
-                  <div className="absolute top-3 left-3">
-                    <span className="px-2.5 py-0.5 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-white text-[10px] font-mono">
+                  {/* Top Category Badge */}
+                  <div className="absolute top-3.5 left-3.5">
+                    <span className="px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono font-medium shadow-xs">
                       {project.categoryLabel}
                     </span>
                   </div>
 
-                  <div className="absolute top-3 right-3">
-                    <div className="w-8 h-8 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md flex items-center justify-center text-slate-800 dark:text-white group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                      <ArrowUpRight size={14} />
+                  {/* View Details Corner Trigger */}
+                  <div className="absolute top-3.5 right-3.5">
+                    <div className="w-9 h-9 rounded-full bg-white/95 dark:bg-slate-900/90 backdrop-blur-md flex items-center justify-center text-slate-800 dark:text-white group-hover:bg-blue-600 group-hover:text-white transition-all shadow-md">
+                      <ArrowUpRight size={16} />
+                    </div>
+                  </div>
+
+                  {/* Bottom Impact Feature Pill */}
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <div className="px-3 py-1.5 rounded-xl bg-slate-950/80 backdrop-blur-md border border-white/10 text-white text-xs font-mono flex items-center gap-1.5 truncate">
+                      <Sparkles size={12} className="text-cyan-400 shrink-0" />
+                      <span className="truncate text-slate-200">{project.impactPill}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Card Content */}
-                <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                {/* Card Content & Ergonomics */}
+                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-1">
-                      <span>// 0{project.id}</span>
-                      <span>{project.year}</span>
-                    </div>
-
                     <h3
                       onClick={() => setSelectedProject(project)}
-                      className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors cursor-pointer"
+                      className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors cursor-pointer"
                     >
                       {project.title}
                     </h3>
-                    <p className="text-xs font-medium text-blue-600 dark:text-cyan-400 mb-2">
+                    <p className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-cyan-400 mb-3">
                       {project.subtitle}
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-2 mb-4 font-normal">
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-normal line-clamp-2">
                       {project.description}
                     </p>
 
-                    {/* Tech Chips */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
+                    {/* Attractive Tech Badges */}
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
                       {project.tech.map((t) => (
                         <span
                           key={t}
-                          className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/10 text-[10px] sm:text-[11px] font-mono text-slate-600 dark:text-slate-300"
+                          className={`px-2.5 py-0.5 rounded-lg text-xs font-mono font-medium border ${getTechBadgeStyle(
+                            t
+                          )}`}
                         >
                           {t}
                         </span>
@@ -535,17 +616,17 @@ export function Projects() {
                     </div>
                   </div>
 
-                  {/* Direct Links Footer */}
-                  <div className="flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-white/10">
+                  {/* Direct Action Buttons - Mobile Friendly (Min 44px Height) */}
+                  <div className="flex flex-wrap items-center gap-2.5 pt-4 border-t border-slate-100 dark:border-white/10">
                     {project.demo && (
                       <a
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold text-center flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                        className="flex-1 min-h-[44px] py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold text-center flex items-center justify-center gap-2 shadow-sm shadow-blue-600/30 transition-colors cursor-pointer"
                       >
-                        <span>Demo</span>
-                        <ExternalLink size={12} />
+                        <span>Live Demo</span>
+                        <ExternalLink size={14} />
                       </a>
                     )}
                     {project.github && (
@@ -553,15 +634,15 @@ export function Projects() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 text-xs font-semibold text-center flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                        className="flex-1 min-h-[44px] py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] border border-slate-200/90 dark:border-white/10 text-slate-800 dark:text-white text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
                       >
-                        <Github size={12} />
+                        <Github size={15} />
                         <span>Code</span>
                       </a>
                     )}
                     <button
                       onClick={() => setSelectedProject(project)}
-                      className="px-3 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer"
+                      className="min-h-[44px] px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200/90 dark:border-white/10 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 cursor-pointer transition-colors"
                     >
                       Case Study
                     </button>
@@ -573,7 +654,7 @@ export function Projects() {
         </div>
       </div>
 
-      {/* Case Study Modal */}
+      {/* Case Study Deep Modal */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />

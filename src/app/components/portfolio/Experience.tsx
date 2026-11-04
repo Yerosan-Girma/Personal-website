@@ -138,7 +138,7 @@ function TimelineCard({
       </div>
 
       {/* Card Content */}
-      <div className="p-5 sm:p-7 rounded-3xl bg-white/95 dark:bg-[#0F1626]/90 border border-slate-200/90 dark:border-white/10 shadow-xs hover:shadow-md transition-all">
+      <div className="p-5 sm:p-7 rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 shadow-xs hover:shadow-lg transition-all">
         {/* Category & Date Row */}
         <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
           <span
@@ -228,7 +228,7 @@ export function Experience({ onOpenResume }: ExperienceProps) {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="experience" ref={ref} className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
+    <section id="experience" ref={ref} className="py-16 sm:py-20 lg:py-28 relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
@@ -253,7 +253,7 @@ export function Experience({ onOpenResume }: ExperienceProps) {
 
         {/* Bottom Resume Action Card */}
         {onOpenResume && (
-          <div className="mt-10 p-5 sm:p-6 rounded-3xl bg-slate-50 dark:bg-[#0F1626]/80 border border-slate-200/90 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+          <div className="mt-10 p-5 sm:p-6 rounded-[28px] bg-slate-50 dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
             <div>
               <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <FileText size={16} className="text-blue-600 dark:text-cyan-400" />

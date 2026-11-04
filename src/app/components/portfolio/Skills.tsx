@@ -110,8 +110,8 @@ export function Skills() {
   };
 
   return (
-    <section id="skills" ref={ref} className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+    <section id="skills" ref={ref} className="py-16 sm:py-20 lg:py-28 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="02"
@@ -164,7 +164,7 @@ export function Skills() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="rounded-3xl bg-white/95 dark:bg-[#0F1626]/90 border border-slate-200/90 dark:border-white/10 p-6 sm:p-8 md:p-10 shadow-xs text-left"
+              className="rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 p-6 sm:p-8 md:p-10 shadow-sm text-left"
             >
               {/* Category Header with Stepper Controls */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-100 dark:border-white/10">

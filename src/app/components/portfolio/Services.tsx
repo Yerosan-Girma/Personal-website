@@ -10,9 +10,9 @@ import {
   Workflow,
   Check,
   Compass,
-  Code2,
   Cpu,
   Rocket,
+  ChevronDown,
 } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 
@@ -144,6 +144,125 @@ const WORKFLOW_STEPS = [
   },
 ];
 
+function ServiceCard({
+  service,
+  index,
+  onContactClick,
+}: {
+  service: ServiceItem;
+  index: number;
+  onContactClick: (title: string) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const Icon = service.icon;
+
+  const visibleDeliverables = expanded
+    ? service.deliverables
+    : service.deliverables.slice(0, 3);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.45, delay: index * 0.08 }}
+      className="rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 p-6 sm:p-7 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between text-left group"
+    >
+      <div>
+        {/* Header */}
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-blue-50 dark:bg-white/5 border border-blue-100 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform shadow-2xs">
+              <Icon size={20} />
+            </div>
+            <div>
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-cyan-400">
+                {service.badge}
+              </span>
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                {service.title}
+              </h3>
+            </div>
+          </div>
+
+          <span className="text-xs font-mono font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-white/5 px-2.5 py-1 rounded-full shrink-0">
+            {service.number}
+          </span>
+        </div>
+
+        <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
+          {service.tagline}
+        </p>
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4 font-normal">
+          {service.description}
+        </p>
+
+        {/* Deliverables Checklist (Top 3 visible, expandable for full detail) */}
+        <div className="mb-4 pt-3 border-t border-slate-100 dark:border-white/10">
+          <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2.5 flex items-center gap-1.5">
+            <CheckCircle2 size={13} className="text-blue-600 dark:text-cyan-400" />
+            <span>Key Deliverables:</span>
+          </p>
+          <ul className="space-y-2">
+            {visibleDeliverables.map((item, i) => (
+              <li
+                key={i}
+                className="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300"
+              >
+                <span className="w-4 h-4 rounded-full bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <Check size={11} strokeWidth={3} />
+                </span>
+                <span className="leading-snug">{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          {service.deliverables.length > 3 && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="mt-2.5 text-xs font-mono font-bold text-blue-600 dark:text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <span>{expanded ? "Show less" : `+${service.deliverables.length - 3} more deliverables`}</span>
+              <motion.div animate={{ rotate: expanded ? 180 : 0 }}>
+                <ChevronDown size={13} />
+              </motion.div>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="pt-4 border-t border-slate-100 dark:border-white/10 space-y-3">
+        <div className="flex flex-wrap gap-1.5">
+          {service.techStack.map((tech) => (
+            <span
+              key={tech}
+              className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 font-mono font-medium border border-slate-200/60 dark:border-white/5"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between pt-1">
+          <div>
+            <p className="text-[10px] font-mono text-slate-400 uppercase">{service.metrics.label}</p>
+            <p className="text-xs font-bold text-slate-900 dark:text-white">{service.metrics.value}</p>
+          </div>
+
+          <button
+            onClick={() => onContactClick(service.title)}
+            className="inline-flex items-center gap-1.5 min-h-[38px] px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
+          >
+            <span>Discuss Project</span>
+            <ArrowRight size={13} />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<"services" | "process">("services");
@@ -169,8 +288,8 @@ export function Services() {
   };
 
   return (
-    <section id="services" ref={containerRef} className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+    <section id="services" ref={containerRef} className="py-16 sm:py-20 lg:py-28 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="04"
@@ -218,103 +337,16 @@ export function Services() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.3 }}
-              className="space-y-10"
+              className="grid sm:grid-cols-2 gap-6 sm:gap-8"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-                {SERVICES_DATA.map((service, index) => {
-                  const Icon = service.icon;
-                  return (
-                    <motion.div
-                      key={service.id}
-                      initial={{ opacity: 0, y: 18 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.45, delay: index * 0.08 }}
-                      className="rounded-3xl bg-white/95 dark:bg-[#0F1626]/90 border border-slate-200/90 dark:border-white/10 p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between text-left group"
-                    >
-                      <div>
-                        {/* Header */}
-                        <div className="flex items-center justify-between gap-3 mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-white/5 border border-blue-100 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform">
-                              <Icon size={19} />
-                            </div>
-                            <div>
-                              <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-blue-600 dark:text-cyan-400">
-                                {service.badge}
-                              </span>
-                              <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
-                                {service.title}
-                              </h3>
-                            </div>
-                          </div>
-
-                          <span className="text-xs font-mono font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-white/5 px-2.5 py-1 rounded-full shrink-0">
-                            {service.number}
-                          </span>
-                        </div>
-
-                        <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
-                          {service.tagline}
-                        </p>
-                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-normal">
-                          {service.description}
-                        </p>
-
-                        {/* Deliverables Checklist */}
-                        <div className="mb-5 pt-4 border-t border-slate-100 dark:border-white/10">
-                          <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5">
-                            <CheckCircle2 size={13} className="text-blue-600 dark:text-cyan-400" />
-                            <span>What I Deliver:</span>
-                          </p>
-                          <ul className="space-y-2">
-                            {service.deliverables.map((item, i) => (
-                              <li
-                                key={i}
-                                className="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300"
-                              >
-                                <span className="w-4 h-4 rounded-full bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
-                                  <Check size={11} strokeWidth={3} />
-                                </span>
-                                <span className="leading-snug">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      {/* Footer */}
-                      <div className="pt-4 border-t border-slate-100 dark:border-white/10 space-y-3">
-                        <div className="flex flex-wrap gap-1.5">
-                          {service.techStack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 font-mono font-medium border border-slate-200/60 dark:border-white/5"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-
-                        <div className="flex items-center justify-between pt-1">
-                          <div>
-                            <p className="text-[10px] font-mono text-slate-400 uppercase">{service.metrics.label}</p>
-                            <p className="text-xs font-bold text-slate-900 dark:text-white">{service.metrics.value}</p>
-                          </div>
-
-                          <button
-                            onClick={() => scrollToContact(service.title)}
-                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
-                          >
-                            <span>Discuss Project</span>
-                            <ArrowRight size={13} />
-                          </button>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
+              {SERVICES_DATA.map((service, index) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  index={index}
+                  onContactClick={scrollToContact}
+                />
+              ))}
             </motion.div>
           )}
 
@@ -338,25 +370,25 @@ export function Services() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.45, delay: idx * 0.08 }}
-                      className="p-5 sm:p-6 rounded-3xl bg-white/95 dark:bg-[#0F1626]/90 border border-slate-200/90 dark:border-white/10 shadow-xs relative flex flex-col justify-between text-left"
+                      className="p-6 rounded-[24px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 shadow-xs relative flex flex-col justify-between text-left"
                     >
                       <div>
                         <div className="flex items-center justify-between mb-4">
                           <span className="text-3xl font-extrabold font-serif italic text-blue-600 dark:text-cyan-400">
                             {wf.step}
                           </span>
-                          <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-white/5 flex items-center justify-center text-blue-600 dark:text-cyan-400 border border-blue-100 dark:border-white/10">
-                            <WfIcon size={17} />
+                          <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-white/5 flex items-center justify-center text-blue-600 dark:text-cyan-400 border border-blue-100 dark:border-white/10">
+                            <WfIcon size={18} />
                           </div>
                         </div>
 
-                        <div className="text-[11px] font-mono font-semibold uppercase text-blue-600 dark:text-cyan-400 mb-1">
+                        <div className="text-[11px] font-mono font-bold uppercase text-blue-600 dark:text-cyan-400 mb-1">
                           {wf.timeline}
                         </div>
                         <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2 leading-snug">
                           {wf.title}
                         </h4>
-                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                           {wf.description}
                         </p>
                       </div>
@@ -370,19 +402,19 @@ export function Services() {
               </div>
 
               {/* Banner */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-700 to-slate-900 text-white shadow-lg text-left flex flex-col sm:flex-row items-center justify-between gap-5">
+              <div className="p-6 sm:p-8 rounded-[28px] bg-gradient-to-r from-blue-600 via-indigo-700 to-slate-900 text-white shadow-xl text-left flex flex-col sm:flex-row items-center justify-between gap-5">
                 <div>
                   <h4 className="text-xl sm:text-2xl font-bold leading-tight">
                     Clear Milestones & Continuous Communication
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-200 mt-1 max-w-xl font-normal leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-200 mt-1.5 max-w-xl font-normal leading-relaxed">
                     Staging environments to test working features, clear documentation, and direct progress updates throughout the development lifecycle.
                   </p>
                 </div>
 
                 <button
                   onClick={() => scrollToContact()}
-                  className="px-5 py-3 rounded-xl bg-white text-slate-900 font-bold text-xs sm:text-sm hover:bg-slate-100 transition-colors shadow-md shrink-0 flex items-center gap-2 cursor-pointer"
+                  className="min-h-[44px] px-6 py-3 rounded-xl bg-white text-slate-900 font-bold text-xs sm:text-sm hover:bg-slate-100 transition-colors shadow-md shrink-0 flex items-center gap-2 cursor-pointer"
                 >
                   <span>Start Discussion</span>
                   <ArrowRight size={14} />

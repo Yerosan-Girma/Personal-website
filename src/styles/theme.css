@@ -1,18 +1,18 @@
 :root {
   --font-size: 16px;
   
-  /* Light Theme Color System - Crisp, Clean, Minimalist */
+  /* Light Theme Color System - Crisp, Clean, Navy-tinted Slate */
   --background: #F8FAFC;
-  --foreground: #0F172A;
+  --foreground: #0B132B;
   --card: #FFFFFF;
-  --card-foreground: #0F172A;
+  --card-foreground: #0B132B;
   --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
+  --popover-foreground: #0B132B;
   --primary: #2563EB;
   --primary-foreground: #FFFFFF;
   --primary-hover: #1D4ED8;
   --secondary: #F1F5F9;
-  --secondary-foreground: #0F172A;
+  --secondary-foreground: #0B132B;
   --muted: #F8FAFC;
   --muted-foreground: #64748B;
   --accent: #EFF6FF;
@@ -36,19 +36,19 @@
 }
 
 .dark {
-  /* Dark Theme Color System - Deep Obsidian & Electric Blue/Cyan Accents */
-  --background: #090D16;
+  /* Dark Theme Color System - Deep Midnight Navy & Electric Blue/Cyan Accents */
+  --background: #070B14;
   --foreground: #F8FAFC;
-  --card: #0F1626;
+  --card: #0D1424;
   --card-foreground: #F8FAFC;
-  --popover: #0F1626;
+  --popover: #0D1424;
   --popover-foreground: #F8FAFC;
   --primary: #38BDF8;
-  --primary-foreground: #090D16;
+  --primary-foreground: #070B14;
   --primary-hover: #0284C7;
-  --secondary: #1E293B;
+  --secondary: #131E33;
   --secondary-foreground: #F8FAFC;
-  --muted: #131C2E;
+  --muted: #0F172A;
   --muted-foreground: #94A3B8;
   --accent: #172554;
   --accent-foreground: #60A5FA;
@@ -56,7 +56,7 @@
   --destructive-foreground: #FFFFFF;
   --border: #1E293B;
   --input: #1E293B;
-  --input-background: #0F1626;
+  --input-background: #0D1424;
   --ring: #38BDF8;
 }
 
@@ -103,6 +103,45 @@
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight text-foreground;
   }
+}
+
+/* Glassmorphism & Visual Tokens */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.dark .glass-panel {
+  background: rgba(13, 20, 36, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-elevated {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06), 0 20px 25px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .glass-panel-elevated {
+  background: rgba(13, 20, 36, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.5), 0 0 25px -5px rgba(56, 189, 248, 0.06);
+}
+
+.glow-blue {
+  box-shadow: 0 0 35px -5px rgba(37, 99, 235, 0.3);
+}
+
+.dark .glow-blue {
+  box-shadow: 0 0 40px -5px rgba(56, 189, 248, 0.25);
 }
 
 /* Custom scrollbar */
