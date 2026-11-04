@@ -39,7 +39,13 @@ Thumbs.db
 !README.md
 .kiro/
 
-# Spec and Documentation Files - Local Only
-*.md
-!README.md
-.kiro/
+# Test files
+*.test.ts
+*.test.tsx
+
+# Backup files
+*.backup
+
+# Implementation documentation
+*_IMPLEMENTATION_SUMMARY.md
+*IMPLEMENTATION.md
