@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+﻿import { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import {
   Mail,
@@ -213,7 +213,7 @@ export function Contact() {
 
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Direct Contact Channels */}
-          <div className="lg:col-span-5 space-y-4 text-left">
+          <div className="lg:col-span-5 space-y-3 sm:space-y-4 text-left">
             <div className="space-y-3">
               {contactChannels.map((item, idx) => {
                 const Icon = item.icon;
@@ -308,12 +308,12 @@ export function Contact() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
+              <div className="space-y-5">
                 {/* Name */}
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
+                    className="block text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                   >
                     Your Name *
                   </label>
@@ -339,7 +339,7 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="contact-email"
-                    className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
+                    className="block text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                   >
                     Email Address *
                   </label>
@@ -366,7 +366,7 @@ export function Contact() {
               <div>
                 <label
                   htmlFor="form-subject"
-                  className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
+                  className="block text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                 >
                   Subject / Opportunity *
                 </label>
@@ -392,7 +392,7 @@ export function Contact() {
               <div>
                 <label
                   htmlFor="contact-message"
-                  className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
+                  className="block text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                 >
                   Message / Project Scope *
                 </label>
@@ -482,3 +482,5 @@ export function Contact() {
     </section>
   );
 }
+
+

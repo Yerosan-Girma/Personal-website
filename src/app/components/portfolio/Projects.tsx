@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ExternalLink,
@@ -50,8 +50,8 @@ const projects: Project[] = [
     category: "realestate",
     categoryLabel: "Real Estate Marketplace",
     domainUrl: "kiray-bet-wine.vercel.app",
-    impactPill: "Verified Listings • Map Search • Realtime Chat",
-    title: "Kiray Bet (ኪራይ ቤት)",
+    impactPill: "Verified Listings â€¢ Map Search â€¢ Realtime Chat",
+    title: "Kiray Bet (áŠªáˆ«á‹­ á‰¤á‰µ)",
     subtitle: "Ethiopian Home Rental Marketplace",
     year: "2024",
     problem:
@@ -81,7 +81,7 @@ const projects: Project[] = [
     category: "edtech",
     categoryLabel: "Online Education LMS",
     domainUrl: "e-learning-three-phi.vercel.app",
-    impactPill: "Structured LMS • Automated Quizzes • PDF Certificates",
+    impactPill: "Structured LMS â€¢ Automated Quizzes â€¢ PDF Certificates",
     title: "E-Learning Platform",
     subtitle: "Online Course Delivery & Certification",
     year: "2024",
@@ -111,8 +111,8 @@ const projects: Project[] = [
     category: "ecommerce",
     categoryLabel: "Multi-Storefront Commerce",
     domainUrl: "e-commerce-navy-mu-90.vercel.app",
-    impactPill: "Multi-Vendor • Stripe Checkout • Inventory Dashboard",
-    title: "MarketHub — E-Commerce",
+    impactPill: "Multi-Vendor â€¢ Stripe Checkout â€¢ Inventory Dashboard",
+    title: "MarketHub â€” E-Commerce",
     subtitle: "Multi-Storefront Marketplace Platform",
     year: "2023",
     problem:
@@ -141,7 +141,7 @@ const projects: Project[] = [
     category: "fintech",
     categoryLabel: "Real-Time / WebSockets",
     domainUrl: "github.com/Yerosan-Girma/WabiSkills-Seminar-Live",
-    impactPill: "WebSockets • Video Signaling • Live Moderated Chat",
+    impactPill: "WebSockets â€¢ Video Signaling â€¢ Live Moderated Chat",
     title: "WabiSeminar Live",
     subtitle: "Live Webcast & Real-Time Meeting App",
     year: "2024",
@@ -171,8 +171,8 @@ const projects: Project[] = [
     category: "fintech",
     categoryLabel: "Digital Fintech / ROSCA",
     domainUrl: "github.com/Yerosan-Girma/Digital-Equb",
-    impactPill: "Rotational Savings • Transparent Ledger • Payout Tracking",
-    title: "Digital Equb (ዲጂታል እቁብ)",
+    impactPill: "Rotational Savings â€¢ Transparent Ledger â€¢ Payout Tracking",
+    title: "Digital Equb (á‹²áŒ‚á‰³áˆ áŠ¥á‰á‰¥)",
     subtitle: "Traditional Rotational Savings Platform",
     year: "2024",
     problem:
@@ -201,7 +201,7 @@ const projects: Project[] = [
     category: "hospitality",
     categoryLabel: "Hospitality & Dining",
     domainUrl: "github.com/Yerosan-Girma/Haven-Cafe-Bistro",
-    impactPill: "Dynamic Menu • Reservation Engine • Mobile-First UX",
+    impactPill: "Dynamic Menu â€¢ Reservation Engine â€¢ Mobile-First UX",
     title: "Haven Cafe & Bistro",
     subtitle: "Modern Restaurant & Reservation Portal",
     year: "2024",
@@ -358,7 +358,7 @@ function ProjectModal({
               <span className="text-blue-600 dark:text-cyan-400 font-bold uppercase">
                 {project.categoryLabel}
               </span>
-              <span className="text-slate-400">•</span>
+              <span className="text-slate-400">â€¢</span>
               <span className="text-slate-500 dark:text-slate-400">{project.year}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
@@ -517,7 +517,7 @@ export function Projects() {
         </div>
 
         {/* High-Impact Project Cards Grid */}
-        <div className="grid md:grid-cols-2 gap-7 sm:gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => (
               <motion.div
@@ -663,3 +663,4 @@ export function Projects() {
     </section>
   );
 }
+
