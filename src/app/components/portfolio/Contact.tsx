@@ -76,6 +76,12 @@ const contactChannels: ContactChannel[] = [
   },
 ];
 
+const inputBase =
+  "w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border text-slate-900 dark:text-white text-sm outline-none transition-all duration-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 font-normal";
+
+const inputNormal = `${inputBase} border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-cyan-400 focus:ring-2 focus:ring-blue-500/15 dark:focus:ring-cyan-400/15`;
+const inputError = `${inputBase} border-rose-500 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/15`;
+
 export function Contact() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -145,7 +151,6 @@ export function Contact() {
     const web3formsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
     if (!web3formsKey) {
-      // If no API key configured, seamlessly route to user's native email client
       handleDirectEmail();
       setStatus("success");
       setForm({ name: "", email: "", subject: "", message: "" });
@@ -218,17 +223,17 @@ export function Contact() {
                     href={item.href}
                     target={item.isExternal ? "_blank" : "_self"}
                     rel={item.isExternal ? "noopener noreferrer" : undefined}
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={{ opacity: 0, y: 14 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: idx * 0.06 }}
-                    className="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-cyan-400/50 shadow-xs hover:shadow-md transition-all group cursor-pointer"
+                    transition={{ delay: idx * 0.07 }}
+                    className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-cyan-400/40 shadow-sm hover:shadow-md dark:hover:shadow-black/30 hover:-translate-y-0.5 transition-all duration-200 group cursor-pointer"
                   >
                     <div className="flex items-center gap-3.5 min-w-0">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-white/5 border border-slate-200/70 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform shrink-0">
+                      <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-500/15 border border-blue-100 dark:border-blue-400/20 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform duration-200 shrink-0">
                         <Icon size={18} />
                       </div>
                       <div className="min-w-0">
-                        <span className="text-[11px] font-mono text-slate-400 uppercase block">
+                        <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
                           {item.name}
                         </span>
                         <span className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors block truncate">
@@ -240,7 +245,7 @@ export function Contact() {
                       </div>
                     </div>
 
-                    <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors shrink-0 ml-2">
+                    <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/[0.05] flex items-center justify-center text-slate-400 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors shrink-0 ml-2">
                       <ArrowUpRight size={15} />
                     </div>
                   </motion.a>
@@ -249,16 +254,16 @@ export function Contact() {
             </div>
 
             {/* Quick Copy Email Card */}
-            <div className="p-4 rounded-2xl bg-slate-50/90 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10 flex items-center justify-between gap-3">
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-50/90 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.08] flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center shrink-0 border border-blue-500/15">
                   <Mail size={15} />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold text-slate-900 dark:text-white">
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white">
                     Need the email copied?
                   </p>
-                  <p className="text-[11px] text-slate-500 font-mono truncate">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate">
                     yerosang463@gmail.com
                   </p>
                 </div>
@@ -266,7 +271,7 @@ export function Contact() {
 
               <button
                 onClick={handleCopyEmail}
-                className="px-3.5 py-1.5 rounded-xl bg-white dark:bg-white/10 hover:bg-slate-100 dark:hover:bg-white/15 border border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="px-4 py-2 rounded-xl bg-white dark:bg-white/[0.10] hover:bg-slate-100 dark:hover:bg-white/[0.16] border border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0 transition-all duration-200 active:scale-95"
               >
                 {copiedEmail ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
                 <span>{copiedEmail ? "Copied!" : "Copy"}</span>
@@ -274,40 +279,41 @@ export function Contact() {
             </div>
 
             {/* Availability Note */}
-            <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-50/80 to-indigo-50/50 dark:from-slate-900/60 dark:to-blue-950/20 border border-blue-200/80 dark:border-blue-900/30">
-              <div className="flex items-center gap-2 text-blue-600 dark:text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-1.5">
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-50/90 to-indigo-50/60 dark:from-blue-950/40 dark:to-indigo-950/30 border border-blue-200/70 dark:border-blue-800/40 shadow-sm">
+              <div className="flex items-center gap-2 text-blue-600 dark:text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
                 <Sparkles size={13} />
                 <span>Response Time</span>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                I typically respond to software engineering recruiters, internship leads, and project inquiries within 24 hours.
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                I typically respond to software engineering recruiters, internship leads, and project inquiries within
+                24 hours.
               </p>
             </div>
           </div>
 
           {/* Right Column: Contact Form */}
-          <div className="lg:col-span-7 p-6 sm:p-8 md:p-9 rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 shadow-lg text-left">
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center">
-                <MessageSquare size={18} />
+          <div className="lg:col-span-7 p-7 sm:p-9 md:p-10 rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 shadow-lg dark:shadow-black/40 text-left">
+            <div className="flex items-center gap-3 mb-7 pb-5 border-b border-slate-100 dark:border-white/10">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-500/15 text-blue-600 dark:text-cyan-400 flex items-center justify-center border border-blue-100 dark:border-blue-400/20">
+                <MessageSquare size={19} />
               </div>
               <div>
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
                   Send a Direct Message
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
                   Fill out the form below or email me directly at yerosang463@gmail.com
                 </p>
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-5">
                 {/* Name */}
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="block text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1"
+                    className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                   >
                     Your Name *
                   </label>
@@ -320,14 +326,10 @@ export function Contact() {
                       if (errors.name) setErrors({ ...errors, name: undefined });
                     }}
                     placeholder="e.g. Alex Morgan"
-                    className={`w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
-                      errors.name
-                        ? "border-rose-500 focus:border-rose-500"
-                        : "border-slate-200/90 dark:border-white/10 focus:border-blue-500"
-                    } text-slate-900 dark:text-white text-sm outline-none transition-colors`}
+                    className={errors.name ? inputError : inputNormal}
                   />
                   {errors.name && (
-                    <p className="text-rose-500 text-xs mt-1 flex items-center gap-1 font-medium">
+                    <p className="text-rose-500 text-xs mt-1.5 flex items-center gap-1 font-medium">
                       <AlertCircle size={11} /> {errors.name}
                     </p>
                   )}
@@ -337,7 +339,7 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="contact-email"
-                    className="block text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1"
+                    className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                   >
                     Email Address *
                   </label>
@@ -350,14 +352,10 @@ export function Contact() {
                       if (errors.email) setErrors({ ...errors, email: undefined });
                     }}
                     placeholder="e.g. alex@company.com"
-                    className={`w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
-                      errors.email
-                        ? "border-rose-500 focus:border-rose-500"
-                        : "border-slate-200/90 dark:border-white/10 focus:border-blue-500"
-                    } text-slate-900 dark:text-white text-sm outline-none transition-colors`}
+                    className={errors.email ? inputError : inputNormal}
                   />
                   {errors.email && (
-                    <p className="text-rose-500 text-xs mt-1 flex items-center gap-1 font-medium">
+                    <p className="text-rose-500 text-xs mt-1.5 flex items-center gap-1 font-medium">
                       <AlertCircle size={11} /> {errors.email}
                     </p>
                   )}
@@ -368,7 +366,7 @@ export function Contact() {
               <div>
                 <label
                   htmlFor="form-subject"
-                  className="block text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1"
+                  className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                 >
                   Subject / Opportunity *
                 </label>
@@ -381,14 +379,10 @@ export function Contact() {
                     if (errors.subject) setErrors({ ...errors, subject: undefined });
                   }}
                   placeholder="e.g. Full-Stack Internship / Project Collaboration"
-                  className={`w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
-                    errors.subject
-                      ? "border-rose-500 focus:border-rose-500"
-                      : "border-slate-200/90 dark:border-white/10 focus:border-blue-500"
-                  } text-slate-900 dark:text-white text-sm outline-none transition-colors`}
+                  className={errors.subject ? inputError : inputNormal}
                 />
                 {errors.subject && (
-                  <p className="text-rose-500 text-xs mt-1 flex items-center gap-1 font-medium">
+                  <p className="text-rose-500 text-xs mt-1.5 flex items-center gap-1 font-medium">
                     <AlertCircle size={11} /> {errors.subject}
                   </p>
                 )}
@@ -398,27 +392,23 @@ export function Contact() {
               <div>
                 <label
                   htmlFor="contact-message"
-                  className="block text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1"
+                  className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                 >
                   Message / Project Scope *
                 </label>
                 <textarea
                   id="contact-message"
-                  rows={4}
+                  rows={5}
                   value={form.message}
                   onChange={(e) => {
                     setForm({ ...form, message: e.target.value });
                     if (errors.message) setErrors({ ...errors, message: undefined });
                   }}
                   placeholder="Describe your project, role requirements, or question..."
-                  className={`w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border ${
-                    errors.message
-                      ? "border-rose-500 focus:border-rose-500"
-                      : "border-slate-200/90 dark:border-white/10 focus:border-blue-500"
-                  } text-slate-900 dark:text-white text-sm outline-none transition-colors resize-none`}
+                  className={`${errors.message ? inputError : inputNormal} resize-none`}
                 />
                 {errors.message && (
-                  <p className="text-rose-500 text-xs mt-1 flex items-center gap-1 font-medium">
+                  <p className="text-rose-500 text-xs mt-1.5 flex items-center gap-1 font-medium">
                     <AlertCircle size={11} /> {errors.message}
                   </p>
                 )}
@@ -428,16 +418,16 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-xs disabled:opacity-70 cursor-pointer"
+                className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2.5 shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40 disabled:opacity-70 cursor-pointer active:scale-[0.99]"
               >
                 {status === "loading" ? (
                   <>
-                    <Loader2 size={16} className="animate-spin" />
+                    <Loader2 size={17} className="animate-spin" />
                     <span>Delivering Message...</span>
                   </>
                 ) : (
                   <>
-                    <Send size={15} />
+                    <Send size={16} />
                     <span>Send Message</span>
                   </>
                 )}
@@ -447,38 +437,36 @@ export function Contact() {
               <AnimatePresence>
                 {status === "success" && (
                   <motion.div
-                    initial={{ opacity: 0, y: 6 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2"
+                    className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 text-sm flex items-center gap-2.5"
                   >
-                    <CheckCircle size={16} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+                    <CheckCircle size={18} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
                     <span>Thank you! Your message has been sent. I will respond to your email shortly.</span>
                   </motion.div>
                 )}
 
                 {status === "error" && (
                   <motion.div
-                    initial={{ opacity: 0, y: 6 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs space-y-2"
+                    className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-sm space-y-2.5"
                   >
                     <div className="flex items-start gap-2">
-                      <AlertCircle size={15} className="shrink-0 mt-0.5" />
+                      <AlertCircle size={16} className="shrink-0 mt-0.5" />
                       <div>
                         <p className="font-semibold">Unable to complete automated delivery:</p>
-                        <p className="mt-0.5 text-[11px] text-slate-600 dark:text-slate-300">
-                          {errorMessage}
-                        </p>
+                        <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-300">{errorMessage}</p>
                       </div>
                     </div>
                     <div className="pt-2 border-t border-rose-500/20 flex items-center justify-between">
-                      <span>Open in your native email client instead:</span>
+                      <span className="text-xs">Open in your native email client instead:</span>
                       <button
                         type="button"
                         onClick={handleDirectEmail}
-                        className="px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs cursor-pointer flex items-center gap-1"
+                        className="px-3.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs cursor-pointer flex items-center gap-1.5 transition-colors active:scale-95"
                       >
                         <Mail size={12} />
                         <span>Send via Email App</span>

@@ -5,3 +5,87 @@
 
 @import 'tw-animate-css';
 
+/* Custom Utility Classes for Design System */
+
+/* Container Max Width */
+@utility container-max {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive Container Padding */
+@utility container-padding {
+  padding-left: var(--container-padding-mobile);
+  padding-right: var(--container-padding-mobile);
+  
+  @media (min-width: 768px) {
+    padding-left: var(--container-padding-tablet);
+    padding-right: var(--container-padding-tablet);
+  }
+  
+  @media (min-width: 1024px) {
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+}
+
+/* Responsive Section Spacing */
+@utility section-spacing {
+  padding-top: var(--section-spacing-mobile);
+  padding-bottom: var(--section-spacing-mobile);
+  
+  @media (min-width: 768px) {
+    padding-top: var(--section-spacing-tablet);
+    padding-bottom: var(--section-spacing-tablet);
+  }
+  
+  @media (min-width: 1024px) {
+    padding-top: var(--section-spacing-desktop);
+    padding-bottom: var(--section-spacing-desktop);
+  }
+}
+
+/* Typography Utilities */
+@utility heading-large {
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-heading);
+}
+
+@utility body-text {
+  line-height: var(--line-height-body);
+}
+
+/* Smooth Transitions for Theme Switching - Requirement 2.3 */
+@utility theme-transition {
+  transition: background-color 300ms ease-in-out,
+              color 300ms ease-in-out,
+              border-color 300ms ease-in-out;
+}
+
+/* Comprehensive color transitions for all color properties */
+@utility color-transition {
+  transition: background-color 300ms ease-in-out,
+              color 300ms ease-in-out,
+              border-color 300ms ease-in-out,
+              fill 300ms ease-in-out,
+              stroke 300ms ease-in-out;
+}
+
+/* Hover color transitions - Requirement 2.10 */
+@utility hover-transition {
+  transition: background-color 300ms ease-in-out,
+              color 300ms ease-in-out,
+              border-color 300ms ease-in-out,
+              transform 300ms ease-in-out,
+              box-shadow 300ms ease-in-out;
+}
+
+/* Secondary color utility - Requirement 2.7 (10% opacity) */
+@utility bg-secondary-subtle {
+  background-color: var(--secondary);
+}
+
+@utility text-secondary-subtle {
+  color: var(--secondary);
+}

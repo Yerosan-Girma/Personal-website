@@ -166,7 +166,7 @@ function ServiceCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.45, delay: index * 0.08 }}
-      className="rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 p-6 sm:p-7 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between text-left group"
+      className="rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 p-6 sm:p-7 shadow-sm hover:shadow-xl dark:hover:shadow-black/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left group"
     >
       <div>
         {/* Header */}
@@ -370,7 +370,7 @@ export function Services() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.45, delay: idx * 0.08 }}
-                      className="p-6 rounded-[24px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 shadow-xs relative flex flex-col justify-between text-left"
+                      className="p-6 rounded-[24px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 shadow-sm hover:shadow-lg dark:hover:shadow-black/30 hover:-translate-y-1 transition-all duration-300 relative flex flex-col justify-between text-left"
                     >
                       <div>
                         <div className="flex items-center justify-between mb-4">

@@ -93,7 +93,7 @@ export function GithubSection() {
             initial={{ opacity: 0, x: -16 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-1 p-5 sm:p-7 rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 flex flex-col justify-between gap-5 shadow-xs"
+            className="lg:col-span-1 p-5 sm:p-7 rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 flex flex-col justify-between gap-5 shadow-sm"
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
@@ -168,7 +168,7 @@ export function GithubSection() {
             initial={{ opacity: 0, x: 16 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-2 p-5 sm:p-7 rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 flex flex-col justify-between gap-5 shadow-xs"
+            className="lg:col-span-2 p-5 sm:p-7 rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 flex flex-col justify-between gap-5 shadow-sm"
           >
             <div className="flex items-center justify-between">
               <span className="text-slate-900 dark:text-white text-sm font-bold flex items-center gap-2">

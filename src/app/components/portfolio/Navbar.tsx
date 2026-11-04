@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { FileText, Menu, X, ArrowUpRight } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -91,7 +91,7 @@ export function Navbar({ onOpenResume }: NavbarProps) {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled || menuOpen
-            ? "bg-white/90 dark:bg-[#090D16]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/10 shadow-xs"
+            ? "bg-white/92 dark:bg-[#070B16]/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] shadow-sm dark:shadow-black/20"
             : "bg-transparent py-2"
         }`}
       >
@@ -181,7 +181,7 @@ export function Navbar({ onOpenResume }: NavbarProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="lg:hidden fixed inset-x-0 top-16 sm:top-20 h-[calc(100dvh-4rem)] sm:h-[calc(100dvh-5rem)] bg-white/98 dark:bg-[#090D16]/98 backdrop-blur-2xl border-t border-slate-200/80 dark:border-white/10 flex flex-col justify-between px-5 sm:px-6 pt-5 pb-8 z-40 overflow-y-auto"
+              className="lg:hidden fixed inset-x-0 top-16 sm:top-20 h-[calc(100dvh-4rem)] sm:h-[calc(100dvh-5rem)] bg-white/98 dark:bg-[#070B16]/98 backdrop-blur-2xl border-t border-slate-200/80 dark:border-white/[0.08] flex flex-col justify-between px-5 sm:px-6 pt-5 pb-8 z-40 overflow-y-auto"
             >
               {/* Navigation items */}
               <div className="flex flex-col gap-1.5">
@@ -229,7 +229,7 @@ export function Navbar({ onOpenResume }: NavbarProps) {
                 </button>
 
                 <p className="text-center text-[11px] font-mono text-slate-400 dark:text-slate-500 mt-1">
-                  Addis Ababa, Ethiopia • Full-Stack Engineer
+                  Addis Ababa, Ethiopia â€¢ Full-Stack Engineer
                 </p>
               </div>
             </motion.div>
@@ -252,3 +252,4 @@ export function Navbar({ onOpenResume }: NavbarProps) {
     </>
   );
 }
+

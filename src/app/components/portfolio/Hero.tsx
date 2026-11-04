@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import confetti from "canvas-confetti";
 import {
@@ -16,6 +16,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 import heroImg from "../image/yeroimage1.jpg";
+import developerBg from "../image/developer-bg.svg";
 
 interface HeroProps {
   onOpenResume: () => void;
@@ -80,6 +81,17 @@ export function Hero({ onOpenResume }: HeroProps) {
     >
       {/* Subtle Atmospheric Ambient Glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[850px] h-[350px] sm:h-[500px] bg-gradient-to-tr from-blue-600/15 via-cyan-400/15 to-indigo-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
+      {/* Developer Background SVG */}
+      <div
+        className="absolute inset-0 opacity-40 dark:opacity-50 pointer-events-none"
+        style={{
+          backgroundImage: `url(${developerBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -261,7 +273,7 @@ export function Hero({ onOpenResume }: HeroProps) {
                 <div className="relative aspect-[4/5] w-full overflow-hidden">
                   <img
                     src={heroImg}
-                    alt="Yerosan Girma — Full Stack Software Engineer"
+                    alt="Yerosan Girma â€” Full Stack Software Engineer"
                     className="w-full h-full object-cover object-[center_18%] transition-transform duration-700 hover:scale-103"
                     loading="eager"
                   />
@@ -297,3 +309,6 @@ export function Hero({ onOpenResume }: HeroProps) {
     </section>
   );
 }
+
+
+

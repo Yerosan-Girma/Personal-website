@@ -291,7 +291,7 @@ function ProjectModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.94, y: 20 }}
         transition={{ type: "spring", stiffness: 300, damping: 28 }}
-        className="relative max-w-4xl w-full bg-white dark:bg-[#0D1424] border border-slate-200 dark:border-white/15 rounded-3xl overflow-hidden shadow-2xl z-10 max-h-[92vh] flex flex-col"
+        className="relative max-w-4xl w-full bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-white/15 rounded-3xl overflow-hidden shadow-2xl z-10 max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Image Showcase with Browser Frame Mockup */}
@@ -526,10 +526,10 @@ export function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.45, delay: idx * 0.08 }}
-                className="rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/15 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group text-left"
+                className="rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/[0.12] overflow-hidden shadow-sm hover:shadow-2xl dark:hover:shadow-black/50 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group text-left"
               >
                 {/* Visual Browser Mockup Header */}
-                <div className="bg-slate-100/90 dark:bg-slate-900/90 px-4 py-2.5 border-b border-slate-200/80 dark:border-white/10 flex items-center justify-between">
+                <div className="bg-slate-100/90 dark:bg-[#162032] px-4 py-3 border-b border-slate-200/80 dark:border-white/[0.08] flex items-center justify-between">
                   {/* macOS Dots */}
                   <div className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-rose-400/80 inline-block" />

@@ -133,12 +133,12 @@ function TimelineCard({
       className="relative pl-8 sm:pl-12 text-left"
     >
       {/* Node bullet */}
-      <div className="absolute left-0 top-3 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-sm ring-4 ring-[#F8FAFC] dark:ring-[#090D16] z-10">
+      <div className="absolute left-0 top-3 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-blue-600 dark:bg-cyan-500 text-white flex items-center justify-center shadow-md ring-4 ring-[#F8FAFC] dark:ring-[#070B16] z-10">
         <Icon size={13} strokeWidth={2.2} />
       </div>
 
       {/* Card Content */}
-      <div className="p-5 sm:p-7 rounded-[28px] bg-white dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 shadow-xs hover:shadow-lg transition-all">
+      <div className="p-5 sm:p-7 rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 shadow-sm hover:shadow-lg dark:hover:shadow-black/40 hover:-translate-y-0.5 transition-all duration-300">
         {/* Category & Date Row */}
         <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
           <span
@@ -242,7 +242,7 @@ export function Experience({ onOpenResume }: ExperienceProps) {
         {/* Timeline Container */}
         <div className="relative">
           {/* Vertical line through bullets */}
-          <div className="absolute left-[11px] sm:left-[15px] top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-white/10" />
+          <div className="absolute left-[11px] sm:left-[15px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-blue-500/60 via-blue-500/30 to-transparent dark:from-cyan-400/50 dark:via-cyan-400/20 dark:to-transparent" />
 
           <div className="space-y-6 sm:space-y-8">
             {timeline.map((item, idx) => (
@@ -253,7 +253,7 @@ export function Experience({ onOpenResume }: ExperienceProps) {
 
         {/* Bottom Resume Action Card */}
         {onOpenResume && (
-          <div className="mt-10 p-5 sm:p-6 rounded-[28px] bg-slate-50 dark:bg-[#0D1424] border border-slate-200/90 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+          <div className="mt-10 p-6 sm:p-7 rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
             <div>
               <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <FileText size={16} className="text-blue-600 dark:text-cyan-400" />

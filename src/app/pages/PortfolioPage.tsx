@@ -21,7 +21,7 @@ import { useTheme } from "../context/ThemeContext";
 function SubtleSectionDivider() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 pointer-events-none">
-      <div className="h-px bg-slate-200/80 dark:bg-white/[0.06]" />
+      <div className="h-px bg-gradient-to-r from-transparent via-slate-200/80 dark:via-white/[0.06] to-transparent" />
     </div>
   );
 }
@@ -102,11 +102,11 @@ export function PortfolioPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#090D16] text-slate-900 dark:text-white max-w-full overflow-x-hidden selection:bg-blue-500/20 dark:selection:bg-cyan-400/25 relative transition-colors duration-300">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#070B16] text-slate-900 dark:text-white max-w-full overflow-x-hidden selection:bg-blue-500/20 dark:selection:bg-cyan-400/25 relative transition-colors duration-300">
       {/* Top Animated Scroll Progress Indicator */}
       <motion.div
         style={{ scaleX }}
-        className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-500 origin-left z-50 pointer-events-none"
+        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-500 origin-left z-50 pointer-events-none shadow-lg shadow-blue-500/20"
       />
 
       {/* Interactive Background Particle Mesh */}
