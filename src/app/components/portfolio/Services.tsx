@@ -15,6 +15,8 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
+import { getOptimizedItemVariants } from "../../hooks/useOptimizedStagger";
+import { prefersReducedMotion } from "../../utils/mobileAnimations";
 
 interface ServiceItem {
   id: string;
@@ -37,16 +39,15 @@ const SERVICES_DATA: ServiceItem[] = [
     number: "01",
     title: "Full-Stack Web Engineering",
     badge: "MERN & TypeScript Architecture",
-    tagline: "End-to-End Modern Web Platforms Built for Production",
-    description:
-      "Architecting complete web platforms from database schema to responsive frontend. Integrating type-safe React interfaces with scalable Node.js/Express backends, robust authentication, and cloud deployment.",
+    tagline: "Production-ready web platforms",
+    description: "Complete web applications from database to UI with secure authentication and cloud deployment.",
     icon: Layers,
     deliverables: [
-      "Custom Single-Page (SPA) & Multi-Page web applications",
-      "Type-safe client-server contracts with clean separation of concerns",
-      "Secure authentication protocols with JWT, refresh tokens & bcrypt hashing",
-      "Third-party integrations: payment processing (Stripe), email gateways & webhooks",
-      "Automated CI/CD workflows and production cloud hosting on Vercel & Render",
+      "Custom SPA & multi-page web applications",
+      "Type-safe React + Node.js architecture",
+      "JWT authentication with secure sessions",
+      "Payment integration (Stripe), email & webhooks",
+      "CI/CD deployment on Vercel & Render",
     ],
     techStack: ["React 18+", "TypeScript", "Node.js", "Express", "PostgreSQL", "MongoDB", "Tailwind CSS"],
     metrics: { label: "Standard", value: "Production-Grade" },
@@ -57,16 +58,15 @@ const SERVICES_DATA: ServiceItem[] = [
     number: "02",
     title: "Frontend & UI Systems",
     badge: "Responsive & Accessible UI",
-    tagline: "High-Performance Interfaces Engineered for Speed & Ergonomics",
-    description:
-      "Designing and implementing modern user interfaces that delight users. Emphasizing mobile-first ergonomics, fast load times, accessible design tokens, and smooth micro-interactions.",
+    tagline: "Fast, responsive user interfaces",
+    description: "Modern, responsive interfaces with mobile-first design and smooth interactions.",
     icon: Palette,
     deliverables: [
-      "100% mobile-first responsive layouts across phones, tablets & desktops",
-      "Reusable, accessible component systems with strict TypeScript interfaces",
-      "Lighthouse performance optimization: lazy loading, asset compression & clean bundles",
-      "Intuitive user flows, micro-interactions, and accessible keyboard navigation (WCAG 2.1)",
-      "Dynamic dark/light mode theming with fluid typography scales",
+      "Mobile-first responsive layouts",
+      "Reusable TypeScript component systems",
+      "Performance optimization & fast loading",
+      "Accessible UI with smooth interactions",
+      "Dark/light mode theming",
     ],
     techStack: ["React", "TypeScript", "Tailwind CSS", "Motion", "CSS Grid/Flexbox", "HTML5"],
     metrics: { label: "Design", value: "100% Mobile-First" },
@@ -77,16 +77,15 @@ const SERVICES_DATA: ServiceItem[] = [
     number: "03",
     title: "Backend & Real-Time APIs",
     badge: "Server Architecture & Sockets",
-    tagline: "High-Throughput Services, Real-Time WebSockets & Secure REST",
-    description:
-      "Building resilient server backends with layered MVC architecture. Designing RESTful API routes, WebSocket event signaling, strict request validation, and comprehensive error handling.",
+    tagline: "Scalable APIs & real-time features",
+    description: "Scalable server architecture with REST APIs, WebSockets, and secure validation.",
     icon: Server,
     deliverables: [
-      "Layered MVC & clean service-repository backend architecture",
-      "Low-latency real-time bidirectional messaging with WebSockets",
-      "Role-Based Access Control (RBAC) with secure session handling",
-      "Strict input validation, rate limiting, and centralized error logging",
-      "Interactive REST endpoint documentation and Postman collections",
+      "Clean MVC architecture",
+      "Real-time WebSocket messaging",
+      "Role-based access control",
+      "Input validation & rate limiting",
+      "API documentation & collections",
     ],
     techStack: ["Node.js", "Express.js", "WebSockets", "REST APIs", "JWT", "Postman"],
     metrics: { label: "Latency", value: "Low-Latency Sockets" },
@@ -97,16 +96,15 @@ const SERVICES_DATA: ServiceItem[] = [
     number: "04",
     title: "Database Modeling & Query Optimization",
     badge: "Data Integrity & Performance",
-    tagline: "Normalized Relational Schemas & Document Aggregations",
-    description:
-      "Designing relational (PostgreSQL, MySQL) and document (MongoDB) schemas engineered for scale. Implementing indexing, atomic transaction safety, and query tuning.",
+    tagline: "Optimized database architecture",
+    description: "Optimized database design with indexing and transaction safety.",
     icon: Database,
     deliverables: [
-      "Third-normal-form (3NF) relational models & document schema design",
-      "Compound B-Tree indexing reducing query latency on high-volume tables",
-      "ACID transaction guarantees preventing race conditions and ledger errors",
-      "Automated database migrations, schema seeding, and backup procedures",
-      "Connection pooling and caching strategies for responsive data throughput",
+      "Normalized database schemas",
+      "Indexed queries for performance",
+      "ACID transactions & data integrity",
+      "Database migrations & backups",
+      "Connection pooling & caching",
     ],
     techStack: ["PostgreSQL", "MongoDB", "MySQL", "Mongoose", "SQL Indexing", "Transactions"],
     metrics: { label: "Integrity", value: "ACID Guaranteed" },
@@ -117,28 +115,28 @@ const WORKFLOW_STEPS = [
   {
     step: "01",
     title: "Discovery & Requirements",
-    description: "Aligning on core project goals, user journeys, data requirements, and technical constraints.",
+    description: "Define goals, requirements & constraints.",
     icon: Compass,
     timeline: "Phase 1",
   },
   {
     step: "02",
     title: "Architecture & Design",
-    description: "Designing database models, API endpoint contracts, and modular frontend component structures.",
+    description: "Design database, APIs & components.",
     icon: Palette,
     timeline: "Phase 2",
   },
   {
     step: "03",
     title: "Iterative Implementation",
-    description: "Writing type-safe code, building secure endpoints, connecting databases, and testing features.",
+    description: "Build features with secure, tested code.",
     icon: Cpu,
     timeline: "Phase 3",
   },
   {
     step: "04",
     title: "Testing, Launch & Delivery",
-    description: "Cross-device responsiveness audits, Lighthouse optimization, CI/CD setup, and deployment.",
+    description: "Test, optimize & deploy to production.",
     icon: Rocket,
     timeline: "Phase 4",
   },
@@ -156,24 +154,30 @@ function ServiceCard({
   const [expanded, setExpanded] = useState(false);
   const Icon = service.icon;
 
+  // Requirement 31: Use optimized animations with 50% reduction on mobile
+  const itemVariants = getOptimizedItemVariants(450);
+  const shouldAnimate = !prefersReducedMotion();
+
   const visibleDeliverables = expanded
     ? service.deliverables
     : service.deliverables.slice(0, 3);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={shouldAnimate ? itemVariants.hidden : {}}
+      whileInView={shouldAnimate ? itemVariants.visible : {}}
       viewport={{ once: true }}
-      transition={{ duration: 0.45, delay: index * 0.08 }}
-      className="rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 p-6 sm:p-7 shadow-sm hover:shadow-xl dark:hover:shadow-black/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left group"
+      transition={shouldAnimate ? { duration: 0.45, delay: index * 0.08 } : { duration: 0 }}
+      className="rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 p-5 sm:p-6 md:p-8 shadow-sm hover:shadow-xl dark:hover:shadow-black/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left group"
     >
       <div>
         {/* Header */}
         <div className="flex items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-blue-50 dark:bg-white/5 border border-blue-100 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform shadow-2xs">
-              <Icon size={20} />
+            <div className="w-9 sm:w-10 md:w-11 h-9 sm:h-10 md:h-11 rounded-2xl bg-blue-50 dark:bg-white/5 border border-blue-100 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform shadow-2xs">
+              <Icon size={18} className="sm:hidden" />
+              <Icon size={20} className="hidden sm:block md:hidden" />
+              <Icon size={24} className="hidden md:block" />
             </div>
             <div>
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-cyan-400">
@@ -231,34 +235,6 @@ function ServiceCard({
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="pt-4 border-t border-slate-100 dark:border-white/10 space-y-3">
-        <div className="flex flex-wrap gap-1.5">
-          {service.techStack.map((tech) => (
-            <span
-              key={tech}
-              className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 font-mono font-medium border border-slate-200/60 dark:border-white/5"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-between pt-1">
-          <div>
-            <p className="text-[10px] font-mono text-slate-400 uppercase">{service.metrics.label}</p>
-            <p className="text-xs font-bold text-slate-900 dark:text-white">{service.metrics.value}</p>
-          </div>
-
-          <button
-            onClick={() => onContactClick(service.title)}
-            className="inline-flex items-center gap-1.5 min-h-[38px] px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
-          >
-            <span>Discuss Project</span>
-            <ArrowRight size={13} />
-          </button>
-        </div>
-      </div>
     </motion.div>
   );
 }
@@ -337,7 +313,7 @@ export function Services() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.3 }}
-              className="grid sm:grid-cols-2 gap-6 sm:gap-8"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8"
             >
               {SERVICES_DATA.map((service, index) => (
                 <ServiceCard

@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ExternalLink,
@@ -13,6 +13,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
+import { getOptimizedItemVariants } from "../../hooks/useOptimizedStagger";
+import { prefersReducedMotion } from "../../utils/mobileAnimations";
 
 import eLearnImage from "../image/e-learn.png";
 import kirayBetHero from "../image/kiray-bet-hero.png";
@@ -50,8 +52,8 @@ const projects: Project[] = [
     category: "realestate",
     categoryLabel: "Real Estate Marketplace",
     domainUrl: "kiray-bet-wine.vercel.app",
-    impactPill: "Verified Listings â€¢ Map Search â€¢ Realtime Chat",
-    title: "Kiray Bet (áŠªáˆ«á‹­ á‰¤á‰µ)",
+    impactPill: "Verified Listings • Map Search • Realtime Chat",
+    title: "Kiray Bet (ኪራይ ቤት)",
     subtitle: "Ethiopian Home Rental Marketplace",
     year: "2024",
     problem:
@@ -81,7 +83,7 @@ const projects: Project[] = [
     category: "edtech",
     categoryLabel: "Online Education LMS",
     domainUrl: "e-learning-three-phi.vercel.app",
-    impactPill: "Structured LMS â€¢ Automated Quizzes â€¢ PDF Certificates",
+    impactPill: "Structured LMS • Automated Quizzes • PDF Certificates",
     title: "E-Learning Platform",
     subtitle: "Online Course Delivery & Certification",
     year: "2024",
@@ -111,8 +113,8 @@ const projects: Project[] = [
     category: "ecommerce",
     categoryLabel: "Multi-Storefront Commerce",
     domainUrl: "e-commerce-navy-mu-90.vercel.app",
-    impactPill: "Multi-Vendor â€¢ Stripe Checkout â€¢ Inventory Dashboard",
-    title: "MarketHub â€” E-Commerce",
+    impactPill: "Multi-Vendor • Stripe Checkout • Inventory Dashboard",
+    title: "MarketHub — E-Commerce",
     subtitle: "Multi-Storefront Marketplace Platform",
     year: "2023",
     problem:
@@ -141,7 +143,7 @@ const projects: Project[] = [
     category: "fintech",
     categoryLabel: "Real-Time / WebSockets",
     domainUrl: "github.com/Yerosan-Girma/WabiSkills-Seminar-Live",
-    impactPill: "WebSockets â€¢ Video Signaling â€¢ Live Moderated Chat",
+    impactPill: "WebSockets • Video Signaling • Live Moderated Chat",
     title: "WabiSeminar Live",
     subtitle: "Live Webcast & Real-Time Meeting App",
     year: "2024",
@@ -171,8 +173,8 @@ const projects: Project[] = [
     category: "fintech",
     categoryLabel: "Digital Fintech / ROSCA",
     domainUrl: "github.com/Yerosan-Girma/Digital-Equb",
-    impactPill: "Rotational Savings â€¢ Transparent Ledger â€¢ Payout Tracking",
-    title: "Digital Equb (á‹²áŒ‚á‰³áˆ áŠ¥á‰á‰¥)",
+    impactPill: "Rotational Savings • Transparent Ledger • Payout Tracking",
+    title: "Digital Equb (ዲጂታል እቁብ)",
     subtitle: "Traditional Rotational Savings Platform",
     year: "2024",
     problem:
@@ -201,7 +203,7 @@ const projects: Project[] = [
     category: "hospitality",
     categoryLabel: "Hospitality & Dining",
     domainUrl: "github.com/Yerosan-Girma/Haven-Cafe-Bistro",
-    impactPill: "Dynamic Menu â€¢ Reservation Engine â€¢ Mobile-First UX",
+    impactPill: "Dynamic Menu • Reservation Engine • Mobile-First UX",
     title: "Haven Cafe & Bistro",
     subtitle: "Modern Restaurant & Reservation Portal",
     year: "2024",
@@ -300,16 +302,22 @@ function ProjectModal({
             src={images[activeImageIndex]}
             alt={project.title}
             className="w-full h-full object-cover object-top"
+            loading="eager"
+            decoding="async"
+            srcSet={`${images[activeImageIndex]} 1x`}
+            sizes="(max-width: 768px) 100vw, 90vw"
+            width={1200}
+            height={675}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent pointer-events-none" />
 
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white flex items-center justify-center border border-white/20 transition-colors cursor-pointer shadow-lg z-20"
+            className="absolute top-4 right-4 min-w-[44px] min-h-[44px] rounded-full bg-slate-900/80 hover:bg-slate-900 text-white flex items-center justify-center border border-white/20 transition-colors cursor-pointer shadow-lg z-20 active:scale-95"
             aria-label="Close modal"
           >
-            <X size={16} />
+            <X size={18} />
           </button>
 
           {/* Carousel controls if multiple screenshots */}
@@ -331,19 +339,19 @@ function ProjectModal({
                   onClick={() =>
                     setActiveImageIndex((i) => (i === 0 ? images.length - 1 : i - 1))
                   }
-                  className="w-8 h-8 rounded-full bg-slate-900/80 text-white flex items-center justify-center border border-white/20 cursor-pointer"
+                  className="min-w-[44px] min-h-[44px] rounded-full bg-slate-900/80 text-white flex items-center justify-center border border-white/20 cursor-pointer active:scale-95 transition-transform"
                   aria-label="Previous screenshot"
                 >
-                  <ChevronLeft size={16} />
+                  <ChevronLeft size={18} />
                 </button>
                 <button
                   onClick={() =>
                     setActiveImageIndex((i) => (i === images.length - 1 ? 0 : i + 1))
                   }
-                  className="w-8 h-8 rounded-full bg-slate-900/80 text-white flex items-center justify-center border border-white/20 cursor-pointer"
+                  className="min-w-[44px] min-h-[44px] rounded-full bg-slate-900/80 text-white flex items-center justify-center border border-white/20 cursor-pointer active:scale-95 transition-transform"
                   aria-label="Next screenshot"
                 >
-                  <ChevronRight size={16} />
+                  <ChevronRight size={18} />
                 </button>
               </div>
             </div>
@@ -358,7 +366,7 @@ function ProjectModal({
               <span className="text-blue-600 dark:text-cyan-400 font-bold uppercase">
                 {project.categoryLabel}
               </span>
-              <span className="text-slate-400">â€¢</span>
+              <span className="text-slate-400">•</span>
               <span className="text-slate-500 dark:text-slate-400">{project.year}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
@@ -444,9 +452,9 @@ function ProjectModal({
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm text-center flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md shadow-blue-600/30"
+                className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[10px] text-center flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md shadow-blue-600/30"
               >
-                <span>Live Demonstration</span>
+                <span className="whitespace-nowrap">Live Demonstration</span>
                 <ExternalLink size={14} />
               </a>
             )}
@@ -455,10 +463,10 @@ function ProjectModal({
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white font-semibold text-xs sm:text-sm text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white font-semibold text-[10px] text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <Github size={15} />
-                <span>GitHub Repository</span>
+                <span className="whitespace-nowrap">GitHub Repository</span>
               </a>
             )}
             <button
@@ -497,14 +505,14 @@ export function Projects() {
         />
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-1.5 sm:gap-2 mb-10 overflow-x-auto max-w-full pb-2">
+        <div className="flex items-center gap-2 mb-10 overflow-x-auto max-w-full pb-2">
           {projectFilters.map((tab) => {
             const isSelected = activeFilter === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveFilter(tab.id)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all cursor-pointer ${
+                className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all cursor-pointer active:scale-95 ${
                   isSelected
                     ? "bg-blue-600 text-white shadow-md shadow-blue-600/25 font-bold"
                     : "bg-white dark:bg-white/[0.04] border border-slate-200/90 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -517,17 +525,22 @@ export function Projects() {
         </div>
 
         {/* High-Impact Project Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, idx) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-30px" }}
-                transition={{ duration: 0.45, delay: idx * 0.08 }}
-                className="rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/[0.12] overflow-hidden shadow-sm hover:shadow-2xl dark:hover:shadow-black/50 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group text-left"
-              >
+            {filteredProjects.map((project, idx) => {
+              // Requirement 31: Reduce stagger animation complexity by 50% on mobile
+              const itemVariants = getOptimizedItemVariants(450);
+              const shouldAnimate = !prefersReducedMotion();
+              
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={shouldAnimate ? itemVariants.hidden : {}}
+                  whileInView={shouldAnimate ? itemVariants.visible : {}}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={shouldAnimate ? { duration: 0.45, delay: idx * 0.08 } : { duration: 0 }}
+                  className="rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/[0.12] overflow-hidden shadow-sm md:hover:shadow-2xl dark:md:hover:shadow-black/50 md:hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group text-left"
+                >
                 {/* Visual Browser Mockup Header */}
                 <div className="bg-slate-100/90 dark:bg-[#162032] px-4 py-3 border-b border-slate-200/80 dark:border-white/[0.08] flex items-center justify-between">
                   {/* macOS Dots */}
@@ -551,14 +564,19 @@ export function Projects() {
 
                 {/* Card Image Showcase */}
                 <div
-                  className="relative aspect-[16/10] overflow-hidden bg-slate-950 cursor-pointer"
+                  className="relative aspect-video md:aspect-[16/10] overflow-hidden bg-slate-950 cursor-pointer"
                   onClick={() => setSelectedProject(project)}
                 >
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover object-top opacity-95 group-hover:opacity-100 group-hover:scale-103 transition-transform duration-700"
+                    className="w-full h-full object-cover object-top opacity-95 md:group-hover:opacity-100 md:group-hover:scale-103 transition-transform duration-700"
                     loading="lazy"
+                    decoding="async"
+                    srcSet={`${project.image} 1x`}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
+                    width={1200}
+                    height={675}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
@@ -571,7 +589,7 @@ export function Projects() {
 
                   {/* View Details Corner Trigger */}
                   <div className="absolute top-3.5 right-3.5">
-                    <div className="w-9 h-9 rounded-full bg-white/95 dark:bg-slate-900/90 backdrop-blur-md flex items-center justify-center text-slate-800 dark:text-white group-hover:bg-blue-600 group-hover:text-white transition-all shadow-md">
+                    <div className="w-9 h-9 rounded-full bg-white/95 dark:bg-slate-900/90 backdrop-blur-md flex items-center justify-center text-slate-800 dark:text-white md:group-hover:bg-blue-600 md:group-hover:text-white transition-all shadow-md">
                       <ArrowUpRight size={16} />
                     </div>
                   </div>
@@ -590,23 +608,23 @@ export function Projects() {
                   <div>
                     <h3
                       onClick={() => setSelectedProject(project)}
-                      className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors cursor-pointer"
+                      className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-1 md:group-hover:text-blue-600 dark:md:group-hover:text-cyan-400 transition-colors cursor-pointer"
                     >
                       {project.title}
                     </h3>
                     <p className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-cyan-400 mb-3">
                       {project.subtitle}
                     </p>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-normal line-clamp-2">
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5 font-normal line-clamp-3 md:line-clamp-2">
                       {project.description}
                     </p>
 
                     {/* Attractive Tech Badges */}
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
+                    <div className="flex flex-wrap gap-1 sm:gap-1.5 md:gap-2 mb-6">
                       {project.tech.map((t) => (
                         <span
                           key={t}
-                          className={`px-2.5 py-0.5 rounded-lg text-xs font-mono font-medium border ${getTechBadgeStyle(
+                          className={`px-2 sm:px-2.5 py-0.5 rounded-lg text-xs font-mono font-medium border ${getTechBadgeStyle(
                             t
                           )}`}
                         >
@@ -617,15 +635,15 @@ export function Projects() {
                   </div>
 
                   {/* Direct Action Buttons - Mobile Friendly (Min 44px Height) */}
-                  <div className="flex flex-wrap items-center gap-2.5 pt-4 border-t border-slate-100 dark:border-white/10">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 pt-4 border-t border-slate-100 dark:border-white/10">
                     {project.demo && (
                       <a
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 min-h-[44px] py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold text-center flex items-center justify-center gap-2 shadow-sm shadow-blue-600/30 transition-colors cursor-pointer"
+                        className="w-full sm:flex-1 min-h-[44px] py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold text-center flex items-center justify-center gap-2 shadow-sm shadow-blue-600/30 transition-colors cursor-pointer"
                       >
-                        <span>Live Demo</span>
+                        <span className="whitespace-nowrap">Live Demo</span>
                         <ExternalLink size={14} />
                       </a>
                     )}
@@ -634,27 +652,28 @@ export function Projects() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 min-h-[44px] py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] border border-slate-200/90 dark:border-white/10 text-slate-800 dark:text-white text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                        className="w-full sm:flex-1 min-h-[44px] py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] border border-slate-200/90 dark:border-white/10 text-slate-800 dark:text-white text-[10px] font-semibold text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
                       >
                         <Github size={15} />
-                        <span>Code</span>
+                        <span className="whitespace-nowrap">Code</span>
                       </a>
                     )}
                     <button
                       onClick={() => setSelectedProject(project)}
-                      className="min-h-[44px] px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200/90 dark:border-white/10 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 cursor-pointer transition-colors"
+                      className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200/90 dark:border-white/10 text-[10px] font-semibold text-slate-700 dark:text-slate-300 cursor-pointer transition-colors"
                     >
-                      Case Study
+                      Detail
                     </button>
                   </div>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </AnimatePresence>
         </div>
       </div>
 
-      {/* Case Study Deep Modal */}
+      {/* Detail Deep Modal */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />

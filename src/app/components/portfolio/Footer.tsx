@@ -25,12 +25,12 @@ export function Footer() {
   };
 
   return (
-    <footer className="border-t border-slate-200/90 dark:border-white/[0.07] bg-white/80 dark:bg-[#070A12] py-14 sm:py-18 relative overflow-hidden transition-colors duration-300">
+    <footer className="border-t border-slate-200/90 dark:border-white/[0.07] bg-white/80 dark:bg-[#070A12] py-8 md:py-14 sm:py-18 relative overflow-hidden transition-colors duration-300">
       {/* Subtle footer glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-gradient-to-b from-blue-500/[0.04] dark:from-blue-500/[0.06] to-transparent pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 sm:gap-12 mb-12 items-start text-left">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-10 lg:px-12 relative z-10">
+        <div className="flex flex-col md:grid md:grid-cols-12 gap-8 md:gap-10 md:gap-y-0 sm:gap-12 mb-8 md:mb-12 md:items-start text-left">
           {/* Brand Panel */}
           <div className="md:col-span-5">
             <div
@@ -61,7 +61,7 @@ export function Footer() {
             </div>
 
             {/* Social Icons */}
-            <div className="flex gap-2.5 mt-5">
+            <div className="flex gap-3 mt-5">
               {[
                 { icon: Github, href: "https://github.com/Yerosan-Girma", label: "GitHub" },
                 { icon: Linkedin, href: "https://www.linkedin.com/in/yerosan-girma-30005b37a", label: "LinkedIn" },
@@ -73,7 +73,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={soc.label}
-                  className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/[0.06] border border-slate-200/80 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 hover:border-blue-400/60 dark:hover:border-cyan-400/40 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shadow-sm"
+                  className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-white/[0.06] border border-slate-200/80 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 hover:border-blue-400/60 dark:hover:border-cyan-400/40 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shadow-sm"
                   aria-label={soc.label}
                 >
                   <soc.icon size={16} />
@@ -88,7 +88,7 @@ export function Footer() {
               <Code2 size={12} className="text-blue-600 dark:text-cyan-400" />
               Navigation
             </h4>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+            <div className="flex flex-col gap-2">
               {[
                 { label: "Home", id: "home" },
                 { label: "About", id: "about" },
@@ -102,7 +102,7 @@ export function Footer() {
                 <button
                   key={link.id}
                   onClick={() => scrollTo(link.id)}
-                  className="text-left text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-cyan-400 text-sm transition-colors duration-200 font-medium cursor-pointer"
+                  className="py-2 px-4 text-left text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-cyan-400 text-sm transition-colors duration-200 font-medium cursor-pointer flex items-center"
                 >
                   {link.label}
                 </button>
@@ -119,7 +119,7 @@ export function Footer() {
 
             <button
               onClick={scrollToTop}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-white/[0.06] hover:bg-slate-200 dark:hover:bg-white/[0.12] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 text-sm font-semibold transition-all duration-200 cursor-pointer shadow-sm active:scale-95"
+              className="py-2.5 px-5 inline-flex w-full sm:w-auto justify-center sm:justify-start items-center gap-2 rounded-xl bg-slate-100 dark:bg-white/[0.06] hover:bg-slate-200 dark:hover:bg-white/[0.12] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 text-sm font-semibold transition-all duration-200 cursor-pointer shadow-sm active:scale-95"
             >
               <ArrowUp size={14} />
               <span>Back to Top</span>
@@ -127,7 +127,7 @@ export function Footer() {
 
             <button
               onClick={() => scrollTo("contact")}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-all duration-200 cursor-pointer shadow-md shadow-blue-600/30 hover:shadow-blue-500/40 active:scale-95"
+              className="py-2.5 px-5 inline-flex w-full sm:w-auto justify-center sm:justify-start items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-all duration-200 cursor-pointer shadow-md shadow-blue-600/30 hover:shadow-blue-500/40 active:scale-95"
             >
               <Mail size={14} />
               <span>Hire Me</span>
@@ -136,7 +136,7 @@ export function Footer() {
         </div>
 
         {/* Bottom copyright line */}
-        <div className="pt-7 border-t border-slate-200/80 dark:border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 font-mono">
+        <div className="pt-5 md:pt-7 border-t border-slate-200/80 dark:border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 font-mono">
           <p>© {new Date().getFullYear()} Yerosan Girma. All rights reserved.</p>
           <p className="text-[11px]">
             Engineered with React 18 · TypeScript · Tailwind CSS · Vite

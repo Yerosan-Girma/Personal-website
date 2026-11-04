@@ -77,7 +77,7 @@ export function Hero({ onOpenResume }: HeroProps) {
   return (
     <section
       id="home"
-      className="relative min-h-[92vh] sm:min-h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24"
+      className="relative min-h-[92vh] sm:min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20 md:pt-24 lg:pt-32 pb-12 sm:pb-16 md:pb-20 lg:pb-24"
     >
       {/* Subtle Atmospheric Ambient Glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[850px] h-[350px] sm:h-[500px] bg-gradient-to-tr from-blue-600/15 via-cyan-400/15 to-indigo-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
@@ -93,8 +93,8 @@ export function Hero({ onOpenResume }: HeroProps) {
         }}
       />
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 relative z-10">
+        <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center">
           {/* Left Column: Command & Bio */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             {/* Availability Pill */}
@@ -120,13 +120,13 @@ export function Hero({ onOpenResume }: HeroProps) {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="mb-4"
             >
-              <span className="text-sm sm:text-base font-mono font-medium text-slate-500 dark:text-slate-400 uppercase tracking-widest block mb-2">
+              <span className="text-xs sm:text-base font-mono font-medium text-slate-500 dark:text-slate-400 uppercase tracking-widest block mb-2">
                 Hello, I am
               </span>
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.06]">
+              <h1 className="text-[40px] sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.06]">
                 Yerosan <span className="bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-500 bg-clip-text text-transparent">Girma</span>
               </h1>
-              <p className="mt-3 text-xl sm:text-2xl md:text-3xl font-medium tracking-tight text-slate-700 dark:text-slate-200">
+              <p className="mt-3 text-[20px] sm:text-2xl md:text-3xl font-medium tracking-tight text-slate-700 dark:text-slate-200">
                 Architecting Scalable,{" "}
                 <span className="italic font-serif font-normal text-blue-600 dark:text-cyan-400">
                   Production-Ready
@@ -195,7 +195,7 @@ export function Hero({ onOpenResume }: HeroProps) {
             >
               <button
                 onClick={() => scrollTo("projects")}
-                className="h-12 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2 cursor-pointer group shrink-0"
+                className="h-auto py-2.5 sm:py-3 px-5 sm:px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm sm:text-base shadow-lg shadow-blue-600/30 hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2 cursor-pointer group shrink-0"
               >
                 <span>View Featured Projects</span>
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -203,7 +203,7 @@ export function Hero({ onOpenResume }: HeroProps) {
 
               <button
                 onClick={onOpenResume}
-                className="h-12 px-5 rounded-xl bg-white dark:bg-white/[0.06] hover:bg-slate-100 dark:hover:bg-white/[0.12] text-slate-900 dark:text-white border border-slate-300/80 dark:border-white/15 font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="h-auto py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl bg-white dark:bg-white/[0.06] hover:bg-slate-100 dark:hover:bg-white/[0.12] text-slate-900 dark:text-white border border-slate-300/80 dark:border-white/15 font-semibold text-sm sm:text-base transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <FileText size={16} className="text-blue-600 dark:text-cyan-400" />
                 <span>View Resume</span>
@@ -211,7 +211,7 @@ export function Hero({ onOpenResume }: HeroProps) {
 
               <button
                 onClick={() => scrollTo("contact")}
-                className="h-12 px-5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-800 dark:text-white border border-slate-200/90 dark:border-white/10 font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="h-auto py-2.5 sm:py-3 px-4 sm:px-5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-800 dark:text-white border border-slate-200/90 dark:border-white/10 font-semibold text-sm sm:text-base transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Contact Me</span>
               </button>
@@ -219,7 +219,7 @@ export function Hero({ onOpenResume }: HeroProps) {
               <button
                 onClick={handleCopyEmail}
                 title="Copy Email Address"
-                className="h-12 px-4 rounded-xl bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs shrink-0"
+                className="h-auto py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs shrink-0"
               >
                 {copied ? <Check size={15} className="text-emerald-500" /> : <Copy size={15} />}
                 <span>{copied ? "Email Copied!" : "Copy Email"}</span>
@@ -263,7 +263,7 @@ export function Hero({ onOpenResume }: HeroProps) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative w-full max-w-[320px] sm:max-w-[370px]"
+              className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[370px]"
             >
               {/* Outer Atmospheric Glow */}
               <div className="absolute -inset-3 bg-gradient-to-tr from-blue-600/30 via-cyan-400/25 to-indigo-600/25 rounded-[32px] blur-2xl -z-10" />

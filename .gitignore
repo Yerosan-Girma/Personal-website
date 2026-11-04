@@ -49,3 +49,12 @@ Thumbs.db
 # Implementation documentation
 *_IMPLEMENTATION_SUMMARY.md
 *IMPLEMENTATION.md
+
+# Verification scripts
+verify-*.js
+
+# Test HTML files
+test-*.html
+
+# Tailwind config (project uses .mjs)
+tailwind.config.js
