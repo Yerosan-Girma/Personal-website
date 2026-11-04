@@ -277,10 +277,10 @@ export function Services() {
 
         {/* View Switcher: Services vs Process */}
         <div className="flex items-center justify-start gap-4 mb-8 sm:mb-10">
-          <div className="inline-flex p-1 rounded-2xl bg-slate-100/90 dark:bg-white/5 border border-slate-200/90 dark:border-white/10 backdrop-blur-md shadow-xs">
+          <div className="w-full sm:w-auto inline-flex p-1 rounded-2xl bg-slate-100/90 dark:bg-white/5 border border-slate-200/90 dark:border-white/10 backdrop-blur-md shadow-xs">
             <button
               onClick={() => setActiveTab("services")}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+              className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 ${
                 activeTab === "services"
                   ? "bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-xs font-bold"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -292,7 +292,7 @@ export function Services() {
 
             <button
               onClick={() => setActiveTab("process")}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+              className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 ${
                 activeTab === "process"
                   ? "bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-xs font-bold"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"

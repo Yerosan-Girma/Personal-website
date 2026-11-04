@@ -297,7 +297,7 @@ function ProjectModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Image Showcase with Browser Frame Mockup */}
-        <div className="relative h-64 sm:h-80 md:h-96 w-full bg-slate-950 overflow-hidden shrink-0">
+        <div className="relative h-48 xs:h-56 sm:h-80 md:h-96 w-full bg-slate-950 overflow-hidden shrink-0">
           <img
             src={images[activeImageIndex]}
             alt={project.title}
@@ -359,7 +359,7 @@ function ProjectModal({
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-left">
+        <div className="p-4 sm:p-8 overflow-y-auto space-y-6 text-left">
           {/* Title Header */}
           <div className="border-b border-slate-200 dark:border-white/10 pb-5">
             <div className="flex flex-wrap items-center gap-2 text-xs font-mono mb-2">
@@ -452,7 +452,7 @@ function ProjectModal({
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[10px] text-center flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md shadow-blue-600/30"
+                className="flex-1 min-h-[40px] px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs text-center flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md shadow-blue-600/30"
               >
                 <span className="whitespace-nowrap">Live Demonstration</span>
                 <ExternalLink size={14} />
@@ -463,7 +463,7 @@ function ProjectModal({
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 min-h-[44px] px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white font-semibold text-[10px] text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="flex-1 min-h-[40px] px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white font-semibold text-xs text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <Github size={15} />
                 <span className="whitespace-nowrap">GitHub Repository</span>
@@ -505,7 +505,7 @@ export function Projects() {
         />
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-2 mb-10 overflow-x-auto max-w-full pb-2">
+        <div className="flex items-center gap-2 mb-10 overflow-x-auto max-w-full pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           {projectFilters.map((tab) => {
             const isSelected = activeFilter === tab.id;
             return (
@@ -635,16 +635,16 @@ export function Projects() {
                   </div>
 
                   {/* Direct Action Buttons - Mobile Friendly (Min 44px Height) */}
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 pt-4 border-t border-slate-100 dark:border-white/10">
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2 pt-4 border-t border-slate-100 dark:border-white/10">
                     {project.demo && (
                       <a
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full sm:flex-1 min-h-[44px] py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold text-center flex items-center justify-center gap-2 shadow-sm shadow-blue-600/30 transition-colors cursor-pointer"
+                        className="min-h-[36px] sm:min-h-[38px] px-1.5 sm:px-2 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[11px] sm:text-xs font-semibold text-center flex items-center justify-center gap-1 shadow-xs transition-colors cursor-pointer whitespace-nowrap active:scale-95"
                       >
                         <span className="whitespace-nowrap">Live Demo</span>
-                        <ExternalLink size={14} />
+                        <ExternalLink size={12} className="shrink-0" />
                       </a>
                     )}
                     {project.github && (
@@ -652,17 +652,17 @@ export function Projects() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full sm:flex-1 min-h-[44px] py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] border border-slate-200/90 dark:border-white/10 text-slate-800 dark:text-white text-[10px] font-semibold text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                        className="min-h-[36px] sm:min-h-[38px] px-1.5 sm:px-2 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] border border-slate-200/90 dark:border-white/10 text-slate-800 dark:text-white text-[11px] sm:text-xs font-semibold text-center flex items-center justify-center gap-1 transition-colors cursor-pointer whitespace-nowrap active:scale-95"
                       >
-                        <Github size={15} />
+                        <Github size={13} className="shrink-0" />
                         <span className="whitespace-nowrap">Code</span>
                       </a>
                     )}
                     <button
                       onClick={() => setSelectedProject(project)}
-                      className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200/90 dark:border-white/10 text-[10px] font-semibold text-slate-700 dark:text-slate-300 cursor-pointer transition-colors"
+                      className="min-h-[36px] sm:min-h-[38px] px-1.5 sm:px-2 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200/90 dark:border-white/10 text-[11px] sm:text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-center cursor-pointer transition-colors whitespace-nowrap active:scale-95"
                     >
-                      Detail
+                      <span className="whitespace-nowrap">Details</span>
                     </button>
                   </div>
                 </div>

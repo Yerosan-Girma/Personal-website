@@ -1,4 +1,4 @@
-﻿import { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import {
   Mail,
@@ -45,7 +45,7 @@ const contactChannels: ContactChannel[] = [
   {
     name: "Email Address",
     value: "yerosang463@gmail.com",
-    detail: "Primary inbox for opportunities & inquiries",
+    detail: "Primary inbox for engineering roles & inquiries",
     href: "mailto:yerosang463@gmail.com",
     icon: Mail,
     isExternal: false,
@@ -53,7 +53,7 @@ const contactChannels: ContactChannel[] = [
   {
     name: "LinkedIn Profile",
     value: "yerosan-girma",
-    detail: "Professional network & connection",
+    detail: "Professional network & career updates",
     href: "https://www.linkedin.com/in/yerosan-girma-30005b37a",
     icon: Linkedin,
     isExternal: true,
@@ -77,7 +77,7 @@ const contactChannels: ContactChannel[] = [
 ];
 
 const inputBase =
-  "w-full px-3 sm:px-4 py-3 sm:py-3.5 rounded-lg sm:rounded-xl bg-slate-50 dark:bg-slate-800/60 border text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all duration-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 font-normal min-h-[44px]";
+  "w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border text-slate-900 dark:text-white text-sm outline-none transition-all duration-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 font-normal";
 
 const inputNormal = `${inputBase} border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-cyan-400 focus:ring-2 focus:ring-blue-500/15 dark:focus:ring-cyan-400/15`;
 const inputError = `${inputBase} border-rose-500 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/15`;
@@ -200,7 +200,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" ref={ref} className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
+    <section id="contact" ref={ref} className="py-16 sm:py-20 lg:py-28 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
@@ -211,31 +211,113 @@ export function Contact() {
           subtitle="Interested in hiring me for software engineering positions, full-stack internships, or discussing project collaborations? Reach out directly below."
         />
 
-        {/* Grid Layout: Form on top (mobile), left side (desktop); Info on bottom (mobile), right side (desktop) */}
+        {/* Clean 2-Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Contact Form - Order 1 on mobile, spans left on desktop */}
-          <div className="lg:col-span-7 p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-2xl lg:rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 shadow-lg dark:shadow-black/40 text-left order-1 lg:order-1 w-full">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-5 sm:mb-7 pb-4 sm:pb-5 border-b border-slate-100 dark:border-white/10">
-              <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-500/15 text-blue-600 dark:text-cyan-400 flex items-center justify-center border border-blue-100 dark:border-blue-400/20 shrink-0">
-                <MessageSquare size={19} />
+          {/* Left Column: Direct Contact Info (Cohesive List, NOT 6 Separate Cards) */}
+          <div className="lg:col-span-5 space-y-6 text-left">
+            <div>
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2">
+                Contact Information
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Feel free to connect directly through any channel or send a message using the form.
+              </p>
+            </div>
+
+            {/* Channels Directory List */}
+            <div className="divide-y divide-slate-200/80 dark:divide-white/10">
+              {contactChannels.map((item, idx) => {
+                const Icon = item.icon;
+                const isEmail = item.name.includes("Email");
+
+                return (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ delay: idx * 0.05 }}
+                    className="py-4 first:pt-0 last:pb-0 flex items-center justify-between gap-3 group"
+                  >
+                    <a
+                      href={item.href}
+                      target={item.isExternal ? "_blank" : "_self"}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
+                      className="flex items-center gap-3.5 min-w-0 flex-1 cursor-pointer"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/[0.05] border border-slate-200/80 dark:border-white/10 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform shrink-0">
+                        <Icon size={18} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
+                          {item.name}
+                        </span>
+                        <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors block truncate">
+                          {item.value}
+                        </span>
+                        <span className="text-xs text-slate-500 dark:text-slate-400 block truncate">
+                          {item.detail}
+                        </span>
+                      </div>
+                    </a>
+
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {isEmail && (
+                        <button
+                          onClick={handleCopyEmail}
+                          title="Copy Email"
+                          className="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-white/[0.06] hover:bg-slate-200 dark:hover:bg-white/[0.12] border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 flex items-center gap-1 transition-colors cursor-pointer"
+                        >
+                          {copiedEmail ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
+                          <span className="hidden sm:inline">{copiedEmail ? "Copied" : "Copy"}</span>
+                        </button>
+                      )}
+                      <a
+                        href={item.href}
+                        target={item.isExternal ? "_blank" : "_self"}
+                        rel={item.isExternal ? "noopener noreferrer" : undefined}
+                        className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors"
+                        aria-label={`Open ${item.name}`}
+                      >
+                        <ArrowUpRight size={16} />
+                      </a>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Response Time Note */}
+            <div className="pt-4 border-t border-slate-200/80 dark:border-white/10 flex items-start gap-2.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-mono">
+              <Sparkles size={14} className="text-cyan-400 shrink-0 mt-0.5" />
+              <span>
+                Based in Addis Ababa (GMT+3). Response time typically within 24 hours for engineering recruitment and project inquiries.
+              </span>
+            </div>
+          </div>
+
+          {/* Right Column: Contact Form */}
+          <div className="lg:col-span-7 p-4 sm:p-8 lg:p-9 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 shadow-sm text-left">
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-white/10">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center border border-blue-100 dark:border-blue-400/20">
+                <MessageSquare size={18} />
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                   Send a Direct Message
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Fill out the form below or email me directly at yerosang463@gmail.com
                 </p>
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-              <div className="grid grid-cols-1 gap-4 sm:gap-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 {/* Name */}
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="block text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
+                    className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                   >
                     Your Name *
                   </label>
@@ -251,7 +333,7 @@ export function Contact() {
                     className={errors.name ? inputError : inputNormal}
                   />
                   {errors.name && (
-                    <p className="text-rose-500 text-xs mt-1.5 flex items-center gap-1 font-medium">
+                    <p className="text-rose-500 text-xs mt-1 flex items-center gap-1 font-medium">
                       <AlertCircle size={11} /> {errors.name}
                     </p>
                   )}
@@ -261,7 +343,7 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="contact-email"
-                    className="block text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
+                    className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                   >
                     Email Address *
                   </label>
@@ -277,79 +359,79 @@ export function Contact() {
                     className={errors.email ? inputError : inputNormal}
                   />
                   {errors.email && (
-                    <p className="text-rose-500 text-xs mt-1.5 flex items-center gap-1 font-medium">
+                    <p className="text-rose-500 text-xs mt-1 flex items-center gap-1 font-medium">
                       <AlertCircle size={11} /> {errors.email}
                     </p>
                   )}
                 </div>
+              </div>
 
-                {/* Subject */}
-                <div>
-                  <label
-                    htmlFor="form-subject"
-                    className="block text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
-                  >
-                    Subject / Opportunity *
-                  </label>
-                  <input
-                    type="text"
-                    id="form-subject"
-                    value={form.subject}
-                    onChange={(e) => {
-                      setForm({ ...form, subject: e.target.value });
-                      if (errors.subject) setErrors({ ...errors, subject: undefined });
-                    }}
-                    placeholder="e.g. Full-Stack Internship / Project Collaboration"
-                    className={errors.subject ? inputError : inputNormal}
-                  />
-                  {errors.subject && (
-                    <p className="text-rose-500 text-xs mt-1.5 flex items-center gap-1 font-medium">
-                      <AlertCircle size={11} /> {errors.subject}
-                    </p>
-                  )}
-                </div>
+              {/* Subject */}
+              <div>
+                <label
+                  htmlFor="form-subject"
+                  className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
+                >
+                  Subject / Opportunity *
+                </label>
+                <input
+                  type="text"
+                  id="form-subject"
+                  value={form.subject}
+                  onChange={(e) => {
+                    setForm({ ...form, subject: e.target.value });
+                    if (errors.subject) setErrors({ ...errors, subject: undefined });
+                  }}
+                  placeholder="e.g. Full-Stack Internship / Project Collaboration"
+                  className={errors.subject ? inputError : inputNormal}
+                />
+                {errors.subject && (
+                  <p className="text-rose-500 text-xs mt-1 flex items-center gap-1 font-medium">
+                    <AlertCircle size={11} /> {errors.subject}
+                  </p>
+                )}
+              </div>
 
-                {/* Message */}
-                <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="block text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
-                  >
-                    Message / Project Scope *
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    rows={4}
-                    value={form.message}
-                    onChange={(e) => {
-                      setForm({ ...form, message: e.target.value });
-                      if (errors.message) setErrors({ ...errors, message: undefined });
-                    }}
-                    placeholder="Describe your project, role requirements, or question..."
-                    className={`${errors.message ? inputError : inputNormal} resize-none`}
-                  />
-                  {errors.message && (
-                    <p className="text-rose-500 text-xs mt-1.5 flex items-center gap-1 font-medium">
-                      <AlertCircle size={11} /> {errors.message}
-                    </p>
-                  )}
-                </div>
+              {/* Message */}
+              <div>
+                <label
+                  htmlFor="contact-message"
+                  className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
+                >
+                  Message / Project Scope *
+                </label>
+                <textarea
+                  id="contact-message"
+                  rows={4}
+                  value={form.message}
+                  onChange={(e) => {
+                    setForm({ ...form, message: e.target.value });
+                    if (errors.message) setErrors({ ...errors, message: undefined });
+                  }}
+                  placeholder="Describe your project, role requirements, or question..."
+                  className={`${errors.message ? inputError : inputNormal} resize-none`}
+                />
+                {errors.message && (
+                  <p className="text-rose-500 text-xs mt-1 flex items-center gap-1 font-medium">
+                    <AlertCircle size={11} /> {errors.message}
+                  </p>
+                )}
               </div>
 
               {/* Submit button */}
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full min-h-[48px] py-3 sm:py-4 rounded-lg sm:rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2.5 shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40 disabled:opacity-70 cursor-pointer active:scale-95"
+                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-md shadow-blue-600/30 disabled:opacity-70 cursor-pointer active:scale-[0.99]"
               >
                 {status === "loading" ? (
                   <>
-                    <Loader2 size={17} className="animate-spin" />
+                    <Loader2 size={16} className="animate-spin" />
                     <span>Delivering Message...</span>
                   </>
                 ) : (
                   <>
-                    <Send size={16} />
+                    <Send size={15} />
                     <span>Send Message</span>
                   </>
                 )}
@@ -362,9 +444,9 @@ export function Contact() {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="p-3 sm:p-4 rounded-lg sm:rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 text-xs sm:text-sm flex items-center gap-2.5"
+                    className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 text-xs sm:text-sm flex items-center gap-2"
                   >
-                    <CheckCircle size={18} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+                    <CheckCircle size={16} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
                     <span>Thank you! Your message has been sent. I will respond to your email shortly.</span>
                   </motion.div>
                 )}
@@ -374,10 +456,10 @@ export function Contact() {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="p-3 sm:p-4 rounded-lg sm:rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs sm:text-sm space-y-2.5"
+                    className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs sm:text-sm space-y-2"
                   >
                     <div className="flex items-start gap-2">
-                      <AlertCircle size={16} className="shrink-0 mt-0.5" />
+                      <AlertCircle size={15} className="shrink-0 mt-0.5" />
                       <div>
                         <p className="font-semibold">Unable to complete automated delivery:</p>
                         <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-300">{errorMessage}</p>
@@ -388,7 +470,7 @@ export function Contact() {
                       <button
                         type="button"
                         onClick={handleDirectEmail}
-                        className="px-3.5 min-h-[44px] py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs cursor-pointer flex items-center justify-center gap-1.5 transition-colors active:scale-95 shrink-0"
+                        className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs cursor-pointer flex items-center justify-center gap-1.5 transition-colors active:scale-95 shrink-0"
                       >
                         <Mail size={12} />
                         <span>Send via Email App</span>
@@ -398,86 +480,6 @@ export function Contact() {
                 )}
               </AnimatePresence>
             </form>
-          </div>
-
-          {/* Contact Info - Order 2 on mobile, right side on desktop */}
-          <div className="lg:col-span-5 space-y-3 sm:space-y-4 text-left order-2 lg:order-2 w-full">
-            {/* Contact Channels */}
-            <div className="space-y-2 sm:space-y-3">
-              {contactChannels.map((item, idx) => {
-                const Icon = item.icon;
-                return (
-                  <motion.a
-                    key={item.name}
-                    href={item.href}
-                    target={item.isExternal ? "_blank" : "_self"}
-                    rel={item.isExternal ? "noopener noreferrer" : undefined}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: idx * 0.07 }}
-                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 p-3 sm:p-4 lg:p-5 rounded-lg sm:rounded-xl lg:rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-cyan-400/40 shadow-sm hover:shadow-md dark:hover:shadow-black/30 hover:-translate-y-0.5 transition-all duration-200 group cursor-pointer"
-                  >
-                    <div className="flex items-start gap-2.5 sm:gap-3 min-w-0 flex-1">
-                      <div className="w-9 sm:w-10 lg:w-11 h-9 sm:h-10 lg:h-11 rounded-lg sm:rounded-lg lg:rounded-xl bg-blue-50 dark:bg-blue-500/15 border border-blue-100 dark:border-blue-400/20 flex items-center justify-center text-blue-600 dark:text-cyan-400 group-hover:scale-105 transition-transform duration-200 shrink-0">
-                        <Icon size={16} className="sm:size-[18px] lg:size-[18px]" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
-                          {item.name}
-                        </span>
-                        <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors block truncate">
-                          {item.value}
-                        </span>
-                        <span className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 block truncate">
-                          {item.detail}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-100 dark:bg-white/[0.05] flex items-center justify-center text-slate-400 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors shrink-0">
-                      <ArrowUpRight size={14} className="sm:size-[15px]" />
-                    </div>
-                  </motion.a>
-                );
-              })}
-            </div>
-
-            {/* Quick Copy Email Card */}
-            <div className="p-3 sm:p-4 lg:p-5 rounded-lg sm:rounded-xl lg:rounded-2xl bg-slate-50/90 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.08] flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-              <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center shrink-0 border border-blue-500/15">
-                  <Mail size={14} className="sm:size-[15px]" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">
-                    Need the email copied?
-                  </p>
-                  <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate">
-                    yerosang463@gmail.com
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={handleCopyEmail}
-                className="px-3 sm:px-4 min-h-[44px] py-2.5 rounded-lg sm:rounded-xl bg-white dark:bg-white/[0.10] hover:bg-slate-100 dark:hover:bg-white/[0.16] border border-slate-200 dark:border-white/15 text-slate-700 dark:text-slate-200 text-[11px] sm:text-xs font-semibold shadow-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0 transition-all duration-200 active:scale-95"
-              >
-                {copiedEmail ? <Check size={12} className="text-emerald-500" /> : <Copy size={12} />}
-                <span>{copiedEmail ? "Copied!" : "Copy"}</span>
-              </button>
-            </div>
-
-            {/* Availability Note */}
-            <div className="p-4 sm:p-5 lg:p-6 rounded-lg sm:rounded-xl lg:rounded-2xl bg-gradient-to-br from-blue-50/90 to-indigo-50/60 dark:from-blue-950/40 dark:to-indigo-950/30 border border-blue-200/70 dark:border-blue-800/40 shadow-sm">
-              <div className="flex items-center gap-2 text-blue-600 dark:text-cyan-400 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider mb-2">
-                <Sparkles size={12} className="sm:size-[13px]" />
-                <span>Response Time</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                I typically respond to software engineering recruiters, internship leads, and project inquiries within
-                24 hours.
-              </p>
-            </div>
           </div>
         </div>
       </div>

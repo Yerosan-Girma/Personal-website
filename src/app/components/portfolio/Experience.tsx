@@ -100,7 +100,7 @@ interface ExperienceProps {
   onOpenResume?: () => void;
 }
 
-function TimelineCard({
+function TimelineEntry({
   item,
   index,
   trigger,
@@ -111,7 +111,6 @@ function TimelineCard({
 }) {
   const [expanded, setExpanded] = useState(index < 2);
   const Icon = item.icon;
-
 
   const getBadgeStyle = (cat: TimelineItem["category"]) => {
     switch (cat) {
@@ -131,94 +130,94 @@ function TimelineCard({
       initial={{ opacity: 0, y: 16 }}
       animate={trigger ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.45, delay: 0.15 + index * 0.1 }}
-      className="relative flex"
+      className="relative pl-8 sm:pl-12 text-left"
     >
-      {/* Node bullet - positioned on right on mobile, centered on timeline line on desktop */}
-      <div className={`absolute top-4 w-3 h-3 md:w-4 md:h-4 rounded-full bg-blue-600 dark:bg-cyan-500 shadow-md ring-4 ring-[#F8FAFC] dark:ring-[#070B16] z-10 flex-shrink-0 right-[-7px] md:left-[-2px]`}>
+      {/* Node bullet on vertical line */}
+      <div className="absolute left-0 top-1.5 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-sm ring-4 ring-[#F8FAFC] dark:ring-[#070B16] z-10">
+        <Icon size={13} strokeWidth={2.2} />
       </div>
 
-      {/* Card Content - full width on mobile, alternates on desktop */}
-      <div className="w-full pl-6 md:pl-0 md:px-8 md:max-w-2xl md:mx-auto">
-        <div className="p-5 md:p-6 rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 shadow-sm hover:shadow-lg dark:hover:shadow-black/40 hover:-translate-y-0.5 transition-all duration-300">
-          {/* Category & Date Row */}
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <span
-              className={`px-2.5 py-0.5 rounded-full text-[10px] md:text-[11px] font-mono font-semibold border ${getBadgeStyle(
-                item.category
-              )}`}
-            >
-              {item.categoryBadge}
-            </span>
-            <span className="flex items-center gap-1.5 text-[11px] md:text-xs font-mono text-slate-500 dark:text-slate-400">
-              <Calendar size={11} className="md:w-3 md:h-3" />
-              <span>{item.period}</span>
-            </span>
-          </div>
+      {/* Content — Open typographic layout, NOT an enclosing heavy card */}
+      <div className="pb-10 border-b border-slate-200/70 dark:border-white/10 last:border-b-0 last:pb-2">
+        {/* Category & Date Row */}
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <span
+            className={`px-2.5 py-0.5 rounded-md text-[11px] font-mono font-semibold border ${getBadgeStyle(
+              item.category
+            )}`}
+          >
+            {item.categoryBadge}
+          </span>
+          <span className="flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400">
+            <Calendar size={13} />
+            <span>{item.period}</span>
+          </span>
+        </div>
 
-          {/* Title & Organization - scaled font sizes for mobile */}
-          <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white leading-tight">
-            {item.title}
-          </h3>
-          <p className="text-[11px] md:text-sm text-blue-600 dark:text-cyan-400 font-semibold mt-0.5 flex items-center gap-1.5">
-            <Building2 size={12} className="md:w-[13px] md:h-[13px] flex-shrink-0" />
-            <span>{item.org}</span>
-            <span className="text-slate-400">•</span>
-            <span className="text-slate-500 dark:text-slate-400 font-normal">{item.location}</span>
-          </p>
+        {/* Title & Organization */}
+        <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-tight">
+          {item.title}
+        </h3>
+        <p className="text-sm text-blue-600 dark:text-cyan-400 font-semibold mt-1 flex flex-wrap items-center gap-1.5">
+          <Building2 size={14} />
+          <span>{item.org}</span>
+          <span className="text-slate-400">•</span>
+          <span className="text-slate-500 dark:text-slate-400 font-normal">{item.location}</span>
+        </p>
 
-          {/* Description */}
-          <p className="text-[11px] md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mt-2.5 font-normal">
-            {item.desc}
-          </p>
+        {/* Description */}
+        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mt-3 font-normal max-w-3xl">
+          {item.desc}
+        </p>
 
-          {/* Expandable Highlights */}
-          <div className="mt-4 pt-3 border-t border-slate-100 dark:border-white/10">
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-1.5 text-[10px] md:text-xs font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors cursor-pointer"
-            >
-              <span>Verified Highlights & Focus Areas</span>
-              <motion.div animate={{ rotate: expanded ? 180 : 0 }} className="transition-transform duration-200">
-                <ChevronDown size={13} className="md:w-[14px] md:h-[14px]" />
-              </motion.div>
-            </button>
+        {/* Highlights Accordion / Toggle */}
+        <div className="mt-4">
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors cursor-pointer py-1"
+          >
+            <span>Verified Highlights & Focus Areas</span>
+            <motion.div animate={{ rotate: expanded ? 180 : 0 }} className="transition-transform duration-200">
+              <ChevronDown size={14} />
+            </motion.div>
+          </button>
 
-            <AnimatePresence initial={false}>
-              {expanded && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="overflow-hidden"
-                >
-                  <ul className="grid md:grid-cols-2 gap-2 pt-3 pb-1">
-                    {item.highlights.map((highlight, hIdx) => (
-                      <li
-                        key={hIdx}
-                        className="flex items-start gap-2 text-xs md:text-sm text-slate-700 dark:text-slate-300"
-                      >
-                        <CheckCircle size={12} className="text-blue-600 dark:text-cyan-400 shrink-0 mt-0.5 md:w-[13px] md:h-[13px]" />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Tech tags */}
-          <div className="flex flex-wrap gap-1.5 mt-3.5">
-            {item.techStack.map((tech) => (
-              <span
-                key={tech}
-                className="text-[9px] md:text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 font-mono"
+          <AnimatePresence initial={false}>
+            {expanded && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
               >
-                {tech}
-              </span>
-            ))}
-          </div>
+                {/* Clean bulleted list — NOT nested mini-cards */}
+                <ul className="grid sm:grid-cols-2 gap-2 pt-3 pb-1">
+                  {item.highlights.map((highlight, hIdx) => (
+                    <li
+                      key={hIdx}
+                      className="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 py-1"
+                    >
+                      <CheckCircle size={14} className="text-blue-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+                      <span className="leading-snug">{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Tech tags */}
+        <div className="flex flex-wrap gap-1.5 mt-3.5">
+          {item.techStack.map((tech) => (
+            <span
+              key={tech}
+              className="text-[11px] px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-white/[0.05] text-slate-600 dark:text-slate-400 font-mono"
+            >
+              {tech}
+            </span>
+          ))}
         </div>
       </div>
     </motion.div>
@@ -230,8 +229,8 @@ export function Experience({ onOpenResume }: ExperienceProps) {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="experience" ref={ref} className="py-12 md:py-16 lg:py-28 relative overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+    <section id="experience" ref={ref} className="py-16 sm:py-20 lg:py-28 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           number="05"
@@ -241,37 +240,36 @@ export function Experience({ onOpenResume }: ExperienceProps) {
           subtitle="Formal software engineering education at Haramaya University combined with freelance client deliveries and intensive technical bootcamps."
         />
 
-        {/* Timeline Container */}
+        {/* Authentic Vertical Timeline (No Chunky Box Cards) */}
         <div className="relative">
-          {/* Vertical line through center on desktop, right on mobile */}
-          <div className="absolute top-4 bottom-4 w-0.5 bg-gradient-to-b from-blue-500/60 via-blue-500/30 to-transparent dark:from-cyan-400/50 dark:via-cyan-400/20 dark:to-transparent
-            left-1/2 transform -translate-x-1/2" />
+          {/* Vertical line through bullets */}
+          <div className="absolute left-[11px] sm:left-[13px] top-3 bottom-3 w-0.5 bg-gradient-to-b from-blue-500/60 via-blue-500/20 to-transparent dark:from-cyan-400/50 dark:via-cyan-400/15 dark:to-transparent" />
 
-          <div className="space-y-6 md:space-y-8">
+          <div className="space-y-8">
             {timeline.map((item, idx) => (
-              <TimelineCard key={idx} item={item} index={idx} trigger={inView} />
+              <TimelineEntry key={idx} item={item} index={idx} trigger={inView} />
             ))}
           </div>
         </div>
 
-        {/* Bottom Resume Action Card */}
+        {/* Bottom Resume Action Strip */}
         {onOpenResume && (
-          <div className="mt-10 p-6 sm:p-7 rounded-[28px] bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-white/10 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+          <div className="mt-12 pt-6 border-t border-slate-200/80 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
             <div>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <FileText size={16} className="text-blue-600 dark:text-cyan-400" />
                 <span>Need a printable or verifiable Curriculum Vitae?</span>
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
                 View the verified, complete resume in browser or save as PDF.
               </p>
             </div>
 
             <button
               onClick={onOpenResume}
-              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors shrink-0 flex items-center gap-2 cursor-pointer active:scale-95"
             >
-              <FileText size={13} />
+              <FileText size={14} />
               <span>View & Print CV</span>
             </button>
           </div>

@@ -50,11 +50,12 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header Action Bar (Sticky, No-Print) */}
-          <div className="no-print flex items-center justify-between px-6 py-4 bg-slate-50 dark:bg-slate-900/80 border-b border-slate-200 dark:border-white/10">
+          <div className="no-print flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 bg-slate-50 dark:bg-slate-900/80 border-b border-slate-200 dark:border-white/10">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                Curriculum Vitae // Verified Profile
+                <span className="hidden sm:inline">Curriculum Vitae // Verified Profile</span>
+                <span className="sm:hidden">CV // Profile</span>
               </span>
             </div>
 
@@ -79,7 +80,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           </div>
 
           {/* Resume Printable Sheet */}
-          <div className="overflow-y-auto p-6 sm:p-10 text-slate-900 dark:text-slate-100 font-sans leading-relaxed space-y-8">
+          <div className="overflow-y-auto p-4 sm:p-10 text-slate-900 dark:text-slate-100 font-sans leading-relaxed space-y-6 sm:space-y-8">
             {/* Top Identity Block */}
             <div className="border-b border-slate-200 dark:border-white/10 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
               <div>

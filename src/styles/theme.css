@@ -359,12 +359,3 @@
     display: none !important;
   }
 }
-
-/* Hero Developer Background - SVG Pattern */
-.hero-developer-bg {
-  background-image: url('src/app/components/image/developer-bg.svg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-}
