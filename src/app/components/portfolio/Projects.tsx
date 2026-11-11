@@ -24,10 +24,15 @@ import ecommerceImage from "../image/ecommerce.png";
 import equbImage from "../image/equb.png";
 import chatImage from "../image/chat.png";
 import cafeImage from "../image/cafe.png";
+import teamflowBoard from "../image/teamflow-board.png";
+import teamflowDashboard from "../image/teamflow-dashboard.png";
+import teamflowMyTasks from "../image/teamflow-mytasks.png";
+import teamflowCalendar from "../image/teamflow-calendar.png";
+import teamflowTeam from "../image/teamflow-team.png";
 
 interface Project {
   id: number;
-  category: "realestate" | "edtech" | "ecommerce" | "fintech" | "hospitality";
+  category: "realestate" | "edtech" | "ecommerce" | "fintech" | "hospitality" | "productivity";
   categoryLabel: string;
   domainUrl: string;
   impactPill: string;
@@ -227,6 +232,37 @@ const projects: Project[] = [
     demo: "https://github.com/Yerosan-Girma/Haven-Cafe-Bistro",
     github: "https://github.com/Yerosan-Girma/Haven-Cafe-Bistro",
   },
+  {
+    id: 7,
+    category: "productivity",
+    categoryLabel: "Team Collaboration SaaS",
+    domainUrl: "project-management-tool-peach-xi.vercel.app",
+    impactPill: "Real-Time Kanban • Multi-Tenant Workspaces • 3-Tier RBAC",
+    title: "TeamFlow",
+    subtitle: "Project Management & Team Collaboration Platform",
+    year: "2026",
+    problem:
+      "Teams often juggle fragmented tools for task tracking, communication, and scheduling, leading to scattered context, unclear ownership, and no single source of truth for project delivery.",
+    solution:
+      "Engineered an enterprise-grade, multi-tenant collaboration platform with real-time Kanban boards, granular role-based access control, milestone calendars, and live WebSocket event distribution.",
+    description:
+      "A full-stack project management platform for agile teams featuring multi-tenant workspaces, drag-and-drop Kanban boards, granular 3-tier RBAC, milestone calendars, personal task queues, threaded task discussions, and automated transactional emails.",
+    tech: ["React", "TypeScript", "Vite", "Node.js", "Express.js", "PostgreSQL", "Prisma", "Socket.IO", "Tailwind CSS"],
+    features: [
+      "Multi-tenant workspaces with strict UUID-based data isolation",
+      "Real-time drag-and-drop Kanban boards synced via Socket.IO",
+      "Granular 3-tier RBAC across platform, workspace, and project levels",
+      "Bank-grade auth: Argon2id hashing, JWT access + rotating refresh tokens",
+      "Milestone calendar and unified personal 'My Tasks' queue",
+      "Threaded task comments and real-time activity audit trails",
+    ],
+    architectureNotes:
+      "Built as a decoupled full-stack system: a Vite + React + TypeScript frontend communicating with an Express.js API backed by PostgreSQL through Prisma ORM. Socket.IO rooms distribute live board and activity events, while Argon2id password hashing and rotating JWT refresh token families secure multi-tenant sessions.",
+    image: teamflowBoard,
+    screenshots: [teamflowBoard, teamflowDashboard, teamflowMyTasks, teamflowCalendar, teamflowTeam],
+    demo: "https://project-management-tool-peach-xi.vercel.app",
+    github: "https://github.com/Yerosan-Girma/project-management-tools",
+  },
 ];
 
 const projectFilters = [
@@ -236,6 +272,7 @@ const projectFilters = [
   { label: "E-Commerce", id: "ecommerce" },
   { label: "Fintech & Sockets", id: "fintech" },
   { label: "Hospitality", id: "hospitality" },
+  { label: "Collaboration", id: "productivity" },
 ];
 
 function getTechBadgeStyle(tech: string) {
